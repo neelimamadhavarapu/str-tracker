@@ -1,0 +1,773 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>STR Hours Tracker</title>
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   SETUP BANNER — remove once Firebase is configured
+   ═══════════════════════════════════════════ */
+#setup-banner {
+  position: fixed; inset: 0; z-index: 9999;
+  background: rgba(0,0,0,0.82);
+  display: flex; align-items: center; justify-content: center;
+  padding: 1.5rem;
+}
+#setup-banner .modal {
+  background: #fff; border-radius: 16px;
+  padding: 2rem 2.25rem; max-width: 520px; width: 100%;
+  box-shadow: 0 24px 64px rgba(0,0,0,0.3);
+}
+#setup-banner h2 { font-size: 18px; font-weight: 600; margin-bottom: 0.5rem; color: #111; }
+#setup-banner p { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 1rem; }
+#setup-banner ol { font-size: 13px; color: #333; line-height: 2; padding-left: 1.25rem; margin-bottom: 1.25rem; }
+#setup-banner ol li a { color: #1a73e8; }
+#setup-banner textarea {
+  width: 100%; height: 140px; font-family: 'DM Mono', monospace; font-size: 12px;
+  border: 1.5px solid #ddd; border-radius: 8px; padding: 10px; resize: none;
+  background: #f8f8f8; color: #222; margin-bottom: 1rem;
+}
+#setup-banner .btn-connect {
+  width: 100%; padding: 11px; border-radius: 8px; border: none;
+  background: #1a73e8; color: #fff; font-size: 14px; font-weight: 600;
+  cursor: pointer; font-family: 'DM Sans', sans-serif;
+}
+#setup-banner .btn-connect:hover { background: #1557b0; }
+#setup-banner .btn-demo {
+  width: 100%; padding: 9px; border-radius: 8px; border: 1.5px solid #ddd;
+  background: transparent; color: #555; font-size: 13px; font-weight: 500;
+  cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 8px;
+}
+#setup-banner .error { font-size: 12px; color: #c0392b; margin-top: 6px; display: none; }
+
+/* ═══════════════════════════════════════════
+   BASE
+   ═══════════════════════════════════════════ */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --ivory:    #F6F4EF;
+  --cream:    #EDEAE2;
+  --sand:     #D8D4C8;
+  --stone:    #8A877E;
+  --charcoal: #2C2B27;
+  --ink:      #1A1917;
+  --forest:   #2D5016;
+  --sage:     #4A7C2F;
+  --leaf:     #7AB648;
+  --leaf-bg:  #EEF5E7;
+  --amber:    #B8650A;
+  --amber-bg: #FDF2E4;
+  --rust:     #C0392B;
+  --rust-bg:  #FDECEA;
+  --blue:     #1A5276;
+  --blue-bg:  #EBF3FA;
+  --purple:   #5B3FA6;
+  --purple-bg:#F0ECFB;
+  --teal:     #0E7063;
+  --teal-bg:  #E5F4F2;
+  --radius:   10px;
+  --radius-lg:14px;
+  --shadow:   0 2px 12px rgba(0,0,0,0.08);
+}
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  background: var(--ivory);
+  color: var(--ink);
+  min-height: 100vh;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
+/* ═══════════════════════════════════════════
+   LAYOUT
+   ═══════════════════════════════════════════ */
+.app { max-width: 760px; margin: 0 auto; padding: 0 1rem 4rem; }
+
+.topbar {
+  position: sticky; top: 0; z-index: 100;
+  background: var(--ivory);
+  border-bottom: 1px solid var(--cream);
+  padding: 1rem 0 0;
+  margin-bottom: 1.5rem;
+}
+.topbar-inner {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  flex-wrap: wrap; gap: 10px; padding-bottom: 1rem;
+}
+.brand { display: flex; align-items: center; gap: 10px; }
+.brand-icon {
+  width: 36px; height: 36px; border-radius: 9px;
+  background: var(--forest); display: flex; align-items: center; justify-content: center;
+}
+.brand-icon svg { width: 18px; height: 18px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; }
+.brand-name { font-size: 17px; font-weight: 600; color: var(--ink); letter-spacing: -0.3px; }
+.brand-sub  { font-size: 12px; color: var(--stone); margin-top: 1px; }
+
+.user-row { display: flex; align-items: center; gap: 8px; }
+.user-row label { font-size: 12px; color: var(--stone); }
+
+.nav { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 1px; }
+.nav::-webkit-scrollbar { display: none; }
+.nav-btn {
+  padding: 7px 16px; border-radius: 8px; border: none; background: transparent;
+  color: var(--stone); cursor: pointer; font-size: 13px; font-weight: 500;
+  font-family: 'DM Sans', sans-serif; white-space: nowrap; transition: all 0.15s;
+}
+.nav-btn:hover { background: var(--cream); color: var(--charcoal); }
+.nav-btn.active { background: var(--charcoal); color: #fff; }
+
+/* ═══════════════════════════════════════════
+   FORM ELEMENTS
+   ═══════════════════════════════════════════ */
+select, input[type=text], input[type=number], input[type=date], textarea {
+  width: 100%; padding: 9px 12px;
+  border-radius: var(--radius); border: 1.5px solid var(--cream);
+  background: #fff; color: var(--ink); font-size: 14px;
+  font-family: 'DM Sans', sans-serif; outline: none;
+  transition: border-color 0.15s, box-shadow 0.15s;
+  -webkit-appearance: none;
+}
+select:focus, input:focus, textarea:focus {
+  border-color: var(--sage); box-shadow: 0 0 0 3px rgba(74,124,47,0.12);
+}
+textarea { resize: vertical; min-height: 72px; }
+.field { margin-bottom: 14px; }
+.field label { display: block; font-size: 12px; font-weight: 500; color: var(--stone); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px; }
+
+.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
+@media(max-width:520px) { .grid2,.grid3 { grid-template-columns: 1fr; } }
+
+/* ═══════════════════════════════════════════
+   BUTTONS
+   ═══════════════════════════════════════════ */
+.btn {
+  padding: 9px 20px; border-radius: var(--radius);
+  border: 1.5px solid var(--cream); background: transparent;
+  color: var(--charcoal); cursor: pointer; font-size: 14px; font-weight: 500;
+  font-family: 'DM Sans', sans-serif; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px;
+}
+.btn:hover { background: var(--cream); }
+.btn-primary {
+  background: var(--forest); color: #fff; border-color: var(--forest);
+}
+.btn-primary:hover { background: #1e3b0e; border-color: #1e3b0e; }
+.btn-sm { padding: 5px 12px; font-size: 12px; }
+.btn-ghost-danger { border-color: transparent; color: var(--rust); }
+.btn-ghost-danger:hover { background: var(--rust-bg); border-color: var(--rust-bg); }
+
+/* ═══════════════════════════════════════════
+   CARDS & METRICS
+   ═══════════════════════════════════════════ */
+.card {
+  background: #fff; border: 1px solid var(--cream);
+  border-radius: var(--radius-lg); padding: 1.125rem 1.25rem;
+  margin-bottom: 10px; transition: box-shadow 0.15s;
+}
+.card:hover { box-shadow: var(--shadow); }
+
+.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
+.metric {
+  background: #fff; border: 1px solid var(--cream);
+  border-radius: var(--radius-lg); padding: 1.125rem;
+}
+.metric-label { font-size: 11px; font-weight: 500; color: var(--stone); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
+.metric-val   { font-size: 26px; font-weight: 300; color: var(--ink); letter-spacing: -0.5px; font-family: 'DM Mono', monospace; }
+.metric-sub   { font-size: 11px; color: var(--stone); margin-top: 4px; }
+
+/* ═══════════════════════════════════════════
+   BADGES & CHIPS
+   ═══════════════════════════════════════════ */
+.badge {
+  display: inline-flex; align-items: center;
+  padding: 3px 10px; border-radius: 20px;
+  font-size: 11px; font-weight: 500; letter-spacing: 0.2px;
+}
+.chip {
+  display: inline-block; padding: 1px 8px;
+  border-radius: 10px; font-size: 11px; color: var(--stone);
+  background: var(--cream); margin-left: 5px;
+}
+.status-good  { background: var(--leaf-bg);  color: var(--forest); }
+.status-warn  { background: var(--amber-bg); color: var(--amber); }
+.status-bad   { background: var(--rust-bg);  color: var(--rust); }
+
+/* ═══════════════════════════════════════════
+   PROGRESS BAR
+   ═══════════════════════════════════════════ */
+.prog-track { height: 6px; background: var(--cream); border-radius: 4px; overflow: hidden; margin-top: 6px; }
+.prog-fill  { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
+.prog-green  { background: var(--sage); }
+.prog-amber  { background: var(--amber); }
+.prog-red    { background: var(--rust); }
+
+/* ═══════════════════════════════════════════
+   SECTION
+   ═══════════════════════════════════════════ */
+.section-head { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 1rem; margin-top: 0.25rem; }
+.divider { border: none; border-top: 1px solid var(--cream); margin: 1.5rem 0; }
+.empty { text-align: center; padding: 3rem 1rem; color: var(--stone); font-size: 14px; }
+.empty-icon { font-size: 28px; margin-bottom: 8px; opacity: 0.5; }
+
+/* ═══════════════════════════════════════════
+   FILTER BAR
+   ═══════════════════════════════════════════ */
+.filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
+.filter-bar select { flex: 1; min-width: 110px; width: auto; }
+
+/* ═══════════════════════════════════════════
+   ENTRY CARD
+   ═══════════════════════════════════════════ */
+.entry-main  { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
+.entry-name  { font-size: 14px; font-weight: 500; color: var(--ink); }
+.entry-meta  { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 5px; }
+.entry-note  { font-size: 12px; color: var(--stone); margin-top: 5px; font-style: italic; }
+.entry-hours { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: var(--ink); white-space: nowrap; }
+
+/* ═══════════════════════════════════════════
+   SYNC INDICATOR
+   ═══════════════════════════════════════════ */
+.sync-dot {
+  width: 7px; height: 7px; border-radius: 50%; display: inline-block;
+  margin-right: 5px; background: var(--sage);
+}
+.sync-dot.syncing { background: var(--amber); animation: pulse 1s infinite; }
+.sync-dot.error   { background: var(--rust); }
+@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
+.sync-label { font-size: 11px; color: var(--stone); display: flex; align-items: center; }
+
+/* ═══════════════════════════════════════════
+   TOAST
+   ═══════════════════════════════════════════ */
+.toast {
+  position: fixed; bottom: 24px; right: 24px;
+  background: var(--charcoal); color: #fff;
+  padding: 10px 18px; border-radius: var(--radius);
+  font-size: 13px; opacity: 0; transition: opacity 0.25s;
+  pointer-events: none; z-index: 9998; max-width: 280px;
+}
+.toast.show { opacity: 1; }
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+   ═══════════════════════════════════════════ */
+.fade-in { animation: fadeIn 0.25s ease forwards; }
+@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
+</style>
+</head>
+<body>
+
+<!-- ════════════════════════════════════════
+     FIREBASE SETUP MODAL
+     ════════════════════════════════════════ -->
+<div id="setup-banner">
+  <div class="modal">
+    <h2>🏠 Connect your database (one-time setup)</h2>
+    <p>To sync hours between you and your husband across any device, this app needs a free Firebase Firestore database. It takes about 5 minutes.</p>
+    <ol>
+      <li>Go to <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a> → <strong>Add project</strong></li>
+      <li>Click <strong>Firestore Database</strong> → <strong>Create database</strong> → choose <strong>Test mode</strong></li>
+      <li>Click the <strong>&lt;/&gt;</strong> web icon → Register app → copy your <code>firebaseConfig</code></li>
+      <li>Paste the entire config object below:</li>
+    </ol>
+    <textarea id="firebase-config-input" placeholder='{
+  "apiKey": "AIza...",
+  "authDomain": "your-project.firebaseapp.com",
+  "projectId": "your-project-id",
+  "storageBucket": "your-project.appspot.com",
+  "messagingSenderId": "123456789",
+  "appId": "1:123:web:abc"
+}'></textarea>
+    <div class="error" id="config-error">Invalid config — please paste the full firebaseConfig object.</div>
+    <button class="btn-connect" onclick="connectFirebase()">Connect &amp; Save</button>
+    <button class="btn-demo" onclick="useDemoMode()">Use demo mode (data won't sync)</button>
+  </div>
+</div>
+
+<!-- ════════════════════════════════════════
+     APP
+     ════════════════════════════════════════ -->
+<div class="app">
+  <div class="topbar">
+    <div class="topbar-inner">
+      <div class="brand">
+        <div class="brand-icon">
+          <svg viewBox="0 0 24 24"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+        </div>
+        <div>
+          <div class="brand-name">STR Hours Tracker</div>
+          <div class="brand-sub" id="sync-status"><span class="sync-dot syncing"></span>Connecting…</div>
+        </div>
+      </div>
+      <div class="user-row">
+        <label for="currentUser">Logged in as</label>
+        <select id="currentUser" style="width:auto;padding:7px 10px;" onchange="saveUserPref()">
+          <option value="Me">Me</option>
+          <option value="Husband">Husband</option>
+        </select>
+      </div>
+    </div>
+    <nav class="nav">
+      <button class="nav-btn active" onclick="showTab('log')">Log Hours</button>
+      <button class="nav-btn" onclick="showTab('entries')">All Entries</button>
+      <button class="nav-btn" onclick="showTab('summary')">Summary</button>
+      <button class="nav-btn" onclick="showTab('properties')">Properties</button>
+    </nav>
+  </div>
+
+  <!-- LOG HOURS -->
+  <div id="tab-log" class="fade-in">
+    <div class="section-head">Log new hours</div>
+    <div class="grid2">
+      <div class="field"><label>Property</label><select id="logProperty"></select></div>
+      <div class="field"><label>Date</label><input type="date" id="logDate"></div>
+    </div>
+    <div class="grid2">
+      <div class="field">
+        <label>Activity category</label>
+        <select id="logCategory">
+          <option>Administrative</option>
+          <option>Design &amp; Decor</option>
+          <option>Maintenance &amp; Repairs</option>
+          <option>Guest Communication</option>
+          <option>Marketing &amp; Photography</option>
+          <option>Financial &amp; Accounting</option>
+          <option>Setup &amp; Staging</option>
+          <option>Cleaning Oversight</option>
+          <option>Research &amp; Planning</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="field"><label>Hours spent</label><input type="number" id="logHours" min="0.25" max="24" step="0.25" placeholder="e.g. 2.5"></div>
+    </div>
+    <div class="field"><label>Notes (optional)</label><textarea id="logNotes" placeholder="What did you work on?"></textarea></div>
+    <button class="btn btn-primary" onclick="logEntry()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Save entry
+    </button>
+  </div>
+
+  <!-- ENTRIES -->
+  <div id="tab-entries" style="display:none;">
+    <div class="filter-bar">
+      <select id="filterProp" onchange="renderEntries()"><option value="">All properties</option></select>
+      <select id="filterCat" onchange="renderEntries()">
+        <option value="">All categories</option>
+        <option>Administrative</option><option>Design &amp; Decor</option>
+        <option>Maintenance &amp; Repairs</option><option>Guest Communication</option>
+        <option>Marketing &amp; Photography</option><option>Financial &amp; Accounting</option>
+        <option>Setup &amp; Staging</option><option>Cleaning Oversight</option>
+        <option>Research &amp; Planning</option><option>Other</option>
+      </select>
+      <select id="filterUser" onchange="renderEntries()">
+        <option value="">All people</option><option>Me</option><option>Husband</option>
+      </select>
+    </div>
+    <div id="entries-list"></div>
+  </div>
+
+  <!-- SUMMARY -->
+  <div id="tab-summary" style="display:none;">
+    <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:1.25rem;">
+      <div class="section-head" style="margin:0;">Overview</div>
+      <select id="summaryProp" style="width:auto;min-width:180px;" onchange="renderSummary()"><option value="">All properties</option></select>
+    </div>
+    <div class="metric-grid" id="summary-metrics"></div>
+    <div class="section-head">Hours by category</div>
+    <div id="summary-cats" style="margin-bottom:1.5rem;"></div>
+    <div class="section-head">Hours by person</div>
+    <div id="summary-people"></div>
+  </div>
+
+  <!-- PROPERTIES -->
+  <div id="tab-properties" style="display:none;">
+    <div class="section-head">Your properties</div>
+    <div id="props-list" style="margin-bottom:1.5rem;"></div>
+    <div class="divider"></div>
+    <div class="section-head">Add a property</div>
+    <div class="grid2" style="margin-bottom:14px;">
+      <div class="field"><label>Property name</label><input type="text" id="newPropName" placeholder="e.g. Lake House, Unit 4B"></div>
+      <div class="field"><label>Short nickname</label><input type="text" id="newPropNick" placeholder="e.g. Lake, 4B"></div>
+    </div>
+    <button class="btn btn-primary" onclick="addProperty()">Add property</button>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<!-- ════════════════════════════════════════
+     FIREBASE SDK
+     ════════════════════════════════════════ -->
+<script type="module">
+// ── FIX: removed unused setDoc/getDoc imports (caused strict-module warnings)
+import { initializeApp }   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { getFirestore, collection, addDoc, deleteDoc,
+         doc, onSnapshot, query, orderBy }
+                           from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+
+/* ──────────────────────────────────────
+   CATEGORY COLORS
+   ────────────────────────────────────── */
+const CAT = {
+  'Administrative':          { bg:'#EBF3FA', fg:'#1A5276' },
+  'Design & Decor':          { bg:'#F0ECFB', fg:'#5B3FA6' },
+  'Maintenance & Repairs':   { bg:'#FDF2E4', fg:'#B8650A' },
+  'Guest Communication':     { bg:'#E5F4F2', fg:'#0E7063' },
+  'Marketing & Photography': { bg:'#FDECEA', fg:'#C0392B' },
+  'Financial & Accounting':  { bg:'#EEF5E7', fg:'#2D5016' },
+  'Setup & Staging':         { bg:'#FDF2E4', fg:'#B8650A' },
+  'Cleaning Oversight':      { bg:'#E5F4F2', fg:'#0E7063' },
+  'Research & Planning':     { bg:'#EBF3FA', fg:'#1A5276' },
+  'Other':                   { bg:'#F2F1EE', fg:'#6B6B67' },
+};
+
+// ── FIX: expose helper functions to window so inline onclick="" handlers can reach them
+// (ES modules are sandboxed — functions not on window are invisible to inline HTML handlers)
+function catBadge(cat) {
+  const c = CAT[cat] || CAT['Other'];
+  return `<span class="badge" style="background:${c.bg};color:${c.fg};">${cat}</span>`;
+}
+
+function fmtDate(d) {
+  if (!d) return '';
+  const [y,m,day] = d.split('-');
+  return new Date(y, m-1, day).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+}
+
+function toast(msg) {
+  const t = document.getElementById('toast');
+  if (!t) return;
+  t.textContent = msg; t.classList.add('show');
+  setTimeout(()=>t.classList.remove('show'), 2500);
+}
+
+// ── FIX: removed dead `cls` variable in setSyncStatus
+function setSyncStatus(state, label) {
+  const el = document.getElementById('sync-status');
+  if (!el) return;
+  const dotClass = state === 'ok' ? '' : state === 'error' ? 'error' : 'syncing';
+  el.innerHTML = `<span class="sync-dot ${dotClass}"></span>${label}`;
+}
+
+/* ──────────────────────────────────────
+   STATE
+   ────────────────────────────────────── */
+let db = null;
+let entries    = [];
+let properties = [];
+let demoMode   = false;
+let unsubEntries = null, unsubProps = null;
+
+/* ──────────────────────────────────────
+   FIREBASE SETUP FLOW
+   ────────────────────────────────────── */
+// ── FIX: expose to window so onclick="connectFirebase()" works from the module
+window.connectFirebase = function() {
+  const raw   = document.getElementById('firebase-config-input').value.trim();
+  const errEl = document.getElementById('config-error');
+  errEl.style.display = 'none';
+  let config;
+  try {
+    // ── FIX: safer JSON extraction — find first { and last } rather than stripping all trailing chars
+    const start   = raw.indexOf('{');
+    const end     = raw.lastIndexOf('}');
+    if (start === -1 || end === -1) throw new Error('No JSON object found');
+    const cleaned = raw.slice(start, end + 1);
+    config = JSON.parse(cleaned);
+    if (!config.apiKey || !config.projectId) throw new Error('Missing required fields');
+  } catch(e) {
+    errEl.style.display = 'block'; return;
+  }
+  localStorage.setItem('str_firebase_config', JSON.stringify(config));
+  initApp(config);
+  document.getElementById('setup-banner').style.display = 'none';
+};
+
+window.useDemoMode = function() {
+  demoMode = true;
+  document.getElementById('setup-banner').style.display = 'none';
+  setSyncStatus('demo', 'Demo mode — data stays local');
+  entries    = JSON.parse(localStorage.getItem('str_demo_entries') || '[]');
+  properties = JSON.parse(localStorage.getItem('str_demo_props')   || '[]');
+  const u = localStorage.getItem('str_user_pref');
+  if (u) document.getElementById('currentUser').value = u;
+  document.getElementById('logDate').value = new Date().toISOString().split('T')[0];
+  refreshDropdowns(); renderEntries(); renderSummary(); renderProperties();
+};
+
+function initApp(config) {
+  const app = initializeApp(config);
+  db = getFirestore(app);
+  const u = localStorage.getItem('str_user_pref');
+  if (u) document.getElementById('currentUser').value = u;
+  document.getElementById('logDate').value = new Date().toISOString().split('T')[0];
+  setSyncStatus('syncing', 'Connecting…');
+
+  // Real-time listener: entries
+  const entQ = query(collection(db, 'str_entries'), orderBy('createdAt', 'desc'));
+  unsubEntries = onSnapshot(entQ, snap => {
+    entries = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    renderEntries(); renderSummary();
+    setSyncStatus('ok', 'Synced · shared with household');
+  }, () => {
+    setSyncStatus('error', 'Sync error — check Firebase rules');
+  });
+
+  // Real-time listener: properties
+  const propQ = query(collection(db, 'str_properties'), orderBy('createdAt', 'asc'));
+  unsubProps = onSnapshot(propQ, snap => {
+    properties = snap.docs.map(d => ({ id: d.id, ...d.data() }));
+    refreshDropdowns(); renderProperties();
+  });
+}
+
+/* ──────────────────────────────────────
+   INIT — runs on page load
+   ────────────────────────────────────── */
+(function init() {
+  const saved = localStorage.getItem('str_firebase_config');
+  if (saved) {
+    try {
+      const config = JSON.parse(saved);
+      document.getElementById('setup-banner').style.display = 'none';
+      initApp(config);
+    } catch(e) { /* malformed saved config — show setup banner */ }
+  }
+})();
+
+/* ──────────────────────────────────────
+   USER PREF
+   ────────────────────────────────────── */
+window.saveUserPref = function() {
+  localStorage.setItem('str_user_pref', document.getElementById('currentUser').value);
+};
+
+/* ──────────────────────────────────────
+   TABS
+   ────────────────────────────────────── */
+window.showTab = function(name) {
+  ['log','entries','summary','properties'].forEach(t => {
+    const el = document.getElementById('tab-' + t);
+    el.style.display = t === name ? '' : 'none';
+    el.classList.toggle('fade-in', t === name);
+  });
+  document.querySelectorAll('.nav-btn').forEach((btn, i) => {
+    btn.classList.toggle('active', ['log','entries','summary','properties'][i] === name);
+  });
+  if (name === 'entries')    renderEntries();
+  if (name === 'summary')    renderSummary();
+  if (name === 'properties') renderProperties();
+};
+
+/* ──────────────────────────────────────
+   DROPDOWNS
+   ────────────────────────────────────── */
+function refreshDropdowns() {
+  ['logProperty','filterProp','summaryProp'].forEach(id => {
+    const el = document.getElementById(id); if (!el) return;
+    const val = el.value;
+    el.innerHTML = id !== 'logProperty' ? '<option value="">All properties</option>' : '';
+    properties.forEach(p => {
+      const o = document.createElement('option');
+      o.value = p.id; o.textContent = p.name;
+      el.appendChild(o);
+    });
+    if (val) el.value = val;
+  });
+}
+
+/* ──────────────────────────────────────
+   LOG ENTRY
+   ────────────────────────────────────── */
+window.logEntry = async function() {
+  const prop  = document.getElementById('logProperty').value;
+  const date  = document.getElementById('logDate').value;
+  const cat   = document.getElementById('logCategory').value;
+  const hrs   = parseFloat(document.getElementById('logHours').value);
+  const notes = document.getElementById('logNotes').value.trim();
+  const user  = document.getElementById('currentUser').value;
+  if (!prop)          { toast('Please select a property'); return; }
+  if (!date)          { toast('Please select a date'); return; }
+  if (!hrs || hrs<=0) { toast('Please enter valid hours'); return; }
+
+  const entry = { property: prop, date, category: cat, hours: hrs, notes, user, createdAt: Date.now() };
+
+  if (demoMode) {
+    entry.id = 'demo_' + Date.now();
+    entries.unshift(entry);
+    localStorage.setItem('str_demo_entries', JSON.stringify(entries));
+    renderEntries(); renderSummary();
+  } else {
+    try {
+      await addDoc(collection(db, 'str_entries'), entry);
+    } catch(e) { toast('Error saving — check connection'); return; }
+  }
+  document.getElementById('logHours').value = '';
+  document.getElementById('logNotes').value = '';
+  toast('Entry saved!');
+};
+
+/* ──────────────────────────────────────
+   DELETE ENTRY
+   ────────────────────────────────────── */
+window.deleteEntry = async function(id) {
+  if (!confirm('Delete this entry?')) return;
+  if (demoMode) {
+    entries = entries.filter(e => e.id !== id);
+    localStorage.setItem('str_demo_entries', JSON.stringify(entries));
+    renderEntries(); renderSummary();
+  } else {
+    try { await deleteDoc(doc(db, 'str_entries', id)); } catch(e) { toast('Error deleting'); }
+  }
+};
+
+/* ──────────────────────────────────────
+   RENDER ENTRIES
+   ── FIX: null guard on container element
+   ────────────────────────────────────── */
+function renderEntries() {
+  const el = document.getElementById('entries-list'); if (!el) return;
+  const fp = document.getElementById('filterProp')?.value || '';
+  const fc = document.getElementById('filterCat')?.value  || '';
+  const fu = document.getElementById('filterUser')?.value || '';
+  const list = entries.filter(e =>
+    (!fp || e.property === fp) && (!fc || e.category === fc) && (!fu || e.user === fu)
+  );
+  if (!list.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div>No entries yet. Start logging your hours!</div>';
+    return;
+  }
+  el.innerHTML = list.map(e => {
+    const prop = properties.find(p => p.id === e.property);
+    return `<div class="card">
+      <div class="entry-main">
+        <div style="flex:1;min-width:0;">
+          <div class="entry-name">${prop ? prop.name : 'Unknown property'}<span class="chip">${e.user}</span></div>
+          <div class="entry-meta">${fmtDate(e.date)} · ${catBadge(e.category)}</div>
+          ${e.notes ? `<div class="entry-note">${e.notes}</div>` : ''}
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+          <span class="entry-hours">${e.hours}h</span>
+          <button class="btn btn-sm btn-ghost-danger" onclick="deleteEntry('${e.id}')">Delete</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+window.renderEntries = renderEntries;
+
+/* ──────────────────────────────────────
+   RENDER SUMMARY
+   ── FIX: null guards on all DOM targets (summary tab may be hidden/unmounted)
+   ────────────────────────────────────── */
+function renderSummary() {
+  const metricsEl = document.getElementById('summary-metrics'); if (!metricsEl) return;
+  const sc = document.getElementById('summary-cats');
+  const sp = document.getElementById('summary-people');
+
+  const fp   = document.getElementById('summaryProp')?.value || '';
+  const list = fp ? entries.filter(e => e.property === fp) : entries;
+  const total = list.reduce((s, e) => s + e.hours, 0);
+  const byUser = {}, byCat = {};
+  list.forEach(e => {
+    byUser[e.user]     = (byUser[e.user]     || 0) + e.hours;
+    byCat[e.category]  = (byCat[e.category]  || 0) + e.hours;
+  });
+
+  metricsEl.innerHTML = `
+    <div class="metric"><div class="metric-label">Total hours</div><div class="metric-val">${total.toFixed(1)}</div><div class="metric-sub">all time</div></div>
+    <div class="metric"><div class="metric-label">Entries</div><div class="metric-val">${list.length}</div><div class="metric-sub">logged</div></div>
+    <div class="metric"><div class="metric-label">Avg / entry</div><div class="metric-val">${list.length ? (total/list.length).toFixed(1) : '—'}</div><div class="metric-sub">hours</div></div>
+    <div class="metric"><div class="metric-label">Properties</div><div class="metric-val">${fp ? '1' : properties.length}</div><div class="metric-sub">tracked</div></div>`;
+
+  if (sc) {
+    const sorted = Object.entries(byCat).sort((a,b) => b[1]-a[1]);
+    sc.innerHTML = sorted.length ? sorted.map(([cat, hrs]) => {
+      const pct = total ? Math.round(hrs/total*100) : 0;
+      const c   = CAT[cat] || CAT['Other'];
+      return `<div style="margin-bottom:12px;">
+        <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
+          ${catBadge(cat)}
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--stone);">${hrs.toFixed(1)}h &nbsp;<span style="color:var(--sand);">${pct}%</span></span>
+        </div>
+        <div class="prog-track"><div class="prog-fill" style="width:${pct}%;background:${c.fg};opacity:0.75;"></div></div>
+      </div>`;
+    }).join('') : '<div class="empty">No data yet.</div>';
+  }
+
+  if (sp) {
+    const sortedP = Object.entries(byUser).sort((a,b) => b[1]-a[1]);
+    sp.innerHTML = sortedP.length ? sortedP.map(([user, hrs]) => {
+      const pct = total ? Math.round(hrs/total*100) : 0;
+      return `<div class="card" style="display:flex;align-items:center;justify-content:space-between;">
+        <div style="font-size:14px;font-weight:500;">${user}</div>
+        <div style="font-family:'DM Mono',monospace;font-size:17px;">${hrs.toFixed(1)}<span style="font-size:12px;color:var(--stone);margin-left:4px;">(${pct}%)</span></div>
+      </div>`;
+    }).join('') : '<div class="empty">No data yet.</div>';
+  }
+}
+window.renderSummary = renderSummary;
+
+/* ──────────────────────────────────────
+   PROPERTIES
+   ────────────────────────────────────── */
+function renderProperties() {
+  const el = document.getElementById('props-list'); if (!el) return;
+  if (!properties.length) {
+    el.innerHTML = '<div class="empty"><div class="empty-icon">🏠</div>No properties yet — add one below.</div>';
+    return;
+  }
+  el.innerHTML = properties.map(p => {
+    const hrs = entries.filter(e => e.property === p.id).reduce((s,e) => s+e.hours, 0);
+    const cnt = entries.filter(e => e.property === p.id).length;
+    return `<div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
+      <div style="flex:1;">
+        <div style="font-size:14px;font-weight:500;">${p.name}</div>
+        <div style="font-size:12px;color:var(--stone);margin-top:2px;">${hrs.toFixed(1)} hrs total · ${cnt} entries</div>
+      </div>
+      <button class="btn btn-sm btn-ghost-danger" onclick="deleteProp('${p.id}')">Remove</button>
+    </div>`;
+  }).join('');
+}
+window.renderProperties = renderProperties;
+
+window.addProperty = async function() {
+  const name = document.getElementById('newPropName').value.trim();
+  if (!name) { toast('Enter a property name'); return; }
+  const prop = { name, nick: document.getElementById('newPropNick').value.trim(), createdAt: Date.now() };
+  if (demoMode) {
+    prop.id = 'prop_demo_' + Date.now();
+    properties.push(prop);
+    localStorage.setItem('str_demo_props', JSON.stringify(properties));
+    refreshDropdowns(); renderProperties();
+  } else {
+    try { await addDoc(collection(db, 'str_properties'), prop); } catch(e) { toast('Error saving property'); return; }
+  }
+  document.getElementById('newPropName').value = '';
+  document.getElementById('newPropNick').value = '';
+  toast('Property added!');
+};
+
+window.deleteProp = async function(id) {
+  if (!confirm('Remove this property and all its entries?')) return;
+  if (demoMode) {
+    properties = properties.filter(p => p.id !== id);
+    entries    = entries.filter(e => e.property !== id);
+    localStorage.setItem('str_demo_props',    JSON.stringify(properties));
+    localStorage.setItem('str_demo_entries',  JSON.stringify(entries));
+    refreshDropdowns(); renderProperties(); renderEntries(); renderSummary();
+  } else {
+    try {
+      await deleteDoc(doc(db, 'str_properties', id));
+      const toDelete = entries.filter(e => e.property === id);
+      await Promise.all(toDelete.map(e => deleteDoc(doc(db, 'str_entries', e.id))));
+    } catch(e) { toast('Error removing property'); }
+  }
+};
+
+</script>
+</body>
+</html>
