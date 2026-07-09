@@ -6,41 +6,7 @@
 <title>STR Hours Tracker</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* ═══════════════════════════════════════════
-   SETUP BANNER — remove once Firebase is configured
-   ═══════════════════════════════════════════ */
-#setup-banner {
-  position: fixed; inset: 0; z-index: 9999;
-  background: rgba(0,0,0,0.82);
-  display: flex; align-items: center; justify-content: center;
-  padding: 1.5rem;
-}
-#setup-banner .modal {
-  background: #fff; border-radius: 16px;
-  padding: 2rem 2.25rem; max-width: 520px; width: 100%;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.3);
-}
-#setup-banner h2 { font-size: 18px; font-weight: 600; margin-bottom: 0.5rem; color: #111; }
-#setup-banner p { font-size: 13px; color: #555; line-height: 1.6; margin-bottom: 1rem; }
-#setup-banner ol { font-size: 13px; color: #333; line-height: 2; padding-left: 1.25rem; margin-bottom: 1.25rem; }
-#setup-banner ol li a { color: #1a73e8; }
-#setup-banner textarea {
-  width: 100%; height: 140px; font-family: 'DM Mono', monospace; font-size: 12px;
-  border: 1.5px solid #ddd; border-radius: 8px; padding: 10px; resize: none;
-  background: #f8f8f8; color: #222; margin-bottom: 1rem;
-}
-#setup-banner .btn-connect {
-  width: 100%; padding: 11px; border-radius: 8px; border: none;
-  background: #1a73e8; color: #fff; font-size: 14px; font-weight: 600;
-  cursor: pointer; font-family: 'DM Sans', sans-serif;
-}
-#setup-banner .btn-connect:hover { background: #1557b0; }
-#setup-banner .btn-demo {
-  width: 100%; padding: 9px; border-radius: 8px; border: 1.5px solid #ddd;
-  background: transparent; color: #555; font-size: 13px; font-weight: 500;
-  cursor: pointer; font-family: 'DM Sans', sans-serif; margin-top: 8px;
-}
-#setup-banner .error { font-size: 12px; color: #c0392b; margin-top: 6px; display: none; }
+/* setup banner removed — config is baked in */
 
 /* ═══════════════════════════════════════════
    BASE
@@ -292,32 +258,7 @@ textarea { resize: vertical; min-height: 72px; }
 </head>
 <body>
 
-<!-- ════════════════════════════════════════
-     FIREBASE SETUP MODAL
-     ════════════════════════════════════════ -->
-<div id="setup-banner">
-  <div class="modal">
-    <h2>🏠 Connect your database (one-time setup)</h2>
-    <p>To sync hours between you and your husband across any device, this app needs a free Firebase Firestore database. It takes about 5 minutes.</p>
-    <ol>
-      <li>Go to <a href="https://console.firebase.google.com" target="_blank">console.firebase.google.com</a> → <strong>Add project</strong></li>
-      <li>Click <strong>Firestore Database</strong> → <strong>Create database</strong> → choose <strong>Test mode</strong></li>
-      <li>Click the <strong>&lt;/&gt;</strong> web icon → Register app → copy your <code>firebaseConfig</code></li>
-      <li>Paste the entire config object below:</li>
-    </ol>
-    <textarea id="firebase-config-input" placeholder='{
-  "apiKey": "AIza...",
-  "authDomain": "your-project.firebaseapp.com",
-  "projectId": "your-project-id",
-  "storageBucket": "your-project.appspot.com",
-  "messagingSenderId": "123456789",
-  "appId": "1:123:web:abc"
-}'></textarea>
-    <div class="error" id="config-error">Invalid config — please paste the full firebaseConfig object.</div>
-    <button class="btn-connect" onclick="connectFirebase()">Connect &amp; Save</button>
-    <button class="btn-demo" onclick="useDemoMode()">Use demo mode (data won't sync)</button>
-  </div>
-</div>
+<!-- config is baked in — no setup modal needed -->
 
 <!-- ════════════════════════════════════════
      NAME PROMPT MODAL
@@ -412,7 +353,13 @@ textarea { resize: vertical; min-height: 72px; }
   <div id="tab-summary" style="display:none;">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:1.25rem;">
       <div class="section-head" style="margin:0;">Overview</div>
-      <select id="summaryProp" style="width:auto;min-width:180px;" onchange="renderSummary()"><option value="">All properties</option></select>
+      <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
+        <select id="summaryProp" style="width:auto;min-width:180px;" onchange="renderSummary()"><option value="">All properties</option></select>
+        <button class="btn" onclick="exportCSV()" style="font-size:13px;display:inline-flex;align-items:center;gap:6px;">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Export CSV
+        </button>
+      </div>
     </div>
     <div class="metric-grid" id="summary-metrics"></div>
     <div class="section-head">Hours by category</div>
@@ -497,43 +444,7 @@ function setSyncStatus(state, label) {
 let db = null;
 let entries    = [];
 let properties = [];
-let demoMode   = false;
 let unsubEntries = null, unsubProps = null;
-
-/* ──────────────────────────────────────
-   FIREBASE SETUP FLOW
-   ────────────────────────────────────── */
-// ── FIX: expose to window so onclick="connectFirebase()" works from the module
-window.connectFirebase = function() {
-  const raw   = document.getElementById('firebase-config-input').value.trim();
-  const errEl = document.getElementById('config-error');
-  errEl.style.display = 'none';
-  let config;
-  try {
-    // ── FIX: safer JSON extraction — find first { and last } rather than stripping all trailing chars
-    const start   = raw.indexOf('{');
-    const end     = raw.lastIndexOf('}');
-    if (start === -1 || end === -1) throw new Error('No JSON object found');
-    const cleaned = raw.slice(start, end + 1);
-    config = JSON.parse(cleaned);
-    if (!config.apiKey || !config.projectId) throw new Error('Missing required fields');
-  } catch(e) {
-    errEl.style.display = 'block'; return;
-  }
-  localStorage.setItem('str_firebase_config', JSON.stringify(config));
-  initApp(config);
-  document.getElementById('setup-banner').style.display = 'none';
-};
-
-window.useDemoMode = function() {
-  demoMode = true;
-  document.getElementById('setup-banner').style.display = 'none';
-  setSyncStatus('demo', 'Demo mode — data stays local');
-  entries    = JSON.parse(localStorage.getItem('str_demo_entries') || '[]');
-  properties = JSON.parse(localStorage.getItem('str_demo_props')   || '[]');
-  document.getElementById('logDate').value = new Date().toISOString().split('T')[0];
-  refreshDropdowns(); renderEntries(); renderSummary(); renderProperties();
-};
 
 function initApp(config) {
   const app = initializeApp(config);
@@ -560,17 +471,22 @@ function initApp(config) {
 }
 
 /* ──────────────────────────────────────
+   FIREBASE CONFIG — baked in, no setup needed
+   ────────────────────────────────────── */
+const FIREBASE_CONFIG = {
+  apiKey:            "AIzaSyByi-RGM2BYUdZF9Rw4Fk0w6lyJIBkdFhw",
+  authDomain:        "str-time-tracker-shared.firebaseapp.com",
+  projectId:         "str-time-tracker-shared",
+  storageBucket:     "str-time-tracker-shared.firebasestorage.app",
+  messagingSenderId: "90772648473",
+  appId:             "1:90772648473:web:11d4e98d1be452a9887088"
+};
+
+/* ──────────────────────────────────────
    INIT — runs on page load
    ────────────────────────────────────── */
 (function init() {
-  const saved = localStorage.getItem('str_firebase_config');
-  if (saved) {
-    try {
-      const config = JSON.parse(saved);
-      document.getElementById('setup-banner').style.display = 'none';
-      initApp(config);
-    } catch(e) { /* malformed saved config — show setup banner */ }
-  }
+  initApp(FIREBASE_CONFIG);
   checkUserIdentity();
 })();
 
@@ -667,16 +583,9 @@ window.logEntry = async function() {
 
   const entry = { property: prop, date, category: cat, hours: hrs, notes, user, createdAt: Date.now() };
 
-  if (demoMode) {
-    entry.id = 'demo_' + Date.now();
-    entries.unshift(entry);
-    localStorage.setItem('str_demo_entries', JSON.stringify(entries));
-    renderEntries(); renderSummary();
-  } else {
-    try {
-      await addDoc(collection(db, 'str_entries'), entry);
-    } catch(e) { toast('Error saving — check connection'); return; }
-  }
+  try {
+    await addDoc(collection(db, 'str_entries'), entry);
+  } catch(e) { toast('Error saving — check connection'); return; }
   document.getElementById('logHours').value = '';
   document.getElementById('logNotes').value = '';
   toast('Entry saved!');
@@ -687,13 +596,7 @@ window.logEntry = async function() {
    ────────────────────────────────────── */
 window.deleteEntry = async function(id) {
   if (!confirm('Delete this entry?')) return;
-  if (demoMode) {
-    entries = entries.filter(e => e.id !== id);
-    localStorage.setItem('str_demo_entries', JSON.stringify(entries));
-    renderEntries(); renderSummary();
-  } else {
-    try { await deleteDoc(doc(db, 'str_entries', id)); } catch(e) { toast('Error deleting'); }
-  }
+  try { await deleteDoc(doc(db, 'str_entries', id)); } catch(e) { toast('Error deleting'); }
 };
 
 /* ──────────────────────────────────────
@@ -820,14 +723,7 @@ window.addProperty = async function() {
   const name = document.getElementById('newPropName').value.trim();
   if (!name) { toast('Enter a property name'); return; }
   const prop = { name, nick: document.getElementById('newPropNick').value.trim(), createdAt: Date.now() };
-  if (demoMode) {
-    prop.id = 'prop_demo_' + Date.now();
-    properties.push(prop);
-    localStorage.setItem('str_demo_props', JSON.stringify(properties));
-    refreshDropdowns(); renderProperties();
-  } else {
-    try { await addDoc(collection(db, 'str_properties'), prop); } catch(e) { toast('Error saving property'); return; }
-  }
+  try { await addDoc(collection(db, 'str_properties'), prop); } catch(e) { toast('Error saving property'); return; }
   document.getElementById('newPropName').value = '';
   document.getElementById('newPropNick').value = '';
   toast('Property added!');
@@ -835,19 +731,46 @@ window.addProperty = async function() {
 
 window.deleteProp = async function(id) {
   if (!confirm('Remove this property and all its entries?')) return;
-  if (demoMode) {
-    properties = properties.filter(p => p.id !== id);
-    entries    = entries.filter(e => e.property !== id);
-    localStorage.setItem('str_demo_props',    JSON.stringify(properties));
-    localStorage.setItem('str_demo_entries',  JSON.stringify(entries));
-    refreshDropdowns(); renderProperties(); renderEntries(); renderSummary();
-  } else {
-    try {
-      await deleteDoc(doc(db, 'str_properties', id));
-      const toDelete = entries.filter(e => e.property === id);
-      await Promise.all(toDelete.map(e => deleteDoc(doc(db, 'str_entries', e.id))));
-    } catch(e) { toast('Error removing property'); }
-  }
+  try {
+    await deleteDoc(doc(db, 'str_properties', id));
+    const toDelete = entries.filter(e => e.property === id);
+    await Promise.all(toDelete.map(e => deleteDoc(doc(db, 'str_entries', e.id))));
+  } catch(e) { toast('Error removing property'); }
+};
+/* ──────────────────────────────────────
+   EXPORT CSV
+   ────────────────────────────────────── */
+window.exportCSV = function() {
+  if (!entries.length) { toast('No entries to export yet'); return; }
+
+  const headers = ['Date', 'Property', 'Category', 'Hours', 'Person', 'Notes'];
+  const rows = entries.map(e => {
+    const prop = properties.find(p => p.id === e.property);
+    const propName = prop ? prop.name : 'Unknown';
+    // Escape any commas or quotes in text fields
+    const escape = val => `"${String(val || '').replace(/"/g, '""')}"`;
+    return [
+      escape(e.date),
+      escape(propName),
+      escape(e.category),
+      e.hours,
+      escape(e.user),
+      escape(e.notes || '')
+    ].join(',');
+  });
+
+  const csv = [headers.join(','), ...rows].join('\n');
+  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const url  = URL.createObjectURL(blob);
+  const a    = document.createElement('a');
+  const date = new Date().toISOString().split('T')[0];
+  a.href     = url;
+  a.download = `str_hours_${date}.csv`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  toast(`Exported ${entries.length} entries`);
 };
 
 </script>
