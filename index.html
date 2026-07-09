@@ -6,11 +6,6 @@
 <title>STR Hours Tracker</title>
 <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
 <style>
-/* setup banner removed — config is baked in */
-
-/* ═══════════════════════════════════════════
-   BASE
-   ═══════════════════════════════════════════ */
 *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 :root {
   --ivory:    #F6F4EF;
@@ -37,241 +32,118 @@
   --radius-lg:14px;
   --shadow:   0 2px 12px rgba(0,0,0,0.08);
 }
+body { font-family:'DM Sans',sans-serif; background:var(--ivory); color:var(--ink); min-height:100vh; font-size:14px; line-height:1.5; }
+.app { max-width:760px; margin:0 auto; padding:0 1rem 4rem; }
+.topbar { position:sticky; top:0; z-index:100; background:var(--ivory); border-bottom:1px solid var(--cream); padding:1rem 0 0; margin-bottom:1.5rem; }
+.topbar-inner { display:flex; align-items:flex-start; justify-content:space-between; flex-wrap:wrap; gap:10px; padding-bottom:1rem; }
+.brand { display:flex; align-items:center; gap:10px; }
+.brand-icon { width:36px; height:36px; border-radius:9px; background:var(--forest); display:flex; align-items:center; justify-content:center; }
+.brand-icon svg { width:18px; height:18px; fill:none; stroke:#fff; stroke-width:2; stroke-linecap:round; }
+.brand-name { font-size:17px; font-weight:600; color:var(--ink); letter-spacing:-0.3px; }
+.brand-sub  { font-size:12px; color:var(--stone); margin-top:1px; }
+.user-row { display:flex; align-items:center; gap:8px; }
+.nav { display:flex; gap:4px; overflow-x:auto; padding-bottom:1px; }
+.nav::-webkit-scrollbar { display:none; }
+.nav-btn { padding:7px 14px; border-radius:8px; border:none; background:transparent; color:var(--stone); cursor:pointer; font-size:13px; font-weight:500; font-family:'DM Sans',sans-serif; white-space:nowrap; transition:all 0.15s; }
+.nav-btn:hover { background:var(--cream); color:var(--charcoal); }
+.nav-btn.active { background:var(--charcoal); color:#fff; }
+select, input[type=text], input[type=number], input[type=date], textarea { width:100%; padding:9px 12px; border-radius:var(--radius); border:1.5px solid var(--cream); background:#fff; color:var(--ink); font-size:14px; font-family:'DM Sans',sans-serif; outline:none; transition:border-color 0.15s,box-shadow 0.15s; -webkit-appearance:none; }
+select:focus, input:focus, textarea:focus { border-color:var(--sage); box-shadow:0 0 0 3px rgba(74,124,47,0.12); }
+textarea { resize:vertical; min-height:72px; }
+.field { margin-bottom:14px; }
+.field label { display:block; font-size:12px; font-weight:500; color:var(--stone); margin-bottom:5px; text-transform:uppercase; letter-spacing:0.4px; }
+.grid2 { display:grid; grid-template-columns:1fr 1fr; gap:12px; }
+@media(max-width:520px) { .grid2 { grid-template-columns:1fr; } }
+.btn { padding:9px 20px; border-radius:var(--radius); border:1.5px solid var(--cream); background:transparent; color:var(--charcoal); cursor:pointer; font-size:14px; font-weight:500; font-family:'DM Sans',sans-serif; transition:all 0.15s; display:inline-flex; align-items:center; gap:6px; }
+.btn:hover { background:var(--cream); }
+.btn-primary { background:var(--forest); color:#fff; border-color:var(--forest); }
+.btn-primary:hover { background:#1e3b0e; border-color:#1e3b0e; }
+.btn-sm { padding:5px 12px; font-size:12px; }
+.btn-ghost-danger { border-color:transparent; color:var(--rust); }
+.btn-ghost-danger:hover { background:var(--rust-bg); border-color:var(--rust-bg); }
+.card { background:#fff; border:1px solid var(--cream); border-radius:var(--radius-lg); padding:1.125rem 1.25rem; margin-bottom:10px; transition:box-shadow 0.15s; }
+.card:hover { box-shadow:var(--shadow); }
+.metric-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(140px,1fr)); gap:10px; margin-bottom:1.5rem; }
+.metric { background:#fff; border:1px solid var(--cream); border-radius:var(--radius-lg); padding:1.125rem; }
+.metric-label { font-size:11px; font-weight:500; color:var(--stone); text-transform:uppercase; letter-spacing:0.5px; margin-bottom:6px; }
+.metric-val   { font-size:26px; font-weight:300; color:var(--ink); letter-spacing:-0.5px; font-family:'DM Mono',monospace; }
+.metric-sub   { font-size:11px; color:var(--stone); margin-top:4px; }
+.badge { display:inline-flex; align-items:center; padding:3px 10px; border-radius:20px; font-size:11px; font-weight:500; letter-spacing:0.2px; }
+.chip { display:inline-block; padding:1px 8px; border-radius:10px; font-size:11px; color:var(--stone); background:var(--cream); margin-left:5px; }
+.prog-track { height:6px; background:var(--cream); border-radius:4px; overflow:hidden; margin-top:6px; }
+.prog-fill  { height:100%; border-radius:4px; transition:width 0.4s ease; }
+.section-head { font-size:15px; font-weight:600; color:var(--ink); margin-bottom:1rem; margin-top:0.25rem; }
+.divider { border:none; border-top:1px solid var(--cream); margin:1.5rem 0; }
+.empty { text-align:center; padding:3rem 1rem; color:var(--stone); font-size:14px; }
+.empty-icon { font-size:28px; margin-bottom:8px; opacity:0.5; }
+.filter-bar { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1rem; }
+.filter-bar select { flex:1; min-width:110px; width:auto; }
+.entry-main  { display:flex; align-items:flex-start; justify-content:space-between; gap:12px; }
+.entry-name  { font-size:14px; font-weight:500; color:var(--ink); }
+.entry-meta  { display:flex; align-items:center; gap:6px; flex-wrap:wrap; margin-top:5px; }
+.entry-note  { font-size:12px; color:var(--stone); margin-top:5px; font-style:italic; }
+.entry-hours { font-family:'DM Mono',monospace; font-size:20px; font-weight:500; color:var(--ink); white-space:nowrap; }
+.sync-dot { width:7px; height:7px; border-radius:50%; display:inline-block; margin-right:5px; background:var(--sage); }
+.sync-dot.syncing { background:var(--amber); animation:pulse 1s infinite; }
+.sync-dot.error   { background:var(--rust); }
+@keyframes pulse { 0%,100%{opacity:1;}50%{opacity:0.3;} }
+.toast { position:fixed; bottom:24px; right:24px; background:var(--charcoal); color:#fff; padding:10px 18px; border-radius:var(--radius); font-size:13px; opacity:0; transition:opacity 0.25s; pointer-events:none; z-index:9998; max-width:280px; }
+.toast.show { opacity:1; }
+.fade-in { animation:fadeIn 0.25s ease forwards; }
+@keyframes fadeIn { from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);} }
 
-body {
-  font-family: 'DM Sans', sans-serif;
-  background: var(--ivory);
-  color: var(--ink);
-  min-height: 100vh;
-  font-size: 14px;
-  line-height: 1.5;
-}
+/* ── NAME MODAL ── */
+#name-modal { position:fixed; inset:0; z-index:9998; background:rgba(0,0,0,0.7); display:none; align-items:center; justify-content:center; padding:1.5rem; }
+#name-modal.visible { display:flex; }
+#name-modal .inner { background:#fff; border-radius:16px; padding:2rem 2.25rem; max-width:380px; width:100%; box-shadow:0 24px 64px rgba(0,0,0,0.25); text-align:center; }
+#name-modal .icon { font-size:32px; margin-bottom:0.75rem; }
+#name-modal h2 { font-size:18px; font-weight:600; color:#111; margin-bottom:0.5rem; }
+#name-modal p  { font-size:13px; color:#666; margin-bottom:1.25rem; line-height:1.5; }
+#name-modal input { width:100%; padding:10px 14px; border-radius:8px; border:1.5px solid #ddd; font-size:15px; text-align:center; font-family:'DM Sans',sans-serif; margin-bottom:12px; outline:none; }
+#name-modal input:focus { border-color:#2D5016; }
+#name-modal .btn-save { width:100%; padding:11px; border-radius:8px; border:none; background:#2D5016; color:#fff; font-size:14px; font-weight:600; cursor:pointer; font-family:'DM Sans',sans-serif; }
+#name-modal .btn-save:hover { background:#1e3b0e; }
 
-/* ═══════════════════════════════════════════
-   LAYOUT
-   ═══════════════════════════════════════════ */
-.app { max-width: 760px; margin: 0 auto; padding: 0 1rem 4rem; }
-
-.topbar {
-  position: sticky; top: 0; z-index: 100;
-  background: var(--ivory);
-  border-bottom: 1px solid var(--cream);
-  padding: 1rem 0 0;
-  margin-bottom: 1.5rem;
-}
-.topbar-inner {
-  display: flex; align-items: flex-start; justify-content: space-between;
-  flex-wrap: wrap; gap: 10px; padding-bottom: 1rem;
-}
-.brand { display: flex; align-items: center; gap: 10px; }
-.brand-icon {
-  width: 36px; height: 36px; border-radius: 9px;
-  background: var(--forest); display: flex; align-items: center; justify-content: center;
-}
-.brand-icon svg { width: 18px; height: 18px; fill: none; stroke: #fff; stroke-width: 2; stroke-linecap: round; }
-.brand-name { font-size: 17px; font-weight: 600; color: var(--ink); letter-spacing: -0.3px; }
-.brand-sub  { font-size: 12px; color: var(--stone); margin-top: 1px; }
-
-.user-row { display: flex; align-items: center; gap: 8px; }
-.user-row label { font-size: 12px; color: var(--stone); }
-
-.nav { display: flex; gap: 4px; overflow-x: auto; padding-bottom: 1px; }
-.nav::-webkit-scrollbar { display: none; }
-.nav-btn {
-  padding: 7px 16px; border-radius: 8px; border: none; background: transparent;
-  color: var(--stone); cursor: pointer; font-size: 13px; font-weight: 500;
-  font-family: 'DM Sans', sans-serif; white-space: nowrap; transition: all 0.15s;
-}
-.nav-btn:hover { background: var(--cream); color: var(--charcoal); }
-.nav-btn.active { background: var(--charcoal); color: #fff; }
-
-/* ═══════════════════════════════════════════
-   FORM ELEMENTS
-   ═══════════════════════════════════════════ */
-select, input[type=text], input[type=number], input[type=date], textarea {
-  width: 100%; padding: 9px 12px;
-  border-radius: var(--radius); border: 1.5px solid var(--cream);
-  background: #fff; color: var(--ink); font-size: 14px;
-  font-family: 'DM Sans', sans-serif; outline: none;
-  transition: border-color 0.15s, box-shadow 0.15s;
-  -webkit-appearance: none;
-}
-select:focus, input:focus, textarea:focus {
-  border-color: var(--sage); box-shadow: 0 0 0 3px rgba(74,124,47,0.12);
-}
-textarea { resize: vertical; min-height: 72px; }
-.field { margin-bottom: 14px; }
-.field label { display: block; font-size: 12px; font-weight: 500; color: var(--stone); margin-bottom: 5px; text-transform: uppercase; letter-spacing: 0.4px; }
-
-.grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
-.grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 12px; }
-@media(max-width:520px) { .grid2,.grid3 { grid-template-columns: 1fr; } }
-
-/* ═══════════════════════════════════════════
-   BUTTONS
-   ═══════════════════════════════════════════ */
-.btn {
-  padding: 9px 20px; border-radius: var(--radius);
-  border: 1.5px solid var(--cream); background: transparent;
-  color: var(--charcoal); cursor: pointer; font-size: 14px; font-weight: 500;
-  font-family: 'DM Sans', sans-serif; transition: all 0.15s; display: inline-flex; align-items: center; gap: 6px;
-}
-.btn:hover { background: var(--cream); }
-.btn-primary {
-  background: var(--forest); color: #fff; border-color: var(--forest);
-}
-.btn-primary:hover { background: #1e3b0e; border-color: #1e3b0e; }
-.btn-sm { padding: 5px 12px; font-size: 12px; }
-.btn-ghost-danger { border-color: transparent; color: var(--rust); }
-.btn-ghost-danger:hover { background: var(--rust-bg); border-color: var(--rust-bg); }
-
-/* ═══════════════════════════════════════════
-   CARDS & METRICS
-   ═══════════════════════════════════════════ */
-.card {
-  background: #fff; border: 1px solid var(--cream);
-  border-radius: var(--radius-lg); padding: 1.125rem 1.25rem;
-  margin-bottom: 10px; transition: box-shadow 0.15s;
-}
-.card:hover { box-shadow: var(--shadow); }
-
-.metric-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr)); gap: 10px; margin-bottom: 1.5rem; }
-.metric {
-  background: #fff; border: 1px solid var(--cream);
-  border-radius: var(--radius-lg); padding: 1.125rem;
-}
-.metric-label { font-size: 11px; font-weight: 500; color: var(--stone); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 6px; }
-.metric-val   { font-size: 26px; font-weight: 300; color: var(--ink); letter-spacing: -0.5px; font-family: 'DM Mono', monospace; }
-.metric-sub   { font-size: 11px; color: var(--stone); margin-top: 4px; }
-
-/* ═══════════════════════════════════════════
-   BADGES & CHIPS
-   ═══════════════════════════════════════════ */
-.badge {
-  display: inline-flex; align-items: center;
-  padding: 3px 10px; border-radius: 20px;
-  font-size: 11px; font-weight: 500; letter-spacing: 0.2px;
-}
-.chip {
-  display: inline-block; padding: 1px 8px;
-  border-radius: 10px; font-size: 11px; color: var(--stone);
-  background: var(--cream); margin-left: 5px;
-}
-.status-good  { background: var(--leaf-bg);  color: var(--forest); }
-.status-warn  { background: var(--amber-bg); color: var(--amber); }
-.status-bad   { background: var(--rust-bg);  color: var(--rust); }
-
-/* ═══════════════════════════════════════════
-   PROGRESS BAR
-   ═══════════════════════════════════════════ */
-.prog-track { height: 6px; background: var(--cream); border-radius: 4px; overflow: hidden; margin-top: 6px; }
-.prog-fill  { height: 100%; border-radius: 4px; transition: width 0.4s ease; }
-.prog-green  { background: var(--sage); }
-.prog-amber  { background: var(--amber); }
-.prog-red    { background: var(--rust); }
-
-/* ═══════════════════════════════════════════
-   SECTION
-   ═══════════════════════════════════════════ */
-.section-head { font-size: 15px; font-weight: 600; color: var(--ink); margin-bottom: 1rem; margin-top: 0.25rem; }
-.divider { border: none; border-top: 1px solid var(--cream); margin: 1.5rem 0; }
-.empty { text-align: center; padding: 3rem 1rem; color: var(--stone); font-size: 14px; }
-.empty-icon { font-size: 28px; margin-bottom: 8px; opacity: 0.5; }
-
-/* ═══════════════════════════════════════════
-   FILTER BAR
-   ═══════════════════════════════════════════ */
-.filter-bar { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 1rem; }
-.filter-bar select { flex: 1; min-width: 110px; width: auto; }
-
-/* ═══════════════════════════════════════════
-   ENTRY CARD
-   ═══════════════════════════════════════════ */
-.entry-main  { display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; }
-.entry-name  { font-size: 14px; font-weight: 500; color: var(--ink); }
-.entry-meta  { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; margin-top: 5px; }
-.entry-note  { font-size: 12px; color: var(--stone); margin-top: 5px; font-style: italic; }
-.entry-hours { font-family: 'DM Mono', monospace; font-size: 20px; font-weight: 500; color: var(--ink); white-space: nowrap; }
-
-/* ═══════════════════════════════════════════
-   SYNC INDICATOR
-   ═══════════════════════════════════════════ */
-.sync-dot {
-  width: 7px; height: 7px; border-radius: 50%; display: inline-block;
-  margin-right: 5px; background: var(--sage);
-}
-.sync-dot.syncing { background: var(--amber); animation: pulse 1s infinite; }
-.sync-dot.error   { background: var(--rust); }
-@keyframes pulse { 0%,100% { opacity:1; } 50% { opacity:0.3; } }
-.sync-label { font-size: 11px; color: var(--stone); display: flex; align-items: center; }
-
-/* ═══════════════════════════════════════════
-   TOAST
-   ═══════════════════════════════════════════ */
-.toast {
-  position: fixed; bottom: 24px; right: 24px;
-  background: var(--charcoal); color: #fff;
-  padding: 10px 18px; border-radius: var(--radius);
-  font-size: 13px; opacity: 0; transition: opacity 0.25s;
-  pointer-events: none; z-index: 9998; max-width: 280px;
-}
-.toast.show { opacity: 1; }
-
-/* ═══════════════════════════════════════════
-   ANIMATIONS
-   ═══════════════════════════════════════════ */
-.fade-in { animation: fadeIn 0.25s ease forwards; }
-@keyframes fadeIn { from { opacity:0; transform:translateY(6px); } to { opacity:1; transform:translateY(0); } }
-
-/* ═══════════════════════════════════════════
-   NAME PROMPT MODAL
-   ═══════════════════════════════════════════ */
-#name-modal {
-  position: fixed; inset: 0; z-index: 9998;
-  background: rgba(0,0,0,0.7);
-  display: none; align-items: center; justify-content: center;
-  padding: 1.5rem;
-}
-#name-modal.visible { display: flex; }
-#name-modal .inner {
-  background: #fff; border-radius: 16px;
-  padding: 2rem 2.25rem; max-width: 380px; width: 100%;
-  box-shadow: 0 24px 64px rgba(0,0,0,0.25);
-  text-align: center;
-}
-#name-modal .icon { font-size: 32px; margin-bottom: 0.75rem; }
-#name-modal h2 { font-size: 18px; font-weight: 600; color: #111; margin-bottom: 0.5rem; }
-#name-modal p  { font-size: 13px; color: #666; margin-bottom: 1.25rem; line-height: 1.5; }
-#name-modal input {
-  width: 100%; padding: 10px 14px; border-radius: 8px;
-  border: 1.5px solid #ddd; font-size: 15px; text-align: center;
-  font-family: 'DM Sans', sans-serif; margin-bottom: 12px; outline: none;
-}
-#name-modal input:focus { border-color: #2D5016; }
-#name-modal .btn-save {
-  width: 100%; padding: 11px; border-radius: 8px; border: none;
-  background: #2D5016; color: #fff; font-size: 14px; font-weight: 600;
-  cursor: pointer; font-family: 'DM Sans', sans-serif;
-}
-#name-modal .btn-save:hover { background: #1e3b0e; }
+/* ── DOCUMENTS TAB ── */
+.drop-zone { border:2px dashed var(--sand); border-radius:var(--radius-lg); padding:2rem 1rem; text-align:center; cursor:pointer; transition:all 0.2s; background:#fff; margin-bottom:1rem; }
+.drop-zone.drag-over { border-color:var(--sage); background:var(--leaf-bg); }
+.drop-zone-icon { font-size:28px; margin-bottom:8px; }
+.drop-zone-text { font-size:14px; color:var(--stone); line-height:1.6; }
+.drop-zone-text strong { color:var(--ink); }
+.drop-zone-hint { font-size:11px; color:var(--sand); margin-top:4px; }
+.upload-btn-wrap { margin-top:10px; }
+#doc-file-input { display:none; }
+.doc-grid { display:grid; grid-template-columns:repeat(auto-fill,minmax(140px,1fr)); gap:12px; margin-top:1rem; }
+@media(max-width:400px) { .doc-grid { grid-template-columns:repeat(2,1fr); } }
+.doc-item { background:#fff; border:1px solid var(--cream); border-radius:var(--radius); overflow:hidden; position:relative; transition:box-shadow 0.15s; }
+.doc-item:hover { box-shadow:var(--shadow); }
+.doc-thumb { width:100%; aspect-ratio:4/3; object-fit:cover; display:block; }
+.doc-pdf-thumb { width:100%; aspect-ratio:4/3; background:var(--rust-bg); display:flex; align-items:center; justify-content:center; font-size:32px; }
+.doc-info { padding:8px 10px; }
+.doc-name { font-size:11px; font-weight:500; color:var(--ink); white-space:nowrap; overflow:hidden; text-overflow:ellipsis; }
+.doc-meta { font-size:10px; color:var(--stone); margin-top:2px; }
+.doc-actions { display:flex; gap:4px; margin-top:6px; }
+.doc-del { font-size:11px; color:var(--rust); background:none; border:none; cursor:pointer; padding:0; font-family:'DM Sans',sans-serif; }
+.doc-open { font-size:11px; color:var(--blue); background:none; border:none; cursor:pointer; padding:0; font-family:'DM Sans',sans-serif; text-decoration:underline; }
+.upload-progress { height:4px; background:var(--cream); border-radius:2px; overflow:hidden; margin-top:6px; display:none; }
+.upload-progress-fill { height:100%; background:var(--sage); border-radius:2px; transition:width 0.3s; }
+.doc-filter { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1rem; align-items:center; }
+.doc-filter select { flex:1; min-width:140px; width:auto; }
+.doc-count { font-size:12px; color:var(--stone); white-space:nowrap; }
 </style>
 </head>
 <body>
 
-<!-- config is baked in — no setup modal needed -->
-
-<!-- ════════════════════════════════════════
-     NAME PROMPT MODAL
-     ════════════════════════════════════════ -->
 <div id="name-modal">
   <div class="inner">
     <div class="icon">👋</div>
     <h2 id="name-modal-title">Welcome! What's your name?</h2>
-    <p id="name-modal-desc">This is saved on your device only — it's how your entries get tagged so you and your partner can track hours separately.</p>
+    <p id="name-modal-desc">Saved on this device only — tags your entries so you and your partner track hours separately.</p>
     <input type="text" id="name-input" placeholder="Enter your first name" maxlength="30" onkeydown="if(event.key==='Enter')saveName()">
     <button class="btn-save" onclick="saveName()">Save &amp; Continue</button>
   </div>
 </div>
+
 <div class="app">
   <div class="topbar">
     <div class="topbar-inner">
@@ -294,6 +166,7 @@ textarea { resize: vertical; min-height: 72px; }
       <button class="nav-btn active" onclick="showTab('log')">Log Hours</button>
       <button class="nav-btn" onclick="showTab('entries')">All Entries</button>
       <button class="nav-btn" onclick="showTab('summary')">Summary</button>
+      <button class="nav-btn" onclick="showTab('documents')">Documents</button>
       <button class="nav-btn" onclick="showTab('properties')">Properties</button>
     </nav>
   </div>
@@ -342,9 +215,7 @@ textarea { resize: vertical; min-height: 72px; }
         <option>Setup &amp; Staging</option><option>Cleaning Oversight</option>
         <option>Research &amp; Planning</option><option>Other</option>
       </select>
-      <select id="filterUser" onchange="renderEntries()">
-        <option value="">All people</option>
-      </select>
+      <select id="filterUser" onchange="renderEntries()"><option value="">All people</option></select>
     </div>
     <div id="entries-list"></div>
   </div>
@@ -355,7 +226,7 @@ textarea { resize: vertical; min-height: 72px; }
       <div class="section-head" style="margin:0;">Overview</div>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
         <select id="summaryProp" style="width:auto;min-width:180px;" onchange="renderSummary()"><option value="">All properties</option></select>
-        <button class="btn" onclick="exportCSV()" style="font-size:13px;display:inline-flex;align-items:center;gap:6px;">
+        <button class="btn" onclick="exportCSV()" style="font-size:13px;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Export CSV
         </button>
@@ -366,6 +237,45 @@ textarea { resize: vertical; min-height: 72px; }
     <div id="summary-cats" style="margin-bottom:1.5rem;"></div>
     <div class="section-head">Hours by person</div>
     <div id="summary-people"></div>
+  </div>
+
+  <!-- DOCUMENTS -->
+  <div id="tab-documents" style="display:none;">
+    <div class="section-head">Supporting Documents</div>
+
+    <!-- Upload area -->
+    <div class="field"><label>Property</label>
+      <select id="docProperty"></select>
+    </div>
+
+    <div class="drop-zone" id="drop-zone" onclick="document.getElementById('doc-file-input').click()" ondragover="handleDragOver(event)" ondragleave="handleDragLeave(event)" ondrop="handleDrop(event)">
+      <div class="drop-zone-icon">📎</div>
+      <div class="drop-zone-text">
+        <strong>Tap to upload</strong> or drag &amp; drop<br>
+        <span style="font-size:12px;">JPG, PNG, PDF · Images up to 10MB · PDFs up to 4MB</span>
+      </div>
+    </div>
+    <input type="file" id="doc-file-input" accept=".jpg,.jpeg,.png,.pdf" multiple onchange="handleFileSelect(event)">
+
+    <div class="upload-progress" id="upload-progress">
+      <div class="upload-progress-fill" id="upload-progress-fill" style="width:0%"></div>
+    </div>
+    <div id="upload-status" style="font-size:12px;color:var(--stone);margin-bottom:1rem;min-height:16px;"></div>
+
+    <div class="divider"></div>
+
+    <!-- Filter -->
+    <div class="doc-filter">
+      <select id="docFilterProp" onchange="renderDocs()"><option value="">All properties</option></select>
+      <select id="docFilterType" onchange="renderDocs()">
+        <option value="">All types</option>
+        <option value="image">Images</option>
+        <option value="pdf">PDFs</option>
+      </select>
+      <span class="doc-count" id="doc-count"></span>
+    </div>
+
+    <div class="doc-grid" id="docs-grid"></div>
   </div>
 
   <!-- PROPERTIES -->
@@ -384,19 +294,18 @@ textarea { resize: vertical; min-height: 72px; }
 
 <div class="toast" id="toast"></div>
 
-<!-- ════════════════════════════════════════
-     FIREBASE SDK
-     ════════════════════════════════════════ -->
 <script type="module">
-// ── FIX: removed unused setDoc/getDoc imports (caused strict-module warnings)
 import { initializeApp }   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getFirestore, collection, addDoc, deleteDoc,
          doc, onSnapshot, query, orderBy }
                            from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-/* ──────────────────────────────────────
-   CATEGORY COLORS
-   ────────────────────────────────────── */
+/* ── CLOUDINARY CONFIG ── */
+const CLOUD_NAME    = 'odv2dxer';
+const UPLOAD_PRESET = 'str_tracker';
+const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
+
+/* ── CATEGORY COLORS ── */
 const CAT = {
   'Administrative':          { bg:'#EBF3FA', fg:'#1A5276' },
   'Design & Decor':          { bg:'#F0ECFB', fg:'#5B3FA6' },
@@ -410,69 +319,34 @@ const CAT = {
   'Other':                   { bg:'#F2F1EE', fg:'#6B6B67' },
 };
 
-// ── FIX: expose helper functions to window so inline onclick="" handlers can reach them
-// (ES modules are sandboxed — functions not on window are invisible to inline HTML handlers)
 function catBadge(cat) {
   const c = CAT[cat] || CAT['Other'];
   return `<span class="badge" style="background:${c.bg};color:${c.fg};">${cat}</span>`;
 }
-
 function fmtDate(d) {
   if (!d) return '';
   const [y,m,day] = d.split('-');
-  return new Date(y, m-1, day).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
+  return new Date(y,m-1,day).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});
 }
-
 function toast(msg) {
-  const t = document.getElementById('toast');
-  if (!t) return;
+  const t = document.getElementById('toast'); if (!t) return;
   t.textContent = msg; t.classList.add('show');
   setTimeout(()=>t.classList.remove('show'), 2500);
 }
-
-// ── FIX: removed dead `cls` variable in setSyncStatus
 function setSyncStatus(state, label) {
-  const el = document.getElementById('sync-status');
-  if (!el) return;
-  const dotClass = state === 'ok' ? '' : state === 'error' ? 'error' : 'syncing';
+  const el = document.getElementById('sync-status'); if (!el) return;
+  const dotClass = state==='ok' ? '' : state==='error' ? 'error' : 'syncing';
   el.innerHTML = `<span class="sync-dot ${dotClass}"></span>${label}`;
 }
 
-/* ──────────────────────────────────────
-   STATE
-   ────────────────────────────────────── */
+/* ── STATE ── */
 let db = null;
 let entries    = [];
 let properties = [];
-let unsubEntries = null, unsubProps = null;
+let documents  = [];
+let unsubEntries = null, unsubProps = null, unsubDocs = null;
 
-function initApp(config) {
-  const app = initializeApp(config);
-  db = getFirestore(app);
-  document.getElementById('logDate').value = new Date().toISOString().split('T')[0];
-  setSyncStatus('syncing', 'Connecting…');
-
-  // Real-time listener: entries
-  const entQ = query(collection(db, 'str_entries'), orderBy('createdAt', 'desc'));
-  unsubEntries = onSnapshot(entQ, snap => {
-    entries = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    renderEntries(); renderSummary();
-    setSyncStatus('ok', 'Synced · shared with household');
-  }, () => {
-    setSyncStatus('error', 'Sync error — check Firebase rules');
-  });
-
-  // Real-time listener: properties
-  const propQ = query(collection(db, 'str_properties'), orderBy('createdAt', 'asc'));
-  unsubProps = onSnapshot(propQ, snap => {
-    properties = snap.docs.map(d => ({ id: d.id, ...d.data() }));
-    refreshDropdowns(); renderProperties();
-  });
-}
-
-/* ──────────────────────────────────────
-   FIREBASE CONFIG — baked in, no setup needed
-   ────────────────────────────────────── */
+/* ── FIREBASE INIT ── */
 const FIREBASE_CONFIG = {
   apiKey:            "AIzaSyByi-RGM2BYUdZF9Rw4Fk0w6lyJIBkdFhw",
   authDomain:        "str-time-tracker-shared.firebaseapp.com",
@@ -482,37 +356,51 @@ const FIREBASE_CONFIG = {
   appId:             "1:90772648473:web:11d4e98d1be452a9887088"
 };
 
-/* ──────────────────────────────────────
-   INIT — runs on page load
-   ────────────────────────────────────── */
+function initApp(config) {
+  const app = initializeApp(config);
+  db = getFirestore(app);
+  document.getElementById('logDate').value = new Date().toISOString().split('T')[0];
+  setSyncStatus('syncing', 'Connecting…');
+
+  const entQ = query(collection(db,'str_entries'), orderBy('createdAt','desc'));
+  unsubEntries = onSnapshot(entQ, snap => {
+    entries = snap.docs.map(d => ({id:d.id,...d.data()}));
+    renderEntries(); renderSummary();
+    setSyncStatus('ok','Synced · shared with household');
+  }, () => setSyncStatus('error','Sync error — check Firebase rules'));
+
+  const propQ = query(collection(db,'str_properties'), orderBy('createdAt','asc'));
+  unsubProps = onSnapshot(propQ, snap => {
+    properties = snap.docs.map(d => ({id:d.id,...d.data()}));
+    refreshDropdowns(); renderProperties();
+  });
+
+  const docQ = query(collection(db,'str_documents'), orderBy('createdAt','desc'));
+  unsubDocs = onSnapshot(docQ, snap => {
+    documents = snap.docs.map(d => ({id:d.id,...d.data()}));
+    renderDocs();
+  });
+}
+
 (function init() {
   initApp(FIREBASE_CONFIG);
   checkUserIdentity();
 })();
 
-/* ──────────────────────────────────────
-   USER IDENTITY — first-visit name prompt
-   ────────────────────────────────────── */
-function getCurrentUser() {
-  return localStorage.getItem('str_user_name') || null;
-}
-
+/* ── USER IDENTITY ── */
+function getCurrentUser() { return localStorage.getItem('str_user_name') || null; }
 function setCurrentUser(name) {
   localStorage.setItem('str_user_name', name);
   const el = document.getElementById('user-display');
   if (el) el.textContent = name;
 }
-
 function checkUserIdentity() {
   const name = getCurrentUser();
   if (!name) {
     document.getElementById('name-modal').classList.add('visible');
-    setTimeout(() => document.getElementById('name-input')?.focus(), 100);
-  } else {
-    setCurrentUser(name);
-  }
+    setTimeout(()=>document.getElementById('name-input')?.focus(), 100);
+  } else { setCurrentUser(name); }
 }
-
 window.saveName = function() {
   const val = document.getElementById('name-input').value.trim();
   if (!val) { document.getElementById('name-input').focus(); return; }
@@ -520,44 +408,37 @@ window.saveName = function() {
   document.getElementById('name-modal').classList.remove('visible');
   toast(`Welcome, ${val}!`);
 };
-
 window.promptSwitchUser = function() {
   const current = getCurrentUser() || '';
   document.getElementById('name-modal-title').textContent = 'Switch user';
   document.getElementById('name-modal-desc').textContent = 'Enter the name to log in as on this device.';
   document.getElementById('name-input').value = current;
   document.getElementById('name-modal').classList.add('visible');
-  setTimeout(() => { const i = document.getElementById('name-input'); i?.focus(); i?.select(); }, 100);
+  setTimeout(()=>{ const i=document.getElementById('name-input'); i?.focus(); i?.select(); }, 100);
 };
-
-// Legacy: keep saveUserPref as no-op in case anything calls it
 window.saveUserPref = function() {};
 
-/* ──────────────────────────────────────
-   TABS
-   ────────────────────────────────────── */
+/* ── TABS ── */
 window.showTab = function(name) {
-  ['log','entries','summary','properties'].forEach(t => {
-    const el = document.getElementById('tab-' + t);
-    el.style.display = t === name ? '' : 'none';
-    el.classList.toggle('fade-in', t === name);
+  ['log','entries','summary','documents','properties'].forEach(t => {
+    document.getElementById('tab-'+t).style.display = t===name ? '' : 'none';
+    document.getElementById('tab-'+t).classList.toggle('fade-in', t===name);
   });
-  document.querySelectorAll('.nav-btn').forEach((btn, i) => {
-    btn.classList.toggle('active', ['log','entries','summary','properties'][i] === name);
+  document.querySelectorAll('.nav-btn').forEach((btn,i) => {
+    btn.classList.toggle('active', ['log','entries','summary','documents','properties'][i]===name);
   });
-  if (name === 'entries')    renderEntries();
-  if (name === 'summary')    renderSummary();
-  if (name === 'properties') renderProperties();
+  if (name==='entries')    renderEntries();
+  if (name==='summary')    renderSummary();
+  if (name==='documents')  renderDocs();
+  if (name==='properties') renderProperties();
 };
 
-/* ──────────────────────────────────────
-   DROPDOWNS
-   ────────────────────────────────────── */
+/* ── DROPDOWNS ── */
 function refreshDropdowns() {
-  ['logProperty','filterProp','summaryProp'].forEach(id => {
+  ['logProperty','filterProp','summaryProp','docProperty','docFilterProp'].forEach(id => {
     const el = document.getElementById(id); if (!el) return;
     const val = el.value;
-    el.innerHTML = id !== 'logProperty' ? '<option value="">All properties</option>' : '';
+    el.innerHTML = id!=='logProperty' ? '<option value="">All properties</option>' : '';
     properties.forEach(p => {
       const o = document.createElement('option');
       o.value = p.id; o.textContent = p.name;
@@ -567,9 +448,7 @@ function refreshDropdowns() {
   });
 }
 
-/* ──────────────────────────────────────
-   LOG ENTRY
-   ────────────────────────────────────── */
+/* ── LOG ENTRY ── */
 window.logEntry = async function() {
   const prop  = document.getElementById('logProperty').value;
   const date  = document.getElementById('logDate').value;
@@ -580,113 +459,85 @@ window.logEntry = async function() {
   if (!prop)          { toast('Please select a property'); return; }
   if (!date)          { toast('Please select a date'); return; }
   if (!hrs || hrs<=0) { toast('Please enter valid hours'); return; }
-
-  const entry = { property: prop, date, category: cat, hours: hrs, notes, user, createdAt: Date.now() };
-
-  try {
-    await addDoc(collection(db, 'str_entries'), entry);
-  } catch(e) { toast('Error saving — check connection'); return; }
+  const entry = { property:prop, date, category:cat, hours:hrs, notes, user, createdAt:Date.now() };
+  try { await addDoc(collection(db,'str_entries'), entry); }
+  catch(e) { toast('Error saving — check connection'); return; }
   document.getElementById('logHours').value = '';
   document.getElementById('logNotes').value = '';
   toast('Entry saved!');
 };
 
-/* ──────────────────────────────────────
-   DELETE ENTRY
-   ────────────────────────────────────── */
+/* ── DELETE ENTRY ── */
 window.deleteEntry = async function(id) {
   if (!confirm('Delete this entry?')) return;
-  try { await deleteDoc(doc(db, 'str_entries', id)); } catch(e) { toast('Error deleting'); }
+  try { await deleteDoc(doc(db,'str_entries',id)); } catch(e) { toast('Error deleting'); }
 };
 
-/* ──────────────────────────────────────
-   RENDER ENTRIES
-   ── FIX: null guard on container element
-   ────────────────────────────────────── */
+/* ── RENDER ENTRIES ── */
 function renderEntries() {
   const el = document.getElementById('entries-list'); if (!el) return;
-
-  // Refresh the "All people" dropdown with real names from entries
   const fuEl = document.getElementById('filterUser');
   if (fuEl) {
     const prevVal = fuEl.value;
-    const names = [...new Set(entries.map(e => e.user).filter(Boolean))].sort();
+    const names = [...new Set(entries.map(e=>e.user).filter(Boolean))].sort();
     fuEl.innerHTML = '<option value="">All people</option>' +
-      names.map(n => `<option value="${n}"${n===prevVal?' selected':''}>${n}</option>`).join('');
+      names.map(n=>`<option value="${n}"${n===prevVal?' selected':''}>${n}</option>`).join('');
   }
-
   const fp = document.getElementById('filterProp')?.value || '';
   const fc = document.getElementById('filterCat')?.value  || '';
   const fu = fuEl?.value || '';
-  const list = entries.filter(e =>
-    (!fp || e.property === fp) && (!fc || e.category === fc) && (!fu || e.user === fu)
-  );
-  if (!list.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">📋</div>No entries yet. Start logging your hours!</div>';
-    return;
-  }
+  const list = entries.filter(e=>(!fp||e.property===fp)&&(!fc||e.category===fc)&&(!fu||e.user===fu));
+  if (!list.length) { el.innerHTML='<div class="empty"><div class="empty-icon">📋</div>No entries yet. Start logging your hours!</div>'; return; }
   el.innerHTML = list.map(e => {
-    const prop = properties.find(p => p.id === e.property);
-    return `<div class="card">
-      <div class="entry-main">
-        <div style="flex:1;min-width:0;">
-          <div class="entry-name">${prop ? prop.name : 'Unknown property'}<span class="chip">${e.user}</span></div>
-          <div class="entry-meta">${fmtDate(e.date)} · ${catBadge(e.category)}</div>
-          ${e.notes ? `<div class="entry-note">${e.notes}</div>` : ''}
-        </div>
-        <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
-          <span class="entry-hours">${e.hours}h</span>
-          <button class="btn btn-sm btn-ghost-danger" onclick="deleteEntry('${e.id}')">Delete</button>
-        </div>
+    const prop = properties.find(p=>p.id===e.property);
+    return `<div class="card"><div class="entry-main">
+      <div style="flex:1;min-width:0;">
+        <div class="entry-name">${prop?prop.name:'Unknown property'}<span class="chip">${e.user}</span></div>
+        <div class="entry-meta">${fmtDate(e.date)} · ${catBadge(e.category)}</div>
+        ${e.notes?`<div class="entry-note">${e.notes}</div>`:''}
       </div>
-    </div>`;
+      <div style="display:flex;align-items:center;gap:10px;flex-shrink:0;">
+        <span class="entry-hours">${e.hours}h</span>
+        <button class="btn btn-sm btn-ghost-danger" onclick="deleteEntry('${e.id}')">Delete</button>
+      </div>
+    </div></div>`;
   }).join('');
 }
 window.renderEntries = renderEntries;
 
-/* ──────────────────────────────────────
-   RENDER SUMMARY
-   ── FIX: null guards on all DOM targets (summary tab may be hidden/unmounted)
-   ────────────────────────────────────── */
+/* ── RENDER SUMMARY ── */
 function renderSummary() {
   const metricsEl = document.getElementById('summary-metrics'); if (!metricsEl) return;
   const sc = document.getElementById('summary-cats');
   const sp = document.getElementById('summary-people');
-
   const fp   = document.getElementById('summaryProp')?.value || '';
-  const list = fp ? entries.filter(e => e.property === fp) : entries;
-  const total = list.reduce((s, e) => s + e.hours, 0);
-  const byUser = {}, byCat = {};
-  list.forEach(e => {
-    byUser[e.user]     = (byUser[e.user]     || 0) + e.hours;
-    byCat[e.category]  = (byCat[e.category]  || 0) + e.hours;
-  });
-
+  const list = fp ? entries.filter(e=>e.property===fp) : entries;
+  const total = list.reduce((s,e)=>s+e.hours,0);
+  const byUser={}, byCat={};
+  list.forEach(e=>{ byUser[e.user]=(byUser[e.user]||0)+e.hours; byCat[e.category]=(byCat[e.category]||0)+e.hours; });
   metricsEl.innerHTML = `
     <div class="metric"><div class="metric-label">Total hours</div><div class="metric-val">${total.toFixed(1)}</div><div class="metric-sub">all time</div></div>
     <div class="metric"><div class="metric-label">Entries</div><div class="metric-val">${list.length}</div><div class="metric-sub">logged</div></div>
-    <div class="metric"><div class="metric-label">Avg / entry</div><div class="metric-val">${list.length ? (total/list.length).toFixed(1) : '—'}</div><div class="metric-sub">hours</div></div>
-    <div class="metric"><div class="metric-label">Properties</div><div class="metric-val">${fp ? '1' : properties.length}</div><div class="metric-sub">tracked</div></div>`;
-
+    <div class="metric"><div class="metric-label">Avg / entry</div><div class="metric-val">${list.length?(total/list.length).toFixed(1):'—'}</div><div class="metric-sub">hours</div></div>
+    <div class="metric"><div class="metric-label">Properties</div><div class="metric-val">${fp?'1':properties.length}</div><div class="metric-sub">tracked</div></div>`;
   if (sc) {
-    const sorted = Object.entries(byCat).sort((a,b) => b[1]-a[1]);
-    sc.innerHTML = sorted.length ? sorted.map(([cat, hrs]) => {
-      const pct = total ? Math.round(hrs/total*100) : 0;
-      const c   = CAT[cat] || CAT['Other'];
+    const sorted = Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
+    sc.innerHTML = sorted.length ? sorted.map(([cat,hrs])=>{
+      const pct=total?Math.round(hrs/total*100):0;
+      const c=CAT[cat]||CAT['Other'];
       return `<div style="margin-bottom:12px;">
         <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">
           ${catBadge(cat)}
-          <span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--stone);">${hrs.toFixed(1)}h &nbsp;<span style="color:var(--sand);">${pct}%</span></span>
+          <span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--stone);">${hrs.toFixed(1)}h <span style="color:var(--sand);">${pct}%</span></span>
         </div>
         <div class="prog-track"><div class="prog-fill" style="width:${pct}%;background:${c.fg};opacity:0.75;"></div></div>
       </div>`;
     }).join('') : '<div class="empty">No data yet.</div>';
   }
-
   if (sp) {
-    const sortedP = Object.entries(byUser).sort((a,b) => b[1]-a[1]);
-    sp.innerHTML = sortedP.length ? sortedP.map(([user, hrs]) => {
-      const pct = total ? Math.round(hrs/total*100) : 0;
+    const sortedP = Object.entries(byUser).sort((a,b)=>b[1]-a[1]);
+    sp.innerHTML = sortedP.length ? sortedP.map(([user,hrs])=>{
+      const pct=total?Math.round(hrs/total*100):0;
       return `<div class="card" style="display:flex;align-items:center;justify-content:space-between;">
         <div style="font-size:14px;font-weight:500;">${user}</div>
         <div style="font-family:'DM Mono',monospace;font-size:17px;">${hrs.toFixed(1)}<span style="font-size:12px;color:var(--stone);margin-left:4px;">(${pct}%)</span></div>
@@ -696,18 +547,13 @@ function renderSummary() {
 }
 window.renderSummary = renderSummary;
 
-/* ──────────────────────────────────────
-   PROPERTIES
-   ────────────────────────────────────── */
+/* ── PROPERTIES ── */
 function renderProperties() {
   const el = document.getElementById('props-list'); if (!el) return;
-  if (!properties.length) {
-    el.innerHTML = '<div class="empty"><div class="empty-icon">🏠</div>No properties yet — add one below.</div>';
-    return;
-  }
-  el.innerHTML = properties.map(p => {
-    const hrs = entries.filter(e => e.property === p.id).reduce((s,e) => s+e.hours, 0);
-    const cnt = entries.filter(e => e.property === p.id).length;
+  if (!properties.length) { el.innerHTML='<div class="empty"><div class="empty-icon">🏠</div>No properties yet — add one below.</div>'; return; }
+  el.innerHTML = properties.map(p=>{
+    const hrs=entries.filter(e=>e.property===p.id).reduce((s,e)=>s+e.hours,0);
+    const cnt=entries.filter(e=>e.property===p.id).length;
     return `<div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:12px;">
       <div style="flex:1;">
         <div style="font-size:14px;font-weight:500;">${p.name}</div>
@@ -722,8 +568,8 @@ window.renderProperties = renderProperties;
 window.addProperty = async function() {
   const name = document.getElementById('newPropName').value.trim();
   if (!name) { toast('Enter a property name'); return; }
-  const prop = { name, nick: document.getElementById('newPropNick').value.trim(), createdAt: Date.now() };
-  try { await addDoc(collection(db, 'str_properties'), prop); } catch(e) { toast('Error saving property'); return; }
+  const prop = { name, nick:document.getElementById('newPropNick').value.trim(), createdAt:Date.now() };
+  try { await addDoc(collection(db,'str_properties'), prop); } catch(e) { toast('Error saving property'); return; }
   document.getElementById('newPropName').value = '';
   document.getElementById('newPropNick').value = '';
   toast('Property added!');
@@ -732,45 +578,158 @@ window.addProperty = async function() {
 window.deleteProp = async function(id) {
   if (!confirm('Remove this property and all its entries?')) return;
   try {
-    await deleteDoc(doc(db, 'str_properties', id));
-    const toDelete = entries.filter(e => e.property === id);
-    await Promise.all(toDelete.map(e => deleteDoc(doc(db, 'str_entries', e.id))));
+    await deleteDoc(doc(db,'str_properties',id));
+    const toDelete = entries.filter(e=>e.property===id);
+    await Promise.all(toDelete.map(e=>deleteDoc(doc(db,'str_entries',e.id))));
   } catch(e) { toast('Error removing property'); }
 };
-/* ──────────────────────────────────────
-   EXPORT CSV
-   ────────────────────────────────────── */
+
+/* ── EXPORT CSV ── */
 window.exportCSV = function() {
   if (!entries.length) { toast('No entries to export yet'); return; }
-
-  const headers = ['Date', 'Property', 'Category', 'Hours', 'Person', 'Notes'];
+  const headers = ['Date','Property','Category','Hours','Person','Notes'];
   const rows = entries.map(e => {
-    const prop = properties.find(p => p.id === e.property);
-    const propName = prop ? prop.name : 'Unknown';
-    // Escape any commas or quotes in text fields
-    const escape = val => `"${String(val || '').replace(/"/g, '""')}"`;
-    return [
-      escape(e.date),
-      escape(propName),
-      escape(e.category),
-      e.hours,
-      escape(e.user),
-      escape(e.notes || '')
-    ].join(',');
+    const prop = properties.find(p=>p.id===e.property);
+    const escape = val => `"${String(val||'').replace(/"/g,'""')}"`;
+    return [escape(e.date),escape(prop?prop.name:'Unknown'),escape(e.category),e.hours,escape(e.user),escape(e.notes||'')].join(',');
   });
-
-  const csv = [headers.join(','), ...rows].join('\n');
-  const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+  const csv = [headers.join(','),...rows].join('\n');
+  const blob = new Blob([csv],{type:'text/csv;charset=utf-8;'});
   const url  = URL.createObjectURL(blob);
   const a    = document.createElement('a');
-  const date = new Date().toISOString().split('T')[0];
-  a.href     = url;
-  a.download = `str_hours_${date}.csv`;
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
+  a.href=url; a.download=`str_hours_${new Date().toISOString().split('T')[0]}.csv`;
+  document.body.appendChild(a); a.click(); document.body.removeChild(a);
   URL.revokeObjectURL(url);
   toast(`Exported ${entries.length} entries`);
+};
+
+/* ════════════════════════════════════════
+   DOCUMENTS — Cloudinary upload + Firebase metadata
+   ════════════════════════════════════════ */
+
+/* drag & drop */
+window.handleDragOver = function(e) {
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.add('drag-over');
+};
+window.handleDragLeave = function() {
+  document.getElementById('drop-zone').classList.remove('drag-over');
+};
+window.handleDrop = function(e) {
+  e.preventDefault();
+  document.getElementById('drop-zone').classList.remove('drag-over');
+  const files = Array.from(e.dataTransfer.files);
+  processFiles(files);
+};
+window.handleFileSelect = function(e) {
+  const files = Array.from(e.target.files);
+  processFiles(files);
+  e.target.value = '';
+};
+
+function processFiles(files) {
+  const propId = document.getElementById('docProperty').value;
+  if (!propId) { toast('Please select a property first'); return; }
+
+  const allowed = ['image/jpeg','image/png','application/pdf'];
+  const valid = files.filter(f => {
+    if (!allowed.includes(f.type)) { toast(`${f.name}: only JPG, PNG, PDF allowed`); return false; }
+    const maxMB = f.type==='application/pdf' ? 4 : 10;
+    if (f.size > maxMB*1024*1024) { toast(`${f.name}: exceeds ${maxMB}MB limit`); return false; }
+    return true;
+  });
+  if (!valid.length) return;
+  uploadFiles(valid, propId);
+}
+
+async function uploadFiles(files, propId) {
+  const bar  = document.getElementById('upload-progress');
+  const fill = document.getElementById('upload-progress-fill');
+  const status = document.getElementById('upload-status');
+  bar.style.display = 'block';
+
+  for (let i = 0; i < files.length; i++) {
+    const file = files[i];
+    status.textContent = `Uploading ${file.name} (${i+1}/${files.length})…`;
+    fill.style.width = '0%';
+    try {
+      const url = await uploadToCloudinary(file, pct => { fill.style.width = pct+'%'; });
+      const isImage = file.type.startsWith('image/');
+      await addDoc(collection(db,'str_documents'), {
+        name:       file.name,
+        url,
+        type:       isImage ? 'image' : 'pdf',
+        property:   propId,
+        uploadedBy: getCurrentUser() || 'Unknown',
+        createdAt:  Date.now()
+      });
+      toast(`${file.name} uploaded!`);
+    } catch(e) {
+      toast(`Failed to upload ${file.name}`);
+      console.error(e);
+    }
+  }
+  fill.style.width = '100%';
+  status.textContent = files.length > 1 ? `${files.length} files uploaded` : 'Upload complete';
+  setTimeout(() => { bar.style.display='none'; status.textContent=''; fill.style.width='0%'; }, 2000);
+}
+
+function uploadToCloudinary(file, onProgress) {
+  return new Promise((resolve, reject) => {
+    const fd = new FormData();
+    fd.append('file', file);
+    fd.append('upload_preset', UPLOAD_PRESET);
+    const xhr = new XMLHttpRequest();
+    xhr.open('POST', CLOUDINARY_URL);
+    xhr.upload.onprogress = e => { if (e.lengthComputable) onProgress(Math.round(e.loaded/e.total*100)); };
+    xhr.onload = () => {
+      if (xhr.status === 200) {
+        const res = JSON.parse(xhr.responseText);
+        resolve(res.secure_url);
+      } else { reject(new Error('Upload failed: '+xhr.status)); }
+    };
+    xhr.onerror = () => reject(new Error('Network error'));
+    xhr.send(fd);
+  });
+}
+
+/* ── RENDER DOCS ── */
+function renderDocs() {
+  const grid = document.getElementById('docs-grid'); if (!grid) return;
+  const fp   = document.getElementById('docFilterProp')?.value || '';
+  const ft   = document.getElementById('docFilterType')?.value || '';
+  let list = documents.filter(d => (!fp||d.property===fp) && (!ft||d.type===ft));
+  const countEl = document.getElementById('doc-count');
+  if (countEl) countEl.textContent = list.length ? `${list.length} file${list.length!==1?'s':''}` : '';
+  if (!list.length) {
+    grid.innerHTML = `<div class="empty" style="grid-column:1/-1;"><div class="empty-icon">📁</div>${documents.length?'No files match filter':'No documents yet — upload one above'}</div>`;
+    return;
+  }
+  grid.innerHTML = list.map(d => {
+    const prop = properties.find(p=>p.id===d.property);
+    const thumb = d.type==='image'
+      ? `<img class="doc-thumb" src="${d.url}" alt="${d.name}" loading="lazy">`
+      : `<div class="doc-pdf-thumb">📄</div>`;
+    return `<div class="doc-item">
+      ${thumb}
+      <div class="doc-info">
+        <div class="doc-name" title="${d.name}">${d.name}</div>
+        <div class="doc-meta">${prop?prop.name:''} · ${d.uploadedBy}</div>
+        <div class="doc-actions">
+          <button class="doc-open" onclick="window.open('${d.url}','_blank')">Open</button>
+          <span style="color:var(--sand);font-size:10px;">·</span>
+          <button class="doc-del" onclick="deleteDoc_('${d.id}')">Delete</button>
+        </div>
+      </div>
+    </div>`;
+  }).join('');
+}
+window.renderDocs = renderDocs;
+
+window.deleteDoc_ = async function(id) {
+  if (!confirm('Delete this file?')) return;
+  try { await deleteDoc(doc(db,'str_documents',id)); toast('File deleted'); }
+  catch(e) { toast('Error deleting file'); }
 };
 
 </script>
