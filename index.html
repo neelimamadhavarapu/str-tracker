@@ -130,6 +130,16 @@ textarea { resize:vertical; min-height:72px; }
 .doc-filter { display:flex; gap:8px; flex-wrap:wrap; margin-bottom:1rem; align-items:center; }
 .doc-filter select { flex:1; min-width:140px; width:auto; }
 .doc-count { font-size:12px; color:var(--stone); white-space:nowrap; }
+/* ── VOICE ── */
+.voice-btn { width:52px; height:52px; border-radius:50%; border:none; background:var(--forest); color:#fff; cursor:pointer; display:flex; align-items:center; justify-content:center; flex-shrink:0; transition:all 0.15s; }
+.voice-btn:hover { background:#1e3b0e; }
+.voice-btn.listening { background:var(--rust); animation:voicePulse 1s infinite; }
+.voice-btn svg { width:22px; height:22px; fill:none; stroke:#fff; stroke-width:2; stroke-linecap:round; }
+@keyframes voicePulse { 0%,100%{box-shadow:0 0 0 0 rgba(192,57,43,0.4);}50%{box-shadow:0 0 0 10px rgba(192,57,43,0);} }
+.voice-row { display:flex; align-items:center; gap:12px; margin-bottom:14px; }
+.voice-transcript { flex:1; padding:9px 12px; border-radius:var(--radius); border:1.5px dashed var(--sand); background:var(--leaf-bg); color:var(--ink); font-size:13px; min-height:42px; line-height:1.5; }
+.voice-hint { font-size:11px; color:var(--stone); margin-top:4px; line-height:1.5; }
+.voice-not-supported { font-size:12px; color:var(--rust); padding:8px 12px; background:var(--rust-bg); border-radius:var(--radius); margin-bottom:14px; }
 </style>
 </head>
 <body>
@@ -183,20 +193,37 @@ textarea { resize:vertical; min-height:72px; }
         <label>Activity category</label>
         <select id="logCategory">
           <option>Administrative</option>
-          <option>Design &amp; Decor</option>
-          <option>Maintenance &amp; Repairs</option>
-          <option>Guest Communication</option>
-          <option>Marketing &amp; Photography</option>
-          <option>Financial &amp; Accounting</option>
-          <option>Setup &amp; Staging</option>
-          <option>Cleaning Oversight</option>
-          <option>Research &amp; Planning</option>
+          <option>Guest Relations</option>
+          <option>Legal</option>
+          <option>Marketing</option>
+          <option>Operations</option>
+          <option>Property Acquisition</option>
+          <option>Property Development</option>
+          <option>Property Improvements</option>
+          <option>Property Maintenance</option>
+          <option>Property Selling</option>
+          <option>Rental Management</option>
+          <option>Tenant Communication</option>
           <option>Other</option>
         </select>
       </div>
       <div class="field"><label>Hours spent</label><input type="number" id="logHours" min="0.25" max="24" step="0.25" placeholder="e.g. 2.5"></div>
     </div>
     <div class="field"><label>Notes (optional)</label><textarea id="logNotes" placeholder="What did you work on?"></textarea></div>
+
+    <!-- VOICE ENTRY -->
+    <div id="voice-section">
+      <div style="font-size:12px;font-weight:500;color:var(--stone);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px;">Or log by voice</div>
+      <div class="voice-row">
+        <button class="voice-btn" id="voice-btn" onclick="toggleVoice()" title="Tap to speak">
+          <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
+        </button>
+        <div>
+          <div class="voice-transcript" id="voice-transcript">Tap the mic and say something like: "2.5 hours of property maintenance for Iron Crest"</div>
+          <div class="voice-hint">Tip: say the hours, category, and any notes. The app will fill in the fields automatically.</div>
+        </div>
+      </div>
+    </div>
     <button class="btn btn-primary" onclick="logEntry()">
       <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
       Save entry
@@ -209,11 +236,19 @@ textarea { resize:vertical; min-height:72px; }
       <select id="filterProp" onchange="renderEntries()"><option value="">All properties</option></select>
       <select id="filterCat" onchange="renderEntries()">
         <option value="">All categories</option>
-        <option>Administrative</option><option>Design &amp; Decor</option>
-        <option>Maintenance &amp; Repairs</option><option>Guest Communication</option>
-        <option>Marketing &amp; Photography</option><option>Financial &amp; Accounting</option>
-        <option>Setup &amp; Staging</option><option>Cleaning Oversight</option>
-        <option>Research &amp; Planning</option><option>Other</option>
+        <option>Administrative</option>
+        <option>Guest Relations</option>
+        <option>Legal</option>
+        <option>Marketing</option>
+        <option>Operations</option>
+        <option>Property Acquisition</option>
+        <option>Property Development</option>
+        <option>Property Improvements</option>
+        <option>Property Maintenance</option>
+        <option>Property Selling</option>
+        <option>Rental Management</option>
+        <option>Tenant Communication</option>
+        <option>Other</option>
       </select>
       <select id="filterUser" onchange="renderEntries()"><option value="">All people</option></select>
     </div>
@@ -307,16 +342,19 @@ const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
 
 /* ── CATEGORY COLORS ── */
 const CAT = {
-  'Administrative':          { bg:'#EBF3FA', fg:'#1A5276' },
-  'Design & Decor':          { bg:'#F0ECFB', fg:'#5B3FA6' },
-  'Maintenance & Repairs':   { bg:'#FDF2E4', fg:'#B8650A' },
-  'Guest Communication':     { bg:'#E5F4F2', fg:'#0E7063' },
-  'Marketing & Photography': { bg:'#FDECEA', fg:'#C0392B' },
-  'Financial & Accounting':  { bg:'#EEF5E7', fg:'#2D5016' },
-  'Setup & Staging':         { bg:'#FDF2E4', fg:'#B8650A' },
-  'Cleaning Oversight':      { bg:'#E5F4F2', fg:'#0E7063' },
-  'Research & Planning':     { bg:'#EBF3FA', fg:'#1A5276' },
-  'Other':                   { bg:'#F2F1EE', fg:'#6B6B67' },
+  'Administrative':        { bg:'#EBF3FA', fg:'#1A5276' },
+  'Guest Relations':       { bg:'#E5F4F2', fg:'#0E7063' },
+  'Legal':                 { bg:'#FCEBEB', fg:'#791F1F' },
+  'Marketing':             { bg:'#FBEAF0', fg:'#72243E' },
+  'Operations':            { bg:'#FDF2E4', fg:'#B8650A' },
+  'Property Acquisition':  { bg:'#EEF5E7', fg:'#2D5016' },
+  'Property Development':  { bg:'#EEF5E7', fg:'#3B6D11' },
+  'Property Improvements': { bg:'#F0ECFB', fg:'#5B3FA6' },
+  'Property Maintenance':  { bg:'#FDF2E4', fg:'#854F0B' },
+  'Property Selling':      { bg:'#FBEAF0', fg:'#993556' },
+  'Rental Management':     { bg:'#EBF3FA', fg:'#185FA5' },
+  'Tenant Communication':  { bg:'#E5F4F2', fg:'#0F6E56' },
+  'Other':                 { bg:'#F2F1EE', fg:'#6B6B67' },
 };
 
 function catBadge(cat) {
@@ -731,6 +769,146 @@ window.deleteDoc_ = async function(id) {
   try { await deleteDoc(doc(db,'str_documents',id)); toast('File deleted'); }
   catch(e) { toast('Error deleting file'); }
 };
+/* ════════════════════════════════════════
+   VOICE ENTRY
+   Uses Web Speech API — works on Chrome, Safari 15+, Edge.
+   Parses spoken text to auto-fill hours, category, notes.
+   ════════════════════════════════════════ */
+
+const VOICE_CATEGORIES = Object.keys(CAT);
+
+let recognition = null;
+let isListening = false;
+
+(function initVoice() {
+  const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+  if (!SpeechRecognition) {
+    const sec = document.getElementById('voice-section');
+    if (sec) sec.innerHTML = '<div class="voice-not-supported">Voice entry is not supported on this browser. Use Chrome or Safari 15+ for voice logging.</div>';
+    return;
+  }
+  recognition = new SpeechRecognition();
+  recognition.continuous = false;
+  recognition.interimResults = true;
+  recognition.lang = 'en-US';
+
+  recognition.onresult = (event) => {
+    const transcript = Array.from(event.results)
+      .map(r => r[0].transcript).join('');
+    document.getElementById('voice-transcript').textContent = transcript;
+    if (event.results[event.results.length - 1].isFinal) {
+      parseVoiceInput(transcript);
+    }
+  };
+
+  recognition.onend = () => {
+    isListening = false;
+    const btn = document.getElementById('voice-btn');
+    if (btn) btn.classList.remove('listening');
+  };
+
+  recognition.onerror = (e) => {
+    isListening = false;
+    const btn = document.getElementById('voice-btn');
+    if (btn) btn.classList.remove('listening');
+    if (e.error !== 'no-speech') toast('Voice error: ' + e.error);
+  };
+})();
+
+window.toggleVoice = function() {
+  if (!recognition) return;
+  if (isListening) {
+    recognition.stop();
+    isListening = false;
+    document.getElementById('voice-btn').classList.remove('listening');
+  } else {
+    recognition.start();
+    isListening = true;
+    document.getElementById('voice-btn').classList.add('listening');
+    document.getElementById('voice-transcript').textContent = 'Listening…';
+  }
+};
+
+function parseVoiceInput(text) {
+  const lower = text.toLowerCase();
+
+  /* ── Extract hours ── */
+  let hours = null;
+  const hrsMatch = lower.match(/(\d+(?:\.\d+)?)\s*(?:and\s*a?\s*half)?\s*hours?/) ||
+                   lower.match(/(\d+)\s*(?:and\s*)?half\s*hours?/);
+  if (hrsMatch) {
+    hours = parseFloat(hrsMatch[1]);
+    if (lower.includes('and a half') || lower.includes('and half')) hours += 0.5;
+  }
+  // handle "half an hour", "an hour"
+  if (!hours && lower.match(/half\s+an?\s+hour/)) hours = 0.5;
+  if (!hours && lower.match(/an?\s+hour/)) hours = 1;
+
+  /* ── Extract category (fuzzy match) ── */
+  let matchedCat = null;
+  let bestScore = 0;
+  VOICE_CATEGORIES.forEach(cat => {
+    const catLower = cat.toLowerCase();
+    // exact substring
+    if (lower.includes(catLower)) { matchedCat = cat; bestScore = 100; return; }
+    // word overlap score
+    const catWords = catLower.split(' ');
+    const score = catWords.filter(w => lower.includes(w) && w.length > 3).length / catWords.length;
+    if (score > bestScore) { bestScore = score; matchedCat = cat; }
+  });
+  // common spoken aliases
+  const aliases = {
+    'admin': 'Administrative', 'administration': 'Administrative',
+    'guest': 'Guest Relations', 'guests': 'Guest Relations', 'relations': 'Guest Relations',
+    'legal': 'Legal', 'lawyer': 'Legal', 'contract': 'Legal',
+    'market': 'Marketing', 'advertis': 'Marketing',
+    'ops': 'Operations', 'operation': 'Operations',
+    'acqui': 'Property Acquisition', 'buying': 'Property Acquisition', 'purchase': 'Property Acquisition',
+    'develop': 'Property Development',
+    'improv': 'Property Improvements', 'renovation': 'Property Improvements', 'upgrade': 'Property Improvements',
+    'mainten': 'Property Maintenance', 'repair': 'Property Maintenance', 'fix': 'Property Maintenance',
+    'sell': 'Property Selling', 'sale': 'Property Selling', 'listing': 'Property Selling',
+    'rental': 'Rental Management', 'manage': 'Rental Management',
+    'tenant': 'Tenant Communication', 'renter': 'Tenant Communication',
+  };
+  Object.entries(aliases).forEach(([key, val]) => {
+    if (lower.includes(key)) { matchedCat = val; }
+  });
+
+  /* ── Extract notes — everything after "for" or "on" or remove known parsed parts ── */
+  let notes = text;
+  // strip hours phrase
+  notes = notes.replace(/\d+(?:\.\d+)?\s*(?:and\s*a?\s*half\s*)?hours?/gi, '');
+  notes = notes.replace(/half\s+an?\s+hour/gi, '');
+  notes = notes.replace(/an?\s+hour/gi, '');
+  // strip category
+  if (matchedCat) notes = notes.replace(new RegExp(matchedCat, 'gi'), '');
+  // strip filler words
+  notes = notes.replace(/\b(of|for|on|spent|did|worked|doing|i|the|some|a|an)\b/gi, '');
+  notes = notes.replace(/\s+/g, ' ').trim();
+
+  /* ── Apply to form ── */
+  let applied = [];
+
+  if (hours && hours > 0) {
+    document.getElementById('logHours').value = hours;
+    applied.push(`${hours}h`);
+  }
+  if (matchedCat && bestScore > 0) {
+    document.getElementById('logCategory').value = matchedCat;
+    applied.push(matchedCat);
+  }
+  if (notes && notes.length > 2) {
+    document.getElementById('logNotes').value = notes;
+    applied.push('notes added');
+  }
+
+  const summary = applied.length
+    ? `Got it — filled in: ${applied.join(', ')}`
+    : 'Heard you! Please check the fields — could not parse hours or category.';
+  document.getElementById('voice-transcript').textContent = `"${text}" → ${summary}`;
+  if (applied.length) toast('Voice entry applied!');
+}
 
 </script>
 </body>
