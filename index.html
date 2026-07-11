@@ -11,11 +11,13 @@
   --ivory:#F6F4EF;--cream:#EDEAE2;--sand:#D8D4C8;--stone:#8A877E;
   --charcoal:#2C2B27;--ink:#1A1917;--forest:#2D5016;--sage:#4A7C2F;
   --amber:#B8650A;--amber-bg:#FDF2E4;--rust:#C0392B;--rust-bg:#FDECEA;
-  --blue:#1A5276;--blue-bg:#EBF3FA;--leaf-bg:#EEF5E7;
+  --leaf-bg:#EEF5E7;--purple:#5B3FA6;--purple-bg:#F0ECFB;
   --radius:10px;--radius-lg:14px;--shadow:0 2px 12px rgba(0,0,0,0.08);
 }
 body{font-family:'DM Sans',sans-serif;background:var(--ivory);color:var(--ink);min-height:100vh;font-size:14px;line-height:1.5;}
 .app{max-width:760px;margin:0 auto;padding:0 1rem 4rem;}
+
+/* TOPBAR */
 .topbar{position:sticky;top:0;z-index:100;background:var(--ivory);border-bottom:1px solid var(--cream);padding:1rem 0 0;margin-bottom:1.5rem;}
 .topbar-inner{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-bottom:1rem;}
 .brand{display:flex;align-items:center;gap:10px;}
@@ -23,12 +25,21 @@ body{font-family:'DM Sans',sans-serif;background:var(--ivory);color:var(--ink);m
 .brand-icon svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;}
 .brand-name{font-size:17px;font-weight:600;color:var(--ink);letter-spacing:-0.3px;}
 .brand-sub{font-size:12px;color:var(--stone);margin-top:1px;}
-.user-row{display:flex;align-items:center;gap:8px;}
+
+/* PERSON TOGGLE */
+.person-toggle{display:flex;align-items:center;gap:6px;background:var(--cream);border-radius:40px;padding:4px 6px;}
+.person-btn{padding:5px 14px;border-radius:30px;border:none;background:transparent;color:var(--stone);cursor:pointer;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;transition:all 0.15s;white-space:nowrap;}
+.person-btn.active-spouse{background:#fff;color:var(--forest);box-shadow:var(--shadow);font-weight:600;}
+.person-btn.active-team{background:var(--purple);color:#fff;box-shadow:var(--shadow);font-weight:600;}
+.person-label{font-size:11px;color:var(--stone);white-space:nowrap;}
+
 .nav{display:flex;gap:4px;overflow-x:auto;padding-bottom:1px;}
 .nav::-webkit-scrollbar{display:none;}
 .nav-btn{padding:7px 14px;border-radius:8px;border:none;background:transparent;color:var(--stone);cursor:pointer;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all 0.15s;}
 .nav-btn:hover{background:var(--cream);color:var(--charcoal);}
 .nav-btn.active{background:var(--charcoal);color:#fff;}
+
+/* FORMS */
 select,input[type=text],input[type=number],input[type=date],textarea{width:100%;padding:9px 12px;border-radius:var(--radius);border:1.5px solid var(--cream);background:#fff;color:var(--ink);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.15s,box-shadow 0.15s;-webkit-appearance:none;}
 select:focus,input:focus,textarea:focus{border-color:var(--sage);box-shadow:0 0 0 3px rgba(74,124,47,0.12);}
 textarea{resize:vertical;min-height:72px;}
@@ -36,97 +47,120 @@ textarea{resize:vertical;min-height:72px;}
 .field label{display:block;font-size:12px;font-weight:500;color:var(--stone);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.4px;}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 @media(max-width:520px){.grid2{grid-template-columns:1fr;}}
+
+/* BUTTONS */
 .btn{padding:9px 20px;border-radius:var(--radius);border:1.5px solid var(--cream);background:transparent;color:var(--charcoal);cursor:pointer;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;transition:all 0.15s;display:inline-flex;align-items:center;gap:6px;}
 .btn:hover{background:var(--cream);}
 .btn-primary{background:var(--forest);color:#fff;border-color:var(--forest);}
-.btn-primary:hover{background:#1e3b0e;border-color:#1e3b0e;}
+.btn-primary:hover{background:#1e3b0e;}
+.btn-dark{background:var(--charcoal);color:#fff;border-color:var(--charcoal);}
+.btn-dark:hover{background:#111;}
 .btn-sm{padding:5px 12px;font-size:12px;}
 .btn-ghost-danger{border-color:transparent;color:var(--rust);}
-.btn-ghost-danger:hover{background:var(--rust-bg);border-color:var(--rust-bg);}
+.btn-ghost-danger:hover{background:var(--rust-bg);}
+
+/* CARDS & METRICS */
 .card{background:#fff;border:1px solid var(--cream);border-radius:var(--radius-lg);padding:1.125rem 1.25rem;margin-bottom:10px;transition:box-shadow 0.15s;}
 .card:hover{box-shadow:var(--shadow);}
-.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));gap:10px;margin-bottom:1.5rem;}
+.metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.5rem;}
 .metric{background:#fff;border:1px solid var(--cream);border-radius:var(--radius-lg);padding:1.125rem;}
 .metric-label{font-size:11px;font-weight:500;color:var(--stone);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:6px;}
-.metric-val{font-size:26px;font-weight:300;color:var(--ink);letter-spacing:-0.5px;font-family:'DM Mono',monospace;}
+.metric-val{font-size:24px;font-weight:300;color:var(--ink);letter-spacing:-0.5px;font-family:'DM Mono',monospace;}
 .metric-sub{font-size:11px;color:var(--stone);margin-top:4px;}
-.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;letter-spacing:0.2px;}
-.chip{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;color:var(--stone);background:var(--cream);margin-left:5px;}
+.metric-spouse{border-top:3px solid var(--forest);}
+.metric-team{border-top:3px solid var(--purple);}
+
+/* BADGES */
+.badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;}
+.spouse-chip{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;color:var(--forest);background:var(--leaf-bg);margin-left:5px;font-weight:500;}
+.team-chip{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;color:#fff;background:var(--purple);margin-left:5px;font-weight:500;}
+.team-role-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;background:var(--purple-bg);color:var(--purple);}
+
+/* PROGRESS */
 .prog-track{height:6px;background:var(--cream);border-radius:4px;overflow:hidden;margin-top:6px;}
 .prog-fill{height:100%;border-radius:4px;transition:width 0.4s ease;}
+
+/* LAYOUT */
 .section-head{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:1rem;margin-top:0.25rem;}
+.section-sub{font-size:13px;color:var(--stone);margin-bottom:1rem;margin-top:-0.5rem;}
 .divider{border:none;border-top:1px solid var(--cream);margin:1.5rem 0;}
 .empty{text-align:center;padding:3rem 1rem;color:var(--stone);font-size:14px;}
 .empty-icon{font-size:28px;margin-bottom:8px;opacity:0.5;}
 .filter-bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:1rem;}
 .filter-bar select{flex:1;min-width:110px;width:auto;}
+.fade-in{animation:fadeIn 0.25s ease forwards;}
+@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
+
+/* ENTRY CARDS */
 .entry-main{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
 .entry-name{font-size:14px;font-weight:500;color:var(--ink);}
 .entry-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:5px;}
 .entry-note{font-size:12px;color:var(--stone);margin-top:5px;font-style:italic;}
 .entry-hours{font-family:'DM Mono',monospace;font-size:20px;font-weight:500;color:var(--ink);white-space:nowrap;}
+.team-card{border-left:3px solid var(--purple);}
+.spouse-card{border-left:3px solid var(--forest);}
+
+/* EVIDENCE */
+.evidence-box{background:var(--leaf-bg);border:2px dashed var(--sage);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:16px;text-align:center;cursor:pointer;transition:all 0.15s;}
+.evidence-box:hover,.evidence-box.over{background:#e0f0d0;border-color:var(--forest);}
+.evidence-box-icon{font-size:24px;margin-bottom:6px;}
+.evidence-box-title{font-size:14px;font-weight:600;color:var(--forest);margin-bottom:3px;}
+.evidence-box-hint{font-size:12px;color:var(--sage);}
+.evidence-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-top:10px;}
+.ev-item{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--cream);background:#fff;}
+.ev-thumb{width:100%;aspect-ratio:1;object-fit:cover;display:block;cursor:pointer;}
+.ev-pdf{width:100%;aspect-ratio:1;background:var(--rust-bg);display:flex;align-items:center;justify-content:center;font-size:22px;cursor:pointer;}
+.ev-del{position:absolute;top:3px;right:3px;width:20px;height:20px;border-radius:50%;background:rgba(0,0,0,0.6);color:#fff;border:none;cursor:pointer;font-size:13px;display:flex;align-items:center;justify-content:center;z-index:2;}
+.ev-name{font-size:9px;color:var(--stone);padding:3px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:#fff;}
+input[type=file].ev-input{display:none;}
+.entry-evidence-drop{border:1.5px dashed var(--sand);border-radius:var(--radius);padding:8px 12px;text-align:center;cursor:pointer;background:var(--ivory);font-size:12px;color:var(--stone);margin-top:10px;transition:all 0.15s;}
+.entry-evidence-drop:hover,.entry-evidence-drop.over{border-color:var(--sage);background:var(--leaf-bg);color:var(--forest);}
+
+/* VOICE */
+.voice-wrap{background:var(--cream);border-radius:var(--radius-lg);padding:1rem 1.25rem;margin-bottom:16px;}
+.voice-label{font-size:11px;font-weight:600;color:var(--stone);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;}
+.voice-btn{width:48px;height:48px;border-radius:50%;border:none;background:var(--forest);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;}
+.voice-btn.listening{background:var(--rust);animation:voicePulse 1s infinite;}
+.voice-btn svg{width:20px;height:20px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;}
+@keyframes voicePulse{0%,100%{box-shadow:0 0 0 0 rgba(192,57,43,0.4);}50%{box-shadow:0 0 0 10px rgba(192,57,43,0);}}
+.voice-row{display:flex;align-items:center;gap:12px;}
+.voice-transcript{flex:1;padding:8px 12px;border-radius:var(--radius);border:1px solid var(--sand);background:#fff;color:var(--ink);font-size:13px;min-height:40px;line-height:1.5;}
+.voice-hint{font-size:11px;color:var(--stone);margin-top:6px;}
+
+/* IRS PROGRESS RINGS */
+.irs-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem;}
+.irs-card{background:#fff;border:1px solid var(--cream);border-radius:var(--radius-lg);padding:1rem;text-align:center;}
+.irs-hrs{font-family:'DM Mono',monospace;font-size:28px;font-weight:300;color:var(--ink);}
+.irs-target{font-size:12px;color:var(--stone);margin-bottom:6px;}
+.irs-label{font-size:12px;font-weight:600;margin-top:6px;}
+.irs-status{font-size:11px;padding:3px 10px;border-radius:20px;display:inline-block;margin-top:4px;}
+.irs-on{background:var(--leaf-bg);color:var(--forest);}
+.irs-warn{background:var(--amber-bg);color:var(--amber);}
+.irs-off{background:var(--rust-bg);color:var(--rust);}
+
+/* CSV IMPORT */
+.import-drop{border:2px dashed var(--sand);border-radius:var(--radius-lg);padding:2rem 1.5rem;text-align:center;cursor:pointer;background:#fff;transition:all 0.15s;margin-bottom:1rem;}
+.import-drop:hover,.import-drop.over{border-color:var(--sage);background:var(--leaf-bg);}
+.map-table{width:100%;border-collapse:collapse;margin-bottom:1rem;font-size:13px;}
+.map-table th{text-align:left;padding:8px 10px;background:var(--cream);color:var(--stone);font-size:11px;text-transform:uppercase;letter-spacing:0.4px;}
+.map-table td{padding:8px 10px;border-bottom:1px solid var(--cream);}
+.map-table select{padding:5px 8px;font-size:12px;}
+.preview-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:1rem;overflow-x:auto;display:block;}
+.preview-table th{background:var(--cream);padding:6px 10px;text-align:left;font-size:11px;color:var(--stone);white-space:nowrap;}
+.preview-table td{padding:6px 10px;border-bottom:1px solid var(--cream);white-space:nowrap;}
+.import-status{font-size:13px;color:var(--stone);padding:8px 12px;background:var(--cream);border-radius:var(--radius);margin-bottom:1rem;display:none;}
+
+/* SYNC & TOAST */
 .sync-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px;background:var(--sage);}
 .sync-dot.syncing{background:var(--amber);animation:pulse 1s infinite;}
 .sync-dot.error{background:var(--rust);}
 @keyframes pulse{0%,100%{opacity:1;}50%{opacity:0.3;}}
 .toast{position:fixed;bottom:24px;right:24px;background:var(--charcoal);color:#fff;padding:10px 18px;border-radius:var(--radius);font-size:13px;opacity:0;transition:opacity 0.25s;pointer-events:none;z-index:9998;max-width:280px;}
 .toast.show{opacity:1;}
-.fade-in{animation:fadeIn 0.25s ease forwards;}
-@keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
-
-/* NAME MODAL */
-#name-modal{position:fixed;inset:0;z-index:9998;background:rgba(0,0,0,0.7);display:none;align-items:center;justify-content:center;padding:1.5rem;}
-#name-modal.visible{display:flex;}
-#name-modal .inner{background:#fff;border-radius:16px;padding:2rem 2.25rem;max-width:380px;width:100%;box-shadow:0 24px 64px rgba(0,0,0,0.25);text-align:center;}
-#name-modal .icon{font-size:32px;margin-bottom:0.75rem;}
-#name-modal h2{font-size:18px;font-weight:600;color:#111;margin-bottom:0.5rem;}
-#name-modal p{font-size:13px;color:#666;margin-bottom:1.25rem;line-height:1.5;}
-#name-modal input{width:100%;padding:10px 14px;border-radius:8px;border:1.5px solid #ddd;font-size:15px;text-align:center;font-family:'DM Sans',sans-serif;margin-bottom:12px;outline:none;}
-#name-modal input:focus{border-color:#2D5016;}
-#name-modal .btn-save{width:100%;padding:11px;border-radius:8px;border:none;background:#2D5016;color:#fff;font-size:14px;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;}
-#name-modal .btn-save:hover{background:#1e3b0e;}
-
-/* EVIDENCE */
-.evidence-section{margin-top:12px;border-top:1px solid var(--cream);padding-top:12px;}
-.evidence-label{font-size:11px;font-weight:500;color:var(--stone);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px;}
-.evidence-drop{border:1.5px dashed var(--sand);border-radius:var(--radius);padding:10px 14px;text-align:center;cursor:pointer;background:var(--ivory);transition:all 0.15s;font-size:12px;color:var(--stone);}
-.evidence-drop:hover,.evidence-drop.over{border-color:var(--sage);background:var(--leaf-bg);color:var(--forest);}
-.evidence-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(80px,1fr));gap:8px;margin-top:8px;}
-.ev-item{position:relative;border-radius:var(--radius);overflow:hidden;border:1px solid var(--cream);}
-.ev-thumb{width:100%;aspect-ratio:1;object-fit:cover;display:block;}
-.ev-pdf{width:100%;aspect-ratio:1;background:var(--rust-bg);display:flex;align-items:center;justify-content:center;font-size:22px;}
-.ev-del{position:absolute;top:3px;right:3px;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,0.55);color:#fff;border:none;cursor:pointer;font-size:11px;display:flex;align-items:center;justify-content:center;line-height:1;}
-.ev-uploading{position:absolute;inset:0;background:rgba(255,255,255,0.8);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--stone);}
-.ev-name{font-size:9px;color:var(--stone);padding:2px 4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;background:#fff;}
-input[type=file].ev-input{display:none;}
-
-/* VOICE */
-.voice-btn{width:52px;height:52px;border-radius:50%;border:none;background:var(--forest);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;}
-.voice-btn:hover{background:#1e3b0e;}
-.voice-btn.listening{background:var(--rust);animation:voicePulse 1s infinite;}
-.voice-btn svg{width:22px;height:22px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;}
-@keyframes voicePulse{0%,100%{box-shadow:0 0 0 0 rgba(192,57,43,0.4);}50%{box-shadow:0 0 0 10px rgba(192,57,43,0);}}
-.voice-row{display:flex;align-items:center;gap:12px;margin-bottom:14px;}
-.voice-transcript{flex:1;padding:9px 12px;border-radius:var(--radius);border:1.5px dashed var(--sand);background:var(--leaf-bg);color:var(--ink);font-size:13px;min-height:42px;line-height:1.5;}
-.voice-hint{font-size:11px;color:var(--stone);margin-top:4px;line-height:1.5;}
-
-/* AUDIT */
-.audit-btn{background:var(--charcoal);color:#fff;border-color:var(--charcoal);}
-.audit-btn:hover{background:#111;}
-.audit-progress{margin-top:10px;font-size:12px;color:var(--stone);display:none;}
+.audit-progress{margin-top:10px;font-size:12px;color:var(--stone);display:none;padding:8px 12px;background:var(--cream);border-radius:var(--radius);}
 </style>
 </head>
 <body>
-
-<div id="name-modal">
-  <div class="inner">
-    <div class="icon">👋</div>
-    <h2 id="name-modal-title">Welcome! What's your name?</h2>
-    <p id="name-modal-desc">Saved on this device only — tags your entries so you and your partner track hours separately.</p>
-    <input type="text" id="name-input" placeholder="Enter your first name" maxlength="30" onkeydown="if(event.key==='Enter')saveName()">
-    <button class="btn-save" onclick="saveName()">Save &amp; Continue</button>
-  </div>
-</div>
 
 <div class="app">
   <div class="topbar">
@@ -140,23 +174,26 @@ input[type=file].ev-input{display:none;}
           <div class="brand-sub" id="sync-status"><span class="sync-dot syncing"></span>Connecting…</div>
         </div>
       </div>
-      <div class="user-row">
-        <span style="font-size:12px;color:var(--stone);">Logged in as</span>
-        <span id="user-display" style="font-size:13px;font-weight:500;color:var(--ink);"></span>
-        <button onclick="promptSwitchUser()" style="font-size:11px;color:var(--stone);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0;font-family:inherit;">switch</button>
+      <!-- WHO IS WORKING NOW -->
+      <div>
+        <div class="person-label" style="margin-bottom:5px;text-align:right;">Who's working?</div>
+        <div class="person-toggle" id="person-toggle"></div>
       </div>
     </div>
     <nav class="nav">
       <button class="nav-btn active" onclick="showTab('log')">Log Hours</button>
       <button class="nav-btn" onclick="showTab('entries')">All Entries</button>
       <button class="nav-btn" onclick="showTab('summary')">Summary</button>
+      <button class="nav-btn" onclick="showTab('import')">Import CSV</button>
       <button class="nav-btn" onclick="showTab('properties')">Properties</button>
     </nav>
   </div>
 
-  <!-- LOG HOURS -->
+  <!-- ═══ LOG HOURS ═══ -->
   <div id="tab-log" class="fade-in">
-    <div class="section-head">Log new hours</div>
+    <!-- CURRENT PERSON BANNER -->
+    <div id="log-person-banner" style="margin-bottom:1rem;padding:10px 14px;border-radius:var(--radius);font-size:13px;font-weight:500;"></div>
+
     <div class="grid2">
       <div class="field"><label>Property</label><select id="logProperty"></select></div>
       <div class="field"><label>Date</label><input type="date" id="logDate"></div>
@@ -165,58 +202,55 @@ input[type=file].ev-input{display:none;}
       <div class="field">
         <label>Activity category</label>
         <select id="logCategory">
-          <option>Administrative</option>
-          <option>Guest Relations</option>
-          <option>Legal</option>
-          <option>Marketing</option>
-          <option>Operations</option>
-          <option>Property Acquisition</option>
-          <option>Property Development</option>
-          <option>Property Improvements</option>
-          <option>Property Maintenance</option>
-          <option>Property Selling</option>
-          <option>Rental Management</option>
-          <option>Tenant Communication</option>
-          <option>Other</option>
+          <option>Administrative</option><option>Guest Relations</option><option>Legal</option>
+          <option>Marketing</option><option>Operations</option><option>Property Acquisition</option>
+          <option>Property Development</option><option>Property Improvements</option>
+          <option>Property Maintenance</option><option>Property Selling</option>
+          <option>Rental Management</option><option>Tenant Communication</option><option>Other</option>
         </select>
       </div>
       <div class="field"><label>Hours spent</label><input type="number" id="logHours" min="0.25" max="24" step="0.25" placeholder="e.g. 2.5"></div>
     </div>
-    <div class="field"><label>Notes (optional)</label><textarea id="logNotes" placeholder="What did you work on?"></textarea></div>
-
-    <!-- EVIDENCE ON LOG FORM -->
-    <div class="field">
-      <label>Evidence (optional)</label>
-      <div class="evidence-drop" id="log-drop"
-        onclick="document.getElementById('log-file-input').click()"
-        ondragover="dzOver(event,'log-drop')" ondragleave="dzOut('log-drop')" ondrop="dzDrop(event,'log-drop',null)">
-        📎 Tap to attach photos or PDFs for this entry
+    <!-- TEAM ROLE ROW — shown only when a team member is selected -->
+    <div id="team-role-row" style="display:none;">
+      <div class="grid2">
+        <div class="field"><label>Role</label>
+          <select id="logTeamRole">
+            <option>Cleaner</option><option>Pool Maintenance</option><option>Design Team</option>
+            <option>Landscaping</option><option>Handyman</option><option>Property Manager</option>
+            <option>Photographer</option><option>Other Contractor</option>
+          </select>
+        </div>
+        <div class="field"><label>Company / full name</label><input type="text" id="logTeamFullName" placeholder="e.g. ABC Cleaning Co."></div>
       </div>
-      <input type="file" class="ev-input" id="log-file-input" accept=".jpg,.jpeg,.png,.pdf" multiple onchange="localAttach(event)">
-      <div class="evidence-grid" id="log-evidence-grid"></div>
     </div>
-
-    <!-- VOICE -->
-    <div id="voice-section">
-      <div style="font-size:12px;font-weight:500;color:var(--stone);text-transform:uppercase;letter-spacing:0.4px;margin-bottom:8px;">Or log by voice</div>
+    <div class="field"><label>Notes (optional)</label><textarea id="logNotes" placeholder="What did you work on?"></textarea></div>
+    <div class="evidence-box" id="log-drop" onclick="document.getElementById('log-file-input').click()" ondragover="dzOver(event,'log-drop')" ondragleave="dzOut('log-drop')" ondrop="dzDrop(event,'log-drop',null)">
+      <div class="evidence-box-icon">📎</div>
+      <div class="evidence-box-title">Attach Evidence</div>
+      <div class="evidence-box-hint">Tap to add photos or PDFs · JPG &amp; PNG up to 10MB · PDF up to 4MB</div>
+      <div class="evidence-grid" id="log-evidence-grid" onclick="event.stopPropagation()"></div>
+    </div>
+    <input type="file" class="ev-input" id="log-file-input" accept=".jpg,.jpeg,.png,.pdf" multiple onchange="localAttach(event)">
+    <div id="voice-section" class="voice-wrap">
+      <div class="voice-label">🎤 Log by voice (optional)</div>
       <div class="voice-row">
         <button class="voice-btn" id="voice-btn" onclick="toggleVoice()" title="Tap to speak">
           <svg viewBox="0 0 24 24"><path d="M12 1a3 3 0 00-3 3v8a3 3 0 006 0V4a3 3 0 00-3-3z"/><path d="M19 10v2a7 7 0 01-14 0v-2"/><line x1="12" y1="19" x2="12" y2="23"/><line x1="8" y1="23" x2="16" y2="23"/></svg>
         </button>
-        <div>
-          <div class="voice-transcript" id="voice-transcript">Tap the mic and say something like: "2.5 hours of property maintenance"</div>
-          <div class="voice-hint">Say the hours, category, and any notes. Fields fill automatically.</div>
+        <div style="flex:1;">
+          <div class="voice-transcript" id="voice-transcript">Tap mic — say e.g. "2.5 hours of property maintenance"</div>
+          <div class="voice-hint">Hours, category and notes fill in automatically.</div>
         </div>
       </div>
     </div>
-
-    <button class="btn btn-primary" onclick="logEntry()">
-      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-      Save entry
+    <button class="btn btn-primary" id="save-btn" onclick="logEntry()" style="width:100%;justify-content:center;padding:12px;">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Save Entry
     </button>
   </div>
 
-  <!-- ENTRIES -->
+  <!-- ═══ ALL ENTRIES ═══ -->
   <div id="tab-entries" style="display:none;">
     <div class="filter-bar">
       <select id="filterProp" onchange="renderEntries()"><option value="">All properties</option></select>
@@ -228,89 +262,144 @@ input[type=file].ev-input{display:none;}
         <option>Property Maintenance</option><option>Property Selling</option>
         <option>Rental Management</option><option>Tenant Communication</option><option>Other</option>
       </select>
-      <select id="filterUser" onchange="renderEntries()"><option value="">All people</option></select>
+      <select id="filterPerson" onchange="renderEntries()"><option value="">All people</option></select>
+      <select id="filterType" onchange="renderEntries()">
+        <option value="">All types</option>
+        <option value="spouse">Spouses only</option>
+        <option value="team">Team only</option>
+      </select>
     </div>
     <div id="entries-list"></div>
   </div>
 
-  <!-- SUMMARY -->
+  <!-- ═══ SUMMARY ═══ -->
   <div id="tab-summary" style="display:none;">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:1.25rem;">
       <div class="section-head" style="margin:0;">Overview</div>
       <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;">
-        <select id="summaryProp" style="width:auto;min-width:180px;" onchange="renderSummary()"><option value="">All properties</option></select>
+        <select id="summaryProp" style="width:auto;min-width:160px;" onchange="renderSummary()"><option value="">All properties</option></select>
         <button class="btn" onclick="exportCSV()" style="font-size:13px;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
           Export CSV
         </button>
-        <button class="btn audit-btn" onclick="downloadAuditPackage()" style="font-size:13px;">
+        <button class="btn btn-dark" onclick="downloadAuditPackage()" style="font-size:13px;">
           <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-          Download Audit Package
+          Audit Package
         </button>
       </div>
     </div>
     <div class="audit-progress" id="audit-progress"></div>
+
+    <!-- IRS MATERIAL PARTICIPATION -->
+    <div class="section-head">IRS material participation</div>
+    <div class="section-sub">Combined spouse hours (you + Shashank) toward the 100-hr and 500-hr tests</div>
+    <div class="irs-grid" id="irs-grid"></div>
+
     <div class="metric-grid" id="summary-metrics"></div>
-    <div class="section-head">Hours by category</div>
+    <div class="section-head">Spouse hours by category</div>
     <div id="summary-cats" style="margin-bottom:1.5rem;"></div>
-    <div class="section-head">Hours by person</div>
-    <div id="summary-people"></div>
+    <div class="section-head">Spouse hours — individual breakdown</div>
+    <div id="summary-people" style="margin-bottom:1.5rem;"></div>
+    <div class="section-head">Team hours by role</div>
+    <div id="summary-team-roles"></div>
   </div>
 
-  <!-- PROPERTIES -->
+  <!-- ═══ IMPORT CSV ═══ -->
+  <div id="tab-import" style="display:none;">
+    <div class="section-head">Import from another app</div>
+    <div class="section-sub">Upload a CSV from Toggl, Clockify, Harvest, or any time tracking tool.</div>
+    <div class="import-drop" id="import-drop" onclick="document.getElementById('csv-file-input').click()" ondragover="dzOver(event,'import-drop')" ondragleave="dzOut('import-drop')" ondrop="csvDrop(event)">
+      <div style="font-size:28px;margin-bottom:8px;">📊</div>
+      <div style="font-size:14px;color:var(--stone);"><strong>Tap to upload CSV</strong> or drag &amp; drop</div>
+      <div style="font-size:12px;color:var(--sand);margin-top:4px;">Any .csv file exported from a time tracking app</div>
+    </div>
+    <input type="file" class="ev-input" id="csv-file-input" accept=".csv" onchange="csvPick(event)">
+    <div class="import-status" id="import-status"></div>
+    <div id="import-mapper" style="display:none;">
+      <div class="section-head" style="margin-top:0;">Map your CSV columns</div>
+      <table class="map-table"><thead><tr><th>Field</th><th>Your CSV column</th></tr></thead><tbody id="map-body"></tbody></table>
+      <div class="field"><label>Import as</label>
+        <select id="importPersonType">
+          <option value="spouse-you">Spouse — You</option>
+          <option value="spouse-shashank">Spouse — Shashank</option>
+          <option value="team">Team member</option>
+        </select>
+      </div>
+      <div class="field"><label>Property for all imported rows</label><select id="importProperty"></select></div>
+      <div style="margin-bottom:1rem;">
+        <div class="section-head" style="font-size:13px;margin-bottom:.5rem;">Preview (first 5 rows)</div>
+        <div style="overflow-x:auto;"><table class="preview-table" id="preview-table"></table></div>
+      </div>
+      <button class="btn btn-primary" onclick="runImport()" style="width:100%;justify-content:center;padding:12px;">Import entries</button>
+    </div>
+    <div id="import-result" style="display:none;"></div>
+  </div>
+
+  <!-- ═══ PROPERTIES ═══ -->
   <div id="tab-properties" style="display:none;">
     <div class="section-head">Your properties</div>
     <div id="props-list" style="margin-bottom:1.5rem;"></div>
     <div class="divider"></div>
     <div class="section-head">Add a property</div>
     <div class="grid2" style="margin-bottom:14px;">
-      <div class="field"><label>Property name</label><input type="text" id="newPropName" placeholder="e.g. Lake House, Unit 4B"></div>
-      <div class="field"><label>Short nickname</label><input type="text" id="newPropNick" placeholder="e.g. Lake, 4B"></div>
+      <div class="field"><label>Property name</label><input type="text" id="newPropName" placeholder="e.g. Iron Crest Social"></div>
+      <div class="field"><label>Short nickname</label><input type="text" id="newPropNick" placeholder="e.g. Iron Crest"></div>
     </div>
     <button class="btn btn-primary" onclick="addProperty()">Add property</button>
   </div>
 </div>
 
 <div class="toast" id="toast"></div>
-
-<!-- JSZip for audit package -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
 
 <script type="module">
-import { initializeApp }   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
+import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getFirestore, collection, addDoc, deleteDoc, updateDoc,
          doc, onSnapshot, query, orderBy }
-                           from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
+  from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-const CLOUD_NAME    = 'odv2dxer';
-const UPLOAD_PRESET = 'str_tracker';
-const CLOUDINARY_URL = `https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
+/* ══════════════════════════════════
+   CONSTANTS
+   ══════════════════════════════════ */
+const CLOUD_NAME='odv2dxer', UPLOAD_PRESET='str_tracker';
+const CLOUDINARY_URL=`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
 
-const CAT = {
-  'Administrative':        {bg:'#EBF3FA',fg:'#1A5276'},
-  'Guest Relations':       {bg:'#E5F4F2',fg:'#0E7063'},
-  'Legal':                 {bg:'#FCEBEB',fg:'#791F1F'},
-  'Marketing':             {bg:'#FBEAF0',fg:'#72243E'},
-  'Operations':            {bg:'#FDF2E4',fg:'#B8650A'},
-  'Property Acquisition':  {bg:'#EEF5E7',fg:'#2D5016'},
-  'Property Development':  {bg:'#EEF5E7',fg:'#3B6D11'},
-  'Property Improvements': {bg:'#F0ECFB',fg:'#5B3FA6'},
-  'Property Maintenance':  {bg:'#FDF2E4',fg:'#854F0B'},
-  'Property Selling':      {bg:'#FBEAF0',fg:'#993556'},
-  'Rental Management':     {bg:'#EBF3FA',fg:'#185FA5'},
-  'Tenant Communication':  {bg:'#E5F4F2',fg:'#0F6E56'},
-  'Other':                 {bg:'#F2F1EE',fg:'#6B6B67'},
+// The two spouses — all hours from these names count toward IRS material participation
+const SPOUSES=['You','Shashank'];
+const TEAM_ROLES=['Cleaner','Pool Maintenance','Design Team','Landscaping','Handyman','Property Manager','Photographer','Other Contractor'];
+
+const CAT={
+  'Administrative':{bg:'#EBF3FA',fg:'#1A5276'},'Guest Relations':{bg:'#E5F4F2',fg:'#0E7063'},
+  'Legal':{bg:'#FCEBEB',fg:'#791F1F'},'Marketing':{bg:'#FBEAF0',fg:'#72243E'},
+  'Operations':{bg:'#FDF2E4',fg:'#B8650A'},'Property Acquisition':{bg:'#EEF5E7',fg:'#2D5016'},
+  'Property Development':{bg:'#EEF5E7',fg:'#3B6D11'},'Property Improvements':{bg:'#F0ECFB',fg:'#5B3FA6'},
+  'Property Maintenance':{bg:'#FDF2E4',fg:'#854F0B'},'Property Selling':{bg:'#FBEAF0',fg:'#993556'},
+  'Rental Management':{bg:'#EBF3FA',fg:'#185FA5'},'Tenant Communication':{bg:'#E5F4F2',fg:'#0F6E56'},
+  'Other':{bg:'#F2F1EE',fg:'#6B6B67'}
 };
 
-function catBadge(cat){const c=CAT[cat]||CAT['Other'];return `<span class="badge" style="background:${c.bg};color:${c.fg};">${cat}</span>`;}
+/* ══════════════════════════════════
+   HELPERS
+   ══════════════════════════════════ */
+function catBadge(cat){const c=CAT[cat]||CAT['Other'];return`<span class="badge" style="background:${c.bg};color:${c.fg};">${cat}</span>`;}
 function fmtDate(d){if(!d)return'';const[y,m,day]=d.split('-');return new Date(y,m-1,day).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
 function toast(msg){const t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
-function setSyncStatus(state,label){const el=document.getElementById('sync-status');if(!el)return;const dc=state==='ok'?'':state==='error'?'error':'syncing';el.innerHTML=`<span class="sync-dot ${dc}"></span>${label}`;}
+function setSyncStatus(state,label){const el=document.getElementById('sync-status');if(!el)return;const dc=state==='error'?'error':state==='ok'?'':'syncing';el.innerHTML=`<span class="sync-dot ${dc}"></span>${label}`;}
 function safeName(s){return(s||'').replace(/[^a-zA-Z0-9_\-\.]/g,'_').substring(0,60);}
+function isSpouse(entry){return SPOUSES.includes(entry.person)||entry.entryType==='spouse';}
 
-let db=null,entries=[],properties=[],unsubEntries=null,unsubProps=null;
+/* ══════════════════════════════════
+   STATE
+   ══════════════════════════════════ */
+let db=null, entries=[], properties=[];
 
-const FIREBASE_CONFIG={
+// currentPerson: one of SPOUSES or a team role string
+let currentPerson=localStorage.getItem('str_current_person')||SPOUSES[0];
+
+/* ══════════════════════════════════
+   FIREBASE
+   ══════════════════════════════════ */
+const FB={
   apiKey:"AIzaSyByi-RGM2BYUdZF9Rw4Fk0w6lyJIBkdFhw",
   authDomain:"str-time-tracker-shared.firebaseapp.com",
   projectId:"str-time-tracker-shared",
@@ -319,40 +408,73 @@ const FIREBASE_CONFIG={
   appId:"1:90772648473:web:11d4e98d1be452a9887088"
 };
 
-function initApp(config){
-  const app=initializeApp(config);
-  db=getFirestore(app);
+function initApp(cfg){
+  db=getFirestore(initializeApp(cfg));
   document.getElementById('logDate').value=new Date().toISOString().split('T')[0];
   setSyncStatus('syncing','Connecting…');
-  const entQ=query(collection(db,'str_entries'),orderBy('createdAt','desc'));
-  unsubEntries=onSnapshot(entQ,snap=>{
+  onSnapshot(query(collection(db,'str_entries'),orderBy('createdAt','desc')),snap=>{
     entries=snap.docs.map(d=>({id:d.id,...d.data()}));
     renderEntries();renderSummary();
     setSyncStatus('ok','Synced · shared with household');
   },()=>setSyncStatus('error','Sync error — check Firebase rules'));
-  const propQ=query(collection(db,'str_properties'),orderBy('createdAt','asc'));
-  unsubProps=onSnapshot(propQ,snap=>{
+  onSnapshot(query(collection(db,'str_properties'),orderBy('createdAt','asc')),snap=>{
     properties=snap.docs.map(d=>({id:d.id,...d.data()}));
     refreshDropdowns();renderProperties();
   });
 }
+(function(){initApp(FB);buildPersonToggle();updateLogBanner();})();
 
-(function init(){initApp(FIREBASE_CONFIG);checkUserIdentity();})();
+/* ══════════════════════════════════
+   PERSON TOGGLE
+   ══════════════════════════════════ */
+function buildPersonToggle(){
+  const wrap=document.getElementById('person-toggle');
+  if(!wrap)return;
+  // Spouses first, then team roles
+  const all=[...SPOUSES,...TEAM_ROLES];
+  wrap.innerHTML=all.map(p=>{
+    const isActive=p===currentPerson;
+    const isS=SPOUSES.includes(p);
+    const cls=isActive?(isS?'active-spouse':'active-team'):'';
+    return`<button class="person-btn ${cls}" onclick="setPerson('${p}')" title="${isS?'Spouse — counts toward IRS material participation':'Team member — does not count toward your hours'}">${p}</button>`;
+  }).join('');
+}
 
-/* USER */
-function getCurrentUser(){return localStorage.getItem('str_user_name')||null;}
-function setCurrentUser(name){localStorage.setItem('str_user_name',name);const el=document.getElementById('user-display');if(el)el.textContent=name;}
-function checkUserIdentity(){const n=getCurrentUser();if(!n){document.getElementById('name-modal').classList.add('visible');setTimeout(()=>document.getElementById('name-input')?.focus(),100);}else setCurrentUser(n);}
-window.saveName=function(){const v=document.getElementById('name-input').value.trim();if(!v){document.getElementById('name-input').focus();return;}setCurrentUser(v);document.getElementById('name-modal').classList.remove('visible');toast(`Welcome, ${v}!`);};
-window.promptSwitchUser=function(){const c=getCurrentUser()||'';document.getElementById('name-modal-title').textContent='Switch user';document.getElementById('name-modal-desc').textContent='Enter the name to log in as on this device.';document.getElementById('name-input').value=c;document.getElementById('name-modal').classList.add('visible');setTimeout(()=>{const i=document.getElementById('name-input');i?.focus();i?.select();},100);};
+window.setPerson=function(name){
+  currentPerson=name;
+  localStorage.setItem('str_current_person',name);
+  buildPersonToggle();
+  updateLogBanner();
+  // show/hide team role row
+  const isTeam=!SPOUSES.includes(name);
+  document.getElementById('team-role-row').style.display=isTeam?'':'none';
+  // change save button color
+  const btn=document.getElementById('save-btn');
+  if(isTeam){btn.style.background='var(--purple)';btn.style.borderColor='var(--purple)';}
+  else{btn.style.background='var(--forest)';btn.style.borderColor='var(--forest)';}
+};
 
-/* TABS */
+function updateLogBanner(){
+  const b=document.getElementById('log-person-banner');if(!b)return;
+  const isS=SPOUSES.includes(currentPerson);
+  if(isS){
+    b.style.background='var(--leaf-bg)';b.style.color='var(--forest)';
+    b.innerHTML=`🏡 Logging as <strong>${currentPerson}</strong> — counts toward combined spouse material participation hours`;
+  }else{
+    b.style.background='var(--purple-bg)';b.style.color='var(--purple)';
+    b.innerHTML=`👥 Logging for team member <strong>${currentPerson}</strong> — these hours are <em>not</em> counted toward your IRS material participation total`;
+  }
+}
+
+/* ══════════════════════════════════
+   TABS
+   ══════════════════════════════════ */
 window.showTab=function(name){
-  ['log','entries','summary','properties'].forEach(t=>{
+  ['log','entries','summary','import','properties'].forEach(t=>{
     document.getElementById('tab-'+t).style.display=t===name?'':'none';
     document.getElementById('tab-'+t).classList.toggle('fade-in',t===name);
   });
-  document.querySelectorAll('.nav-btn').forEach((btn,i)=>{btn.classList.toggle('active',['log','entries','summary','properties'][i]===name);});
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',['log','entries','summary','import','properties'][i]===name));
   if(name==='entries')renderEntries();
   if(name==='summary')renderSummary();
   if(name==='properties')renderProperties();
@@ -360,7 +482,7 @@ window.showTab=function(name){
 
 /* DROPDOWNS */
 function refreshDropdowns(){
-  ['logProperty','filterProp','summaryProp'].forEach(id=>{
+  ['logProperty','filterProp','summaryProp','importProperty'].forEach(id=>{
     const el=document.getElementById(id);if(!el)return;
     const val=el.value;
     el.innerHTML=id!=='logProperty'?'<option value="">All properties</option>':'';
@@ -370,15 +492,10 @@ function refreshDropdowns(){
 }
 
 /* ══════════════════════════════════
-   EVIDENCE — local pending files before save
+   EVIDENCE
    ══════════════════════════════════ */
-let pendingFiles=[]; // files queued on the log form before entry is saved
-
-window.localAttach=function(e){
-  addPendingFiles(Array.from(e.target.files));
-  e.target.value='';
-};
-
+let pendingFiles=[];
+window.localAttach=function(e){addPendingFiles(Array.from(e.target.files));e.target.value='';};
 function addPendingFiles(files){
   const allowed=['image/jpeg','image/png','application/pdf'];
   files.forEach(f=>{
@@ -389,46 +506,30 @@ function addPendingFiles(files){
   });
   renderPendingGrid();
 }
-
 function renderPendingGrid(){
   const grid=document.getElementById('log-evidence-grid');if(!grid)return;
   if(!pendingFiles.length){grid.innerHTML='';return;}
   grid.innerHTML=pendingFiles.map((f,i)=>{
-    const isImg=f.type.startsWith('image/');
-    const url=URL.createObjectURL(f);
-    return `<div class="ev-item">
-      ${isImg?`<img class="ev-thumb" src="${url}" alt="${f.name}">`:`<div class="ev-pdf">📄</div>`}
-      <div class="ev-name">${f.name}</div>
-      <button class="ev-del" onclick="removePending(${i})">×</button>
-    </div>`;
+    const isImg=f.type.startsWith('image/');const url=URL.createObjectURL(f);
+    return`<div class="ev-item">${isImg?`<img class="ev-thumb" src="${url}">`:`<div class="ev-pdf">📄</div>`}<div class="ev-name">${f.name}</div><button class="ev-del" onclick="event.stopPropagation();removePending(${i})">×</button></div>`;
   }).join('');
 }
-
 window.removePending=function(i){pendingFiles.splice(i,1);renderPendingGrid();};
-
-/* drag & drop on log form */
 window.dzOver=function(e,id){e.preventDefault();document.getElementById(id)?.classList.add('over');};
 window.dzOut=function(id){document.getElementById(id)?.classList.remove('over');};
 window.dzDrop=function(e,id,entryId){
   e.preventDefault();document.getElementById(id)?.classList.remove('over');
   const files=Array.from(e.dataTransfer.files);
-  if(entryId) uploadEvidenceToEntry(files,entryId);
-  else addPendingFiles(files);
+  if(entryId)uploadEvidenceToEntry(files,entryId);else addPendingFiles(files);
 };
-
-/* Upload to Cloudinary */
-function uploadToCloudinary(file,onProgress){
-  return new Promise((resolve,reject)=>{
+function uploadToCloudinary(file){
+  return new Promise((res,rej)=>{
     const fd=new FormData();fd.append('file',file);fd.append('upload_preset',UPLOAD_PRESET);
     const xhr=new XMLHttpRequest();xhr.open('POST',CLOUDINARY_URL);
-    xhr.upload.onprogress=e=>{if(e.lengthComputable)onProgress(Math.round(e.loaded/e.total*100));};
-    xhr.onload=()=>{if(xhr.status===200)resolve(JSON.parse(xhr.responseText).secure_url);else reject(new Error('Upload failed: '+xhr.status));};
-    xhr.onerror=()=>reject(new Error('Network error'));
-    xhr.send(fd);
+    xhr.onload=()=>xhr.status===200?res(JSON.parse(xhr.responseText).secure_url):rej(new Error('Upload failed'));
+    xhr.onerror=()=>rej(new Error('Network error'));xhr.send(fd);
   });
 }
-
-/* Upload evidence files and attach URLs to an existing entry */
 async function uploadEvidenceToEntry(files,entryId){
   const allowed=['image/jpeg','image/png','application/pdf'];
   const valid=files.filter(f=>{
@@ -440,34 +541,23 @@ async function uploadEvidenceToEntry(files,entryId){
   if(!valid.length)return;
   toast(`Uploading ${valid.length} file${valid.length>1?'s':''}…`);
   const entry=entries.find(e=>e.id===entryId);
-  const existing=entry?.evidence||[];
-  const newEvidence=[...existing];
+  const newEvidence=[...(entry?.evidence||[])];
   for(const file of valid){
-    try{
-      const url=await uploadToCloudinary(file,()=>{});
-      newEvidence.push({name:file.name,url,type:file.type.startsWith('image/')?'image':'pdf'});
-    }catch(err){toast(`Failed: ${file.name}`);}
+    try{const url=await uploadToCloudinary(file);newEvidence.push({name:file.name,url,type:file.type.startsWith('image/')?'image':'pdf'});}
+    catch(err){toast(`Failed: ${file.name}`);}
   }
-  try{
-    await updateDoc(doc(db,'str_entries',entryId),{evidence:newEvidence});
-    toast('Evidence saved!');
-  }catch(e){toast('Error saving evidence');}
+  try{await updateDoc(doc(db,'str_entries',entryId),{evidence:newEvidence});toast('Evidence saved!');}
+  catch(e){toast('Error saving evidence');}
 }
-
-/* Delete one evidence file from an entry */
 window.deleteEvidence=async function(entryId,idx){
   const entry=entries.find(e=>e.id===entryId);if(!entry)return;
   const ev=[...(entry.evidence||[])];ev.splice(idx,1);
   try{await updateDoc(doc(db,'str_entries',entryId),{evidence:ev});toast('File removed');}
   catch(e){toast('Error removing file');}
 };
-
-/* Open evidence file picker for existing entry */
 window.openEvidencePicker=function(entryId){
-  const inp=document.createElement('input');
-  inp.type='file';inp.accept='.jpg,.jpeg,.png,.pdf';inp.multiple=true;
-  inp.onchange=e=>uploadEvidenceToEntry(Array.from(e.target.files),entryId);
-  inp.click();
+  const inp=document.createElement('input');inp.type='file';inp.accept='.jpg,.jpeg,.png,.pdf';inp.multiple=true;
+  inp.onchange=e=>uploadEvidenceToEntry(Array.from(e.target.files),entryId);inp.click();
 };
 
 /* ══════════════════════════════════
@@ -479,34 +569,42 @@ window.logEntry=async function(){
   const cat=document.getElementById('logCategory').value;
   const hrs=parseFloat(document.getElementById('logHours').value);
   const notes=document.getElementById('logNotes').value.trim();
-  const user=getCurrentUser()||'Unknown';
+  const isTeam=!SPOUSES.includes(currentPerson);
   if(!prop){toast('Please select a property');return;}
   if(!date){toast('Please select a date');return;}
   if(!hrs||hrs<=0){toast('Please enter valid hours');return;}
 
-  // upload pending evidence first
   let evidence=[];
   if(pendingFiles.length){
     toast(`Uploading ${pendingFiles.length} file${pendingFiles.length>1?'s':''}…`);
     for(const file of pendingFiles){
-      try{
-        const url=await uploadToCloudinary(file,()=>{});
-        evidence.push({name:file.name,url,type:file.type.startsWith('image/')?'image':'pdf'});
-      }catch(err){toast(`Failed: ${file.name}`);}
+      try{const url=await uploadToCloudinary(file);evidence.push({name:file.name,url,type:file.type.startsWith('image/')?'image':'pdf'});}
+      catch(err){toast(`Failed: ${file.name}`);}
     }
   }
 
-  const entry={property:prop,date,category:cat,hours:hrs,notes,user,evidence,createdAt:Date.now()};
-  try{await addDoc(collection(db,'str_entries'),entry);}
+  const entryData={
+    property:prop, date, category:cat, hours:hrs, notes, evidence,
+    person:currentPerson,
+    entryType:isTeam?'team':'spouse',
+    createdAt:Date.now()
+  };
+  // add team-specific fields
+  if(isTeam){
+    entryData.teamRole=document.getElementById('logTeamRole').value;
+    entryData.teamFullName=document.getElementById('logTeamFullName').value.trim()||currentPerson;
+  }
+
+  try{await addDoc(collection(db,'str_entries'),entryData);}
   catch(e){toast('Error saving — check connection');return;}
 
   document.getElementById('logHours').value='';
   document.getElementById('logNotes').value='';
+  if(isTeam)document.getElementById('logTeamFullName').value='';
   pendingFiles=[];renderPendingGrid();
   toast('Entry saved!');
 };
 
-/* DELETE ENTRY */
 window.deleteEntry=async function(id){
   if(!confirm('Delete this entry?'))return;
   try{await deleteDoc(doc(db,'str_entries',id));}catch(e){toast('Error deleting');}
@@ -517,30 +615,44 @@ window.deleteEntry=async function(id){
    ══════════════════════════════════ */
 function renderEntries(){
   const el=document.getElementById('entries-list');if(!el)return;
-  const fuEl=document.getElementById('filterUser');
-  if(fuEl){
-    const prev=fuEl.value;
-    const names=[...new Set(entries.map(e=>e.user).filter(Boolean))].sort();
-    fuEl.innerHTML='<option value="">All people</option>'+names.map(n=>`<option value="${n}"${n===prev?' selected':''}>${n}</option>`).join('');
+  const fpEl=document.getElementById('filterPerson');
+  if(fpEl){
+    const prev=fpEl.value;
+    const names=[...new Set(entries.map(e=>e.person).filter(Boolean))].sort();
+    fpEl.innerHTML='<option value="">All people</option>'+names.map(n=>`<option value="${n}"${n===prev?' selected':''}>${n}</option>`).join('');
   }
   const fp=document.getElementById('filterProp')?.value||'';
   const fc=document.getElementById('filterCat')?.value||'';
-  const fu=fuEl?.value||'';
-  const list=entries.filter(e=>(!fp||e.property===fp)&&(!fc||e.category===fc)&&(!fu||e.user===fu));
+  const fu=fpEl?.value||'';
+  const ft=document.getElementById('filterType')?.value||'';
+  let list=entries.filter(e=>
+    (!fp||e.property===fp)&&(!fc||e.category===fc)&&(!fu||e.person===fu)&&
+    (!ft||(ft==='spouse'&&isSpouse(e))||(ft==='team'&&!isSpouse(e)))
+  );
   if(!list.length){el.innerHTML='<div class="empty"><div class="empty-icon">📋</div>No entries yet. Start logging your hours!</div>';return;}
   el.innerHTML=list.map(e=>{
     const prop=properties.find(p=>p.id===e.property);
     const ev=e.evidence||[];
-    const evHtml=ev.length?`<div class="evidence-grid" style="margin-top:8px;">${ev.map((f,i)=>
+    const spouse=isSpouse(e);
+    const evGrid=ev.length?`<div class="evidence-grid" style="margin-top:10px;">${ev.map((f,i)=>
       f.type==='image'
-        ?`<div class="ev-item"><img class="ev-thumb" src="${f.url}" alt="${f.name}" onclick="window.open('${f.url}','_blank')" style="cursor:pointer;"><div class="ev-name">${f.name}</div><button class="ev-del" onclick="deleteEvidence('${e.id}',${i})">×</button></div>`
-        :`<div class="ev-item"><div class="ev-pdf" onclick="window.open('${f.url}','_blank')" style="cursor:pointer;">📄</div><div class="ev-name">${f.name}</div><button class="ev-del" onclick="deleteEvidence('${e.id}',${i})">×</button></div>`
+        ?`<div class="ev-item"><img class="ev-thumb" src="${f.url}" onclick="window.open('${f.url}','_blank')"><div class="ev-name">${f.name}</div><button class="ev-del" onclick="deleteEvidence('${e.id}',${i})">×</button></div>`
+        :`<div class="ev-item"><div class="ev-pdf" onclick="window.open('${f.url}','_blank')">📄</div><div class="ev-name">${f.name}</div><button class="ev-del" onclick="deleteEvidence('${e.id}',${i})">×</button></div>`
     ).join('')}</div>`:'';
-    return `<div class="card">
+    return`<div class="card ${spouse?'spouse-card':'team-card'}">
       <div class="entry-main">
         <div style="flex:1;min-width:0;">
-          <div class="entry-name">${prop?prop.name:'Unknown property'}<span class="chip">${e.user}</span></div>
-          <div class="entry-meta">${fmtDate(e.date)} · ${catBadge(e.category)}${ev.length?` <span style="font-size:11px;color:var(--stone);">📎 ${ev.length} file${ev.length>1?'s':''}</span>`:''}</div>
+          <div class="entry-name">
+            ${prop?prop.name:'Unknown property'}
+            ${spouse
+              ?`<span class="spouse-chip">🏡 ${e.person}</span>`
+              :`<span class="team-chip">👥 ${e.teamRole||e.person}</span>`}
+          </div>
+          <div class="entry-meta">
+            ${fmtDate(e.date)} · ${catBadge(e.category)}
+            ${!spouse&&e.teamFullName?`<span style="font-size:11px;color:var(--purple);">${e.teamFullName}</span>`:''}
+            ${ev.length?`<span style="font-size:11px;color:var(--stone);">📎 ${ev.length} file${ev.length>1?'s':''}</span>`:''}
+          </div>
           ${e.notes?`<div class="entry-note">${e.notes}</div>`:''}
         </div>
         <div style="display:flex;align-items:center;gap:8px;flex-shrink:0;">
@@ -548,14 +660,9 @@ function renderEntries(){
           <button class="btn btn-sm btn-ghost-danger" onclick="deleteEntry('${e.id}')">Delete</button>
         </div>
       </div>
-      ${evHtml}
-      <div class="evidence-section">
-        <div class="evidence-label">Evidence</div>
-        <div class="evidence-drop" id="drop-${e.id}"
-          onclick="openEvidencePicker('${e.id}')"
-          ondragover="dzOver(event,'drop-${e.id}')" ondragleave="dzOut('drop-${e.id}')" ondrop="dzDrop(event,'drop-${e.id}','${e.id}')">
-          📎 Add evidence for this entry
-        </div>
+      ${evGrid}
+      <div class="entry-evidence-drop" id="drop-${e.id}" onclick="openEvidencePicker('${e.id}')" ondragover="dzOver(event,'drop-${e.id}')" ondragleave="dzOut('drop-${e.id}')" ondrop="dzDrop(event,'drop-${e.id}','${e.id}')">
+        📎 Tap to add evidence
       </div>
     </div>`;
   }).join('');
@@ -568,63 +675,98 @@ window.renderEntries=renderEntries;
 function renderSummary(){
   const metricsEl=document.getElementById('summary-metrics');if(!metricsEl)return;
   const fp=document.getElementById('summaryProp')?.value||'';
-  const list=fp?entries.filter(e=>e.property===fp):entries;
-  const total=list.reduce((s,e)=>s+e.hours,0);
-  const byUser={},byCat={};
-  list.forEach(e=>{byUser[e.user]=(byUser[e.user]||0)+e.hours;byCat[e.category]=(byCat[e.category]||0)+e.hours;});
-  const totalFiles=list.reduce((s,e)=>s+(e.evidence||[]).length,0);
+  const all=fp?entries.filter(e=>e.property===fp):entries;
+  const spouseEntries=all.filter(e=>isSpouse(e));
+  const teamEntries=all.filter(e=>!isSpouse(e));
+  const spouseTotal=spouseEntries.reduce((s,e)=>s+e.hours,0);
+  const teamTotal=teamEntries.reduce((s,e)=>s+e.hours,0);
+  const totalFiles=all.reduce((s,e)=>s+(e.evidence||[]).length,0);
+  const byCat={},byPerson={};
+  spouseEntries.forEach(e=>{
+    byCat[e.category]=(byCat[e.category]||0)+e.hours;
+    byPerson[e.person]=(byPerson[e.person]||0)+e.hours;
+  });
+
+  // IRS tests
+  const irs100pct=Math.min(spouseTotal/100,1);
+  const irs500pct=Math.min(spouseTotal/500,1);
+  const irsGrid=document.getElementById('irs-grid');
+  if(irsGrid){
+    const statusClass=(val,t1,t2)=>val>=t2?'irs-on':val>=t1?'irs-warn':'irs-off';
+    const statusText=(val,target)=>val>=target?'✓ Qualified':`${(target-val).toFixed(1)}h to go`;
+    irsGrid.innerHTML=`
+      <div class="irs-card">
+        <div class="irs-target">100-hour test</div>
+        <div class="irs-hrs">${spouseTotal.toFixed(1)}<span style="font-size:16px;color:var(--stone);">/100h</span></div>
+        <div class="prog-track"><div class="prog-fill" style="width:${irs100pct*100}%;background:${spouseTotal>=100?'var(--sage)':spouseTotal>=60?'var(--amber)':'var(--rust)'};"></div></div>
+        <div class="irs-label">Combined spouse hours</div>
+        <span class="irs-status ${statusClass(spouseTotal,60,100)}">${statusText(spouseTotal,100)}</span>
+      </div>
+      <div class="irs-card">
+        <div class="irs-target">500-hour safe harbor</div>
+        <div class="irs-hrs">${spouseTotal.toFixed(1)}<span style="font-size:16px;color:var(--stone);">/500h</span></div>
+        <div class="prog-track"><div class="prog-fill" style="width:${irs500pct*100}%;background:${spouseTotal>=500?'var(--sage)':spouseTotal>=300?'var(--amber)':'var(--rust)'};"></div></div>
+        <div class="irs-label">Combined spouse hours</div>
+        <span class="irs-status ${statusClass(spouseTotal,300,500)}">${statusText(spouseTotal,500)}</span>
+      </div>`;
+  }
+
   metricsEl.innerHTML=`
-    <div class="metric"><div class="metric-label">Total hours</div><div class="metric-val">${total.toFixed(1)}</div><div class="metric-sub">all time</div></div>
-    <div class="metric"><div class="metric-label">Entries</div><div class="metric-val">${list.length}</div><div class="metric-sub">logged</div></div>
-    <div class="metric"><div class="metric-label">Avg / entry</div><div class="metric-val">${list.length?(total/list.length).toFixed(1):'—'}</div><div class="metric-sub">hours</div></div>
+    <div class="metric metric-spouse"><div class="metric-label">Spouse hours</div><div class="metric-val">${spouseTotal.toFixed(1)}</div><div class="metric-sub">you + Shashank combined</div></div>
+    <div class="metric metric-team"><div class="metric-label">Team hours</div><div class="metric-val">${teamTotal.toFixed(1)}</div><div class="metric-sub">contractors &amp; staff</div></div>
+    <div class="metric"><div class="metric-label">Total entries</div><div class="metric-val">${all.length}</div><div class="metric-sub">all logged</div></div>
     <div class="metric"><div class="metric-label">Evidence files</div><div class="metric-val">${totalFiles}</div><div class="metric-sub">attached</div></div>`;
+
   const sc=document.getElementById('summary-cats');
   if(sc){
     const sorted=Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
     sc.innerHTML=sorted.length?sorted.map(([cat,hrs])=>{
-      const pct=total?Math.round(hrs/total*100):0;const c=CAT[cat]||CAT['Other'];
-      return `<div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">${catBadge(cat)}<span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--stone);">${hrs.toFixed(1)}h <span style="color:var(--sand);">${pct}%</span></span></div><div class="prog-track"><div class="prog-fill" style="width:${pct}%;background:${c.fg};opacity:0.75;"></div></div></div>`;
-    }).join(''):'<div class="empty">No data yet.</div>';
+      const pct=spouseTotal?Math.round(hrs/spouseTotal*100):0;const c=CAT[cat]||CAT['Other'];
+      return`<div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;">${catBadge(cat)}<span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--stone);">${hrs.toFixed(1)}h <span style="color:var(--sand);">${pct}%</span></span></div><div class="prog-track"><div class="prog-fill" style="width:${pct}%;background:${c.fg};opacity:0.75;"></div></div></div>`;
+    }).join(''):'<div class="empty">No spouse entries yet.</div>';
   }
   const sp=document.getElementById('summary-people');
   if(sp){
-    const sortedP=Object.entries(byUser).sort((a,b)=>b[1]-a[1]);
-    sp.innerHTML=sortedP.length?sortedP.map(([user,hrs])=>{
-      const pct=total?Math.round(hrs/total*100):0;
-      return `<div class="card" style="display:flex;align-items:center;justify-content:space-between;"><div style="font-size:14px;font-weight:500;">${user}</div><div style="font-family:'DM Mono',monospace;font-size:17px;">${hrs.toFixed(1)}<span style="font-size:12px;color:var(--stone);margin-left:4px;">(${pct}%)</span></div></div>`;
-    }).join(''):'<div class="empty">No data yet.</div>';
+    sp.innerHTML=SPOUSES.map(name=>{
+      const hrs=byPerson[name]||0;const pct=spouseTotal?Math.round(hrs/spouseTotal*100):0;
+      return`<div class="card" style="display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:14px;font-weight:500;">${name}</div><div style="font-size:12px;color:var(--stone);">Spouse — counts toward IRS test</div></div><div style="font-family:'DM Mono',monospace;font-size:17px;">${hrs.toFixed(1)}h <span style="font-size:12px;color:var(--stone);">(${pct}%)</span></div></div>`;
+    }).join('');
+  }
+  const str=document.getElementById('summary-team-roles');
+  if(str){
+    const byRole={};
+    teamEntries.forEach(e=>{const k=e.teamRole||e.person||'Other';byRole[k]=(byRole[k]||0)+e.hours;});
+    const sortedR=Object.entries(byRole).sort((a,b)=>b[1]-a[1]);
+    str.innerHTML=sortedR.length?sortedR.map(([role,hrs])=>{
+      const pct=teamTotal?Math.round(hrs/teamTotal*100):0;
+      return`<div style="margin-bottom:12px;"><div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:5px;"><span class="team-role-badge">${role}</span><span style="font-family:'DM Mono',monospace;font-size:13px;color:var(--stone);">${hrs.toFixed(1)}h <span style="color:var(--sand);">${pct}%</span></span></div><div class="prog-track"><div class="prog-fill" style="width:${pct}%;background:var(--purple);opacity:0.75;"></div></div></div>`;
+    }).join(''):'<div class="empty">No team hours yet.</div>';
   }
 }
 window.renderSummary=renderSummary;
 
-/* PROPERTIES */
+/* ══════════════════════════════════
+   PROPERTIES
+   ══════════════════════════════════ */
 function renderProperties(){
   const el=document.getElementById('props-list');if(!el)return;
   if(!properties.length){el.innerHTML='<div class="empty"><div class="empty-icon">🏠</div>No properties yet — add one below.</div>';return;}
   el.innerHTML=properties.map(p=>{
-    const hrs=entries.filter(e=>e.property===p.id).reduce((s,e)=>s+e.hours,0);
-    const cnt=entries.filter(e=>e.property===p.id).length;
-    return `<div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:12px;"><div style="flex:1;"><div style="font-size:14px;font-weight:500;">${p.name}</div><div style="font-size:12px;color:var(--stone);margin-top:2px;">${hrs.toFixed(1)} hrs total · ${cnt} entries</div></div><button class="btn btn-sm btn-ghost-danger" onclick="deleteProp('${p.id}')">Remove</button></div>`;
+    const spouseHrs=entries.filter(e=>e.property===p.id&&isSpouse(e)).reduce((s,e)=>s+e.hours,0);
+    const teamHrs=entries.filter(e=>e.property===p.id&&!isSpouse(e)).reduce((s,e)=>s+e.hours,0);
+    return`<div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:12px;"><div style="flex:1;"><div style="font-size:14px;font-weight:500;">${p.name}</div><div style="font-size:12px;color:var(--stone);margin-top:2px;">Spouse: ${spouseHrs.toFixed(1)}h · Team: ${teamHrs.toFixed(1)}h</div></div><button class="btn btn-sm btn-ghost-danger" onclick="deleteProp('${p.id}')">Remove</button></div>`;
   }).join('');
 }
 window.renderProperties=renderProperties;
 
 window.addProperty=async function(){
-  const name=document.getElementById('newPropName').value.trim();
-  if(!name){toast('Enter a property name');return;}
-  const prop={name,nick:document.getElementById('newPropNick').value.trim(),createdAt:Date.now()};
-  try{await addDoc(collection(db,'str_properties'),prop);}catch(e){toast('Error saving property');return;}
-  document.getElementById('newPropName').value='';document.getElementById('newPropNick').value='';
-  toast('Property added!');
+  const name=document.getElementById('newPropName').value.trim();if(!name){toast('Enter a property name');return;}
+  try{await addDoc(collection(db,'str_properties'),{name,nick:document.getElementById('newPropNick').value.trim(),createdAt:Date.now()});}catch(e){toast('Error saving property');return;}
+  document.getElementById('newPropName').value='';document.getElementById('newPropNick').value='';toast('Property added!');
 };
-
 window.deleteProp=async function(id){
   if(!confirm('Remove this property and all its entries?'))return;
-  try{
-    await deleteDoc(doc(db,'str_properties',id));
-    const toDelete=entries.filter(e=>e.property===id);
-    await Promise.all(toDelete.map(e=>deleteDoc(doc(db,'str_entries',e.id))));
-  }catch(e){toast('Error removing property');}
+  try{await deleteDoc(doc(db,'str_properties',id));await Promise.all(entries.filter(e=>e.property===id).map(e=>deleteDoc(doc(db,'str_entries',e.id))));}catch(e){toast('Error removing property');}
 };
 
 /* ══════════════════════════════════
@@ -632,161 +774,159 @@ window.deleteProp=async function(id){
    ══════════════════════════════════ */
 window.exportCSV=function(){
   if(!entries.length){toast('No entries to export yet');return;}
-  const headers=['Date','Property','Category','Hours','Person','Notes','Evidence Files'];
+  const h=['Date','Property','Category','Hours','Person','Type','Team Role','Notes','Evidence Files'];
   const rows=entries.map(e=>{
     const prop=properties.find(p=>p.id===e.property);
     const esc=val=>`"${String(val||'').replace(/"/g,'""')}"`;
-    const evNames=(e.evidence||[]).map(f=>f.name).join('; ');
-    return[esc(e.date),esc(prop?prop.name:'Unknown'),esc(e.category),e.hours,esc(e.user),esc(e.notes||''),esc(evNames)].join(',');
+    return[esc(e.date),esc(prop?prop.name:'Unknown'),esc(e.category),e.hours,esc(e.person),esc(isSpouse(e)?'Spouse':'Team'),esc(e.teamRole||''),esc(e.notes||''),esc((e.evidence||[]).map(f=>f.name).join('; '))].join(',');
   });
-  const csv=[headers.join(','),...rows].join('\n');
+  const csv=[h.join(','),...rows].join('\n');
   const blob=new Blob([csv],{type:'text/csv;charset=utf-8;'});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement('a');
+  const url=URL.createObjectURL(blob);const a=document.createElement('a');
   a.href=url;a.download=`str_hours_${new Date().toISOString().split('T')[0]}.csv`;
-  document.body.appendChild(a);a.click();document.body.removeChild(a);
-  URL.revokeObjectURL(url);
+  document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
   toast(`Exported ${entries.length} entries`);
 };
 
 /* ══════════════════════════════════
-   AUDIT PACKAGE — ZIP organized by Property / Date / files
+   AUDIT PACKAGE
    ══════════════════════════════════ */
 window.downloadAuditPackage=async function(){
   if(!entries.length){toast('No entries to export');return;}
-  if(typeof JSZip==='undefined'){toast('JSZip not loaded — try refreshing');return;}
-
-  const prog=document.getElementById('audit-progress');
-  prog.style.display='block';
-  prog.textContent='Building audit package…';
-
+  if(typeof JSZip==='undefined'){toast('JSZip not loaded — refresh');return;}
+  const prog=document.getElementById('audit-progress');prog.style.display='block';prog.textContent='Building audit package…';
   try{
     const zip=new JSZip();
-
-    // 1. Add CSV
-    const headers=['Date','Property','Category','Hours','Person','Notes','Evidence Files'];
+    const h=['Date','Property','Category','Hours','Person','Type','Team Role','Notes','Evidence Files'];
     const rows=entries.map(e=>{
-      const prop=properties.find(p=>p.id===e.property);
-      const esc=val=>`"${String(val||'').replace(/"/g,'""')}"`;
-      const evNames=(e.evidence||[]).map(f=>f.name).join('; ');
-      return[esc(e.date),esc(prop?prop.name:'Unknown'),esc(e.category),e.hours,esc(e.user),esc(e.notes||''),esc(evNames)].join(',');
+      const prop=properties.find(p=>p.id===e.property);const esc=val=>`"${String(val||'').replace(/"/g,'""')}"`;
+      return[esc(e.date),esc(prop?prop.name:'Unknown'),esc(e.category),e.hours,esc(e.person),esc(isSpouse(e)?'Spouse':'Team'),esc(e.teamRole||''),esc(e.notes||''),esc((e.evidence||[]).map(f=>f.name).join('; '))].join(',');
     });
-    zip.file('str_hours_log.csv',[headers.join(','),...rows].join('\n'));
-
-    // 2. Add evidence files organized by Property / Date /
-    const entriesWithEvidence=entries.filter(e=>(e.evidence||[]).length>0);
-    let done=0,total=entriesWithEvidence.reduce((s,e)=>s+(e.evidence||[]).length,0);
-
-    for(const entry of entriesWithEvidence){
+    zip.file('str_hours_log.csv',[h.join(','),...rows].join('\n'));
+    const withEv=entries.filter(e=>(e.evidence||[]).length>0);
+    let done=0,total=withEv.reduce((s,e)=>s+(e.evidence||[]).length,0);
+    for(const entry of withEv){
       const prop=properties.find(p=>p.id===entry.property);
-      const propFolder=safeName(prop?prop.name:'Unknown_Property');
-      const dateFolder=entry.date||'Unknown_Date';
-
-      for(let i=0;i<(entry.evidence||[]).length;i++){
-        const ev=entry.evidence[i];
-        try{
-          const resp=await fetch(ev.url);
-          if(!resp.ok)throw new Error('fetch failed');
-          const blob=await resp.blob();
-          const ext=ev.name.includes('.')?ev.name.split('.').pop():(ev.type==='pdf'?'pdf':'jpg');
-          const fname=`${safeName(entry.category)}_${safeName(ev.name)}`;
-          zip.folder(propFolder).folder(dateFolder).file(fname,blob);
-          done++;
-          prog.textContent=`Collecting evidence: ${done} / ${total} files…`;
-        }catch(err){
-          console.warn('Could not fetch',ev.url,err);
-          done++;
-        }
+      const folder=zip.folder(safeName(prop?prop.name:'Unknown')).folder(entry.date||'Unknown');
+      for(const ev of(entry.evidence||[])){
+        try{const resp=await fetch(ev.url);if(!resp.ok)throw new Error();folder.file(safeName(entry.category)+'_'+safeName(ev.name),await resp.blob());done++;prog.textContent=`Collecting: ${done}/${total} files…`;}
+        catch(err){done++;console.warn('fetch failed',ev.url);}
       }
-
-      // Add a summary text file per entry folder
-      const prop2=properties.find(p=>p.id===entry.property);
-      const summary=[
-        `Date: ${entry.date}`,
-        `Property: ${prop2?prop2.name:'Unknown'}`,
-        `Category: ${entry.category}`,
-        `Hours: ${entry.hours}`,
-        `Logged by: ${entry.user}`,
-        `Notes: ${entry.notes||'—'}`,
-        `Evidence files: ${(entry.evidence||[]).map(f=>f.name).join(', ')||'None'}`,
-      ].join('\n');
-      zip.folder(safeName(prop2?prop2.name:'Unknown_Property')).folder(entry.date||'Unknown_Date').file(`_entry_summary.txt`,summary);
+      folder.file('_summary.txt',[`Date: ${entry.date}`,`Property: ${prop?prop.name:'Unknown'}`,`Category: ${entry.category}`,`Hours: ${entry.hours}`,`Person: ${entry.person}`,`Type: ${isSpouse(entry)?'Spouse (counts toward IRS test)':'Team (does not count)'}`,entry.teamRole?`Team Role: ${entry.teamRole}`:'',`Notes: ${entry.notes||'—'}`,`Evidence: ${(entry.evidence||[]).map(f=>f.name).join(', ')||'None'}`].filter(Boolean).join('\n'));
     }
-
     prog.textContent='Compressing…';
     const blob=await zip.generateAsync({type:'blob',compression:'DEFLATE'});
-    const url=URL.createObjectURL(blob);
-    const a=document.createElement('a');
+    const url=URL.createObjectURL(blob);const a=document.createElement('a');
     a.href=url;a.download=`STR_Audit_${new Date().toISOString().split('T')[0]}.zip`;
-    document.body.appendChild(a);a.click();document.body.removeChild(a);
-    URL.revokeObjectURL(url);
-    prog.textContent=`✓ Audit package downloaded — ${entries.length} entries, ${total} evidence files`;
+    document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
+    prog.textContent=`✓ Downloaded — ${entries.length} entries, ${total} evidence files`;
     setTimeout(()=>{prog.style.display='none';},4000);
-  }catch(err){
-    prog.textContent='Error building package — try again';
-    console.error(err);
-  }
+  }catch(err){prog.textContent='Error building package — try again';console.error(err);}
 };
 
 /* ══════════════════════════════════
-   VOICE ENTRY
+   CSV IMPORT
    ══════════════════════════════════ */
-const VOICE_CATEGORIES=Object.keys(CAT);
-let recognition=null,isListening=false;
-
-(function initVoice(){
-  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
-  if(!SR){
-    const sec=document.getElementById('voice-section');
-    if(sec)sec.innerHTML='<div style="font-size:12px;color:var(--rust);padding:8px 12px;background:var(--rust-bg);border-radius:var(--radius);margin-bottom:14px;">Voice entry is not supported on this browser. Use Chrome or Safari 15+.</div>';
-    return;
-  }
-  recognition=new SR();recognition.continuous=false;recognition.interimResults=true;recognition.lang='en-US';
-  recognition.onresult=ev=>{
-    const t=Array.from(ev.results).map(r=>r[0].transcript).join('');
-    document.getElementById('voice-transcript').textContent=t;
-    if(ev.results[ev.results.length-1].isFinal)parseVoiceInput(t);
+let csvRows=[],csvHeaders=[];
+const FIELD_MAP=[{key:'date',label:'Date',required:true},{key:'hours',label:'Hours',required:true},{key:'category',label:'Category',required:false},{key:'notes',label:'Notes / Description',required:false}];
+window.csvDrop=function(e){e.preventDefault();document.getElementById('import-drop')?.classList.remove('over');const f=e.dataTransfer.files[0];if(f)parseCSV(f);};
+window.csvPick=function(e){const f=e.target.files[0];if(f)parseCSV(f);e.target.value='';};
+function parseCSV(file){
+  const reader=new FileReader();
+  reader.onload=ev=>{
+    const lines=ev.target.result.split(/\r?\n/).filter(l=>l.trim());
+    if(lines.length<2){showImportStatus('CSV must have a header row and at least one data row.');return;}
+    csvHeaders=parseCSVLine(lines[0]);csvRows=lines.slice(1).map(l=>parseCSVLine(l));
+    showImportStatus(`Found ${csvRows.length} rows and ${csvHeaders.length} columns.`);
+    buildMapper();buildPreview();document.getElementById('import-mapper').style.display='block';
   };
+  reader.readAsText(file);
+}
+function parseCSVLine(line){
+  const res=[];let cur='',inQ=false;
+  for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'&&inQ&&line[i+1]==='"'){cur+='"';i++;}else if(ch==='"'){inQ=!inQ;}else if(ch===','&&!inQ){res.push(cur.trim());cur='';}else cur+=ch;}
+  res.push(cur.trim());return res;
+}
+function showImportStatus(msg){const el=document.getElementById('import-status');el.style.display='block';el.textContent=msg;}
+function buildMapper(){
+  const tbody=document.getElementById('map-body');
+  tbody.innerHTML=FIELD_MAP.map(f=>{
+    const opts=csvHeaders.map((h,i)=>{const sel=h.toLowerCase().includes(f.key)||h.toLowerCase().includes(f.label.split('/')[0].trim().toLowerCase())?'selected':'';return`<option value="${i}" ${sel}>${h}</option>`;}).join('');
+    return`<tr><td><strong>${f.label}</strong>${f.required?' <span style="color:var(--rust);">*</span>':''}</td><td><select id="map-${f.key}"><option value="">— skip —</option>${opts}</select></td></tr>`;
+  }).join('');
+}
+function buildPreview(){
+  const t=document.getElementById('preview-table');
+  t.innerHTML=`<tr>${csvHeaders.map(h=>`<th>${h}</th>`).join('')}</tr>`+csvRows.slice(0,5).map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('');
+}
+window.runImport=async function(){
+  const propId=document.getElementById('importProperty').value;
+  if(!propId){toast('Please select a property');return;}
+  const personType=document.getElementById('importPersonType').value;
+  const person=personType==='spouse-shashank'?'Shashank':personType==='spouse-you'?(localStorage.getItem('str_current_person')||SPOUSES[0]):'Team Import';
+  const entryType=personType==='team'?'team':'spouse';
+  const getIdx=key=>{const el=document.getElementById('map-'+key);return el&&el.value!==''?parseInt(el.value):-1;};
+  const dateIdx=getIdx('date'),hoursIdx=getIdx('hours'),catIdx=getIdx('category'),notesIdx=getIdx('notes');
+  if(dateIdx<0||hoursIdx<0){toast('Date and Hours columns are required');return;}
+  let imported=0,skipped=0;
+  for(const row of csvRows){
+    const date=row[dateIdx]?.trim();const hrs=parseFloat(row[hoursIdx]);
+    if(!date||isNaN(hrs)||hrs<=0){skipped++;continue;}
+    let normDate=date;
+    const dp=date.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
+    if(dp){const y=dp[3].length===2?'20'+dp[3]:dp[3];normDate=`${y}-${dp[1].padStart(2,'0')}-${dp[2].padStart(2,'0')}`;}
+    const rawCat=catIdx>=0?row[catIdx]?.trim():'';
+    const cat=matchCat(rawCat)||'Other';
+    const notes=notesIdx>=0?row[notesIdx]?.trim()||'':'';
+    try{await addDoc(collection(db,'str_entries'),{property:propId,date:normDate,category:cat,hours:hrs,notes,person,entryType,evidence:[],createdAt:Date.now(),importedFrom:'csv'});imported++;}
+    catch(e){skipped++;}
+  }
+  document.getElementById('import-mapper').style.display='none';
+  const res=document.getElementById('import-result');res.style.display='block';
+  res.innerHTML=`<div class="card" style="text-align:center;padding:1.5rem;"><div style="font-size:28px;margin-bottom:8px;">✅</div><div style="font-size:16px;font-weight:500;margin-bottom:4px;">${imported} entries imported as ${entryType==='spouse'?person:'Team'}</div><div style="font-size:13px;color:var(--stone);">${skipped} rows skipped</div></div>`;
+  toast(`Imported ${imported} entries!`);
+};
+function matchCat(raw){
+  if(!raw)return null;const lower=raw.toLowerCase();
+  for(const cat of Object.keys(CAT)){if(lower.includes(cat.toLowerCase())||cat.toLowerCase().includes(lower))return cat;}
+  const a={admin:'Administrative',cleaning:'Property Maintenance',maintenance:'Property Maintenance',repair:'Property Maintenance',marketing:'Marketing',legal:'Legal',operations:'Operations',rental:'Rental Management',tenant:'Tenant Communication',guest:'Guest Relations',design:'Property Improvements',development:'Property Development',acquisition:'Property Acquisition',selling:'Property Selling'};
+  for(const[k,v]of Object.entries(a)){if(lower.includes(k))return v;}return null;
+}
+
+/* ══════════════════════════════════
+   VOICE
+   ══════════════════════════════════ */
+const VOICE_CATS=Object.keys(CAT);let recognition=null,isListening=false;
+(function(){
+  const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(!SR){const s=document.getElementById('voice-section');if(s)s.innerHTML='<div style="font-size:12px;color:var(--rust);padding:8px 12px;background:var(--rust-bg);border-radius:var(--radius);">Voice not supported — use Chrome or Safari 15+.</div>';return;}
+  recognition=new SR();recognition.continuous=false;recognition.interimResults=true;recognition.lang='en-US';
+  recognition.onresult=ev=>{const t=Array.from(ev.results).map(r=>r[0].transcript).join('');document.getElementById('voice-transcript').textContent=t;if(ev.results[ev.results.length-1].isFinal)parseVoice(t);};
   recognition.onend=()=>{isListening=false;document.getElementById('voice-btn')?.classList.remove('listening');};
   recognition.onerror=e=>{isListening=false;document.getElementById('voice-btn')?.classList.remove('listening');if(e.error!=='no-speech')toast('Voice error: '+e.error);};
 })();
-
-window.toggleVoice=function(){
-  if(!recognition)return;
-  if(isListening){recognition.stop();isListening=false;document.getElementById('voice-btn').classList.remove('listening');}
-  else{recognition.start();isListening=true;document.getElementById('voice-btn').classList.add('listening');document.getElementById('voice-transcript').textContent='Listening…';}
-};
-
-function parseVoiceInput(text){
-  const lower=text.toLowerCase();
-  let hours=null;
+window.toggleVoice=function(){if(!recognition)return;if(isListening)recognition.stop();else{recognition.start();isListening=true;document.getElementById('voice-btn').classList.add('listening');document.getElementById('voice-transcript').textContent='Listening…';}};
+function parseVoice(text){
+  const lower=text.toLowerCase();let hours=null;
   const hm=lower.match(/(\d+(?:\.\d+)?)\s*(?:and\s*a?\s*half\s*)?hours?/);
   if(hm){hours=parseFloat(hm[1]);if(lower.includes('and a half')||lower.includes('and half'))hours+=0.5;}
   if(!hours&&lower.match(/half\s+an?\s+hour/))hours=0.5;
   if(!hours&&lower.match(/an?\s+hour/))hours=1;
   let matchedCat=null,bestScore=0;
-  VOICE_CATEGORIES.forEach(cat=>{
-    const cl=cat.toLowerCase();
-    if(lower.includes(cl)){matchedCat=cat;bestScore=100;return;}
-    const words=cl.split(' ');
-    const score=words.filter(w=>lower.includes(w)&&w.length>3).length/words.length;
-    if(score>bestScore){bestScore=score;matchedCat=cat;}
-  });
-  const aliases={'admin':'Administrative','administration':'Administrative','guest':'Guest Relations','legal':'Legal','contract':'Legal','market':'Marketing','ops':'Operations','acqui':'Property Acquisition','buying':'Property Acquisition','develop':'Property Development','improv':'Property Improvements','renovation':'Property Improvements','mainten':'Property Maintenance','repair':'Property Maintenance','fix':'Property Maintenance','sell':'Property Selling','rental':'Rental Management','manage':'Rental Management','tenant':'Tenant Communication','renter':'Tenant Communication'};
-  Object.entries(aliases).forEach(([k,v])=>{if(lower.includes(k))matchedCat=v;});
+  VOICE_CATS.forEach(cat=>{const cl=cat.toLowerCase();if(lower.includes(cl)){matchedCat=cat;bestScore=100;return;}const words=cl.split(' ');const score=words.filter(w=>lower.includes(w)&&w.length>3).length/words.length;if(score>bestScore){bestScore=score;matchedCat=cat;}});
+  const al={admin:'Administrative',guest:'Guest Relations',legal:'Legal',market:'Marketing',ops:'Operations',acqui:'Property Acquisition',develop:'Property Development',improv:'Property Improvements',mainten:'Property Maintenance',repair:'Property Maintenance',fix:'Property Maintenance',sell:'Property Selling',rental:'Rental Management',tenant:'Tenant Communication'};
+  Object.entries(al).forEach(([k,v])=>{if(lower.includes(k))matchedCat=v;});
   let notes=text;
-  notes=notes.replace(/\d+(?:\.\d+)?\s*(?:and\s*a?\s*half\s*)?hours?/gi,'');
-  notes=notes.replace(/half\s+an?\s+hour/gi,'');notes=notes.replace(/an?\s+hour/gi,'');
+  notes=notes.replace(/\d+(?:\.\d+)?\s*(?:and\s*a?\s*half\s*)?hours?/gi,'').replace(/half\s+an?\s+hour/gi,'').replace(/an?\s+hour/gi,'');
   if(matchedCat)notes=notes.replace(new RegExp(matchedCat,'gi'),'');
   notes=notes.replace(/\b(of|for|on|spent|did|worked|doing|i|the|some|a|an)\b/gi,'').replace(/\s+/g,' ').trim();
   const applied=[];
   if(hours&&hours>0){document.getElementById('logHours').value=hours;applied.push(`${hours}h`);}
   if(matchedCat&&bestScore>0){document.getElementById('logCategory').value=matchedCat;applied.push(matchedCat);}
   if(notes&&notes.length>2){document.getElementById('logNotes').value=notes;applied.push('notes added');}
-  document.getElementById('voice-transcript').textContent=`"${text}" → ${applied.length?'Filled: '+applied.join(', '):'Could not parse — please check fields'}`;
+  document.getElementById('voice-transcript').textContent=`"${text}" → ${applied.length?'Filled: '+applied.join(', '):'Could not parse — check fields'}`;
   if(applied.length)toast('Voice entry applied!');
 }
-
 </script>
 </body>
 </html>
