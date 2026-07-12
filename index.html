@@ -23,11 +23,11 @@ body{font-family:'DM Sans',sans-serif;background:var(--ivory);color:var(--ink);m
 .brand-icon svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;}
 .brand-name{font-size:17px;font-weight:600;color:var(--ink);letter-spacing:-0.3px;}
 .brand-sub{font-size:12px;color:var(--stone);margin-top:1px;}
-.person-toggle{display:flex;align-items:center;gap:4px;background:var(--cream);border-radius:40px;padding:4px 5px;}
-.person-btn{padding:5px 13px;border-radius:30px;border:none;background:transparent;color:var(--stone);cursor:pointer;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;transition:all 0.15s;white-space:nowrap;}
-.person-btn.active-spouse{background:#fff;color:var(--forest);box-shadow:var(--shadow);font-weight:600;}
-.person-btn.active-team{background:var(--purple);color:#fff;box-shadow:var(--shadow);font-weight:600;}
-.person-label{font-size:11px;color:var(--stone);white-space:nowrap;}
+.person-toggle-wrap{display:flex;flex-direction:column;align-items:flex-end;gap:4px;}
+.person-toggle-label{font-size:11px;color:var(--stone);text-transform:uppercase;letter-spacing:0.4px;}
+.person-toggle-btns{display:flex;gap:6px;}
+.ptbtn{padding:8px 20px;border-radius:30px;border:2px solid var(--cream);background:var(--cream);color:var(--stone);cursor:pointer;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;transition:all 0.15s;}
+.ptbtn.active{background:var(--forest);color:#fff;border-color:var(--forest);font-weight:700;box-shadow:0 2px 8px rgba(45,80,22,0.3);}
 .nav{display:flex;gap:4px;overflow-x:auto;padding-bottom:1px;}
 .nav::-webkit-scrollbar{display:none;}
 .nav-btn{padding:7px 14px;border-radius:8px;border:none;background:transparent;color:var(--stone);cursor:pointer;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all 0.15s;}
@@ -150,11 +150,11 @@ input[type=file].ev-input{display:none;}
           <div class="brand-sub" id="sync-status"><span class="sync-dot syncing"></span>Connecting…</div>
         </div>
       </div>
-      <div>
-        <div class="person-label" style="margin-bottom:5px;text-align:right;font-size:11px;color:var(--stone);text-transform:uppercase;letter-spacing:0.4px;">Logging as</div>
-        <div style="display:flex;gap:6px;">
-          <button id="btn-you" onclick="setPerson('You')" style="padding:7px 18px;border-radius:30px;border:1.5px solid var(--forest);background:var(--forest);color:#fff;cursor:pointer;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;transition:all 0.15s;">You</button>
-          <button id="btn-shashank" onclick="setPerson('Shashank')" style="padding:7px 18px;border-radius:30px;border:1.5px solid var(--cream);background:transparent;color:var(--stone);cursor:pointer;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;transition:all 0.15s;">Shashank</button>
+      <div class="person-toggle-wrap">
+        <div class="person-toggle-label">Logging as</div>
+        <div class="person-toggle-btns">
+          <button id="btn-you" class="ptbtn active" onclick="setPerson('Neelima')">Neelima</button>
+          <button id="btn-shashank" class="ptbtn" onclick="setPerson('Shashank')">Shashank</button>
         </div>
       </div>
     </div>
@@ -310,7 +310,7 @@ input[type=file].ev-input{display:none;}
     </div>
     <div class="audit-progress" id="audit-progress"></div>
     <div class="section-head">IRS material participation</div>
-    <div class="section-sub">Combined spouse hours (you + Shashank) toward the 100-hr and 500-hr tests</div>
+    <div class="section-sub">Combined spouse hours (Neelima + Shashank) toward the 100-hr and 500-hr tests</div>
     <div class="irs-grid" id="irs-grid"></div>
     <div class="metric-grid" id="summary-metrics"></div>
     <div class="section-head">Spouse hours by category</div>
@@ -376,7 +376,7 @@ import { getFirestore, collection, addDoc, deleteDoc, updateDoc,
 
 const CLOUD_NAME='odv2dxer',UPLOAD_PRESET='str_tracker';
 const CLOUDINARY_URL=`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
-const SPOUSES=['You','Shashank'];
+const SPOUSES=['Neelima','Shashank'];
 const CAT={
   'Administrative':{bg:'#EBF3FA',fg:'#1A5276'},'Guest Relations':{bg:'#E5F4F2',fg:'#0E7063'},
   'Legal':{bg:'#FCEBEB',fg:'#791F1F'},'Marketing':{bg:'#FBEAF0',fg:'#72243E'},
@@ -392,10 +392,17 @@ function fmtDate(d){if(!d)return'';const[y,m,day]=d.split('-');return new Date(y
 function toast(msg){const t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
 function setSyncStatus(s,l){const el=document.getElementById('sync-status');if(!el)return;const dc=s==='error'?'error':s==='ok'?'':'syncing';el.innerHTML=`<span class="sync-dot ${dc}"></span>${l}`;}
 function safeName(s){return(s||'').replace(/[^a-zA-Z0-9_\-\.]/g,'_').substring(0,60);}
-function isSpouse(e){return SPOUSES.includes(e.person)||e.entryType==='spouse';}
+function isSpouse(e){
+  // Recognize current names AND legacy values from older versions of the app
+  const spouseNames=['Neelima','Shashank','You','Me','Husband','me','husband'];
+  return spouseNames.includes(e.person)||e.entryType==='spouse';
+}
 
 let db=null,entries=[],properties=[];
 let currentPerson=localStorage.getItem('str_current_person')||SPOUSES[0];
+// Migrate legacy 'Me'/'Husband' values from old version
+if(currentPerson==='Me'||currentPerson==='me'||currentPerson==='You')currentPerson='Neelima';
+if(currentPerson==='Husband'||currentPerson==='husband')currentPerson='Shashank';
 
 const FB={
   apiKey:"AIzaSyByi-RGM2BYUdZF9Rw4Fk0w6lyJIBkdFhw",
@@ -431,12 +438,10 @@ function updateToggleButtons(){
   const btnYou=document.getElementById('btn-you');
   const btnShashank=document.getElementById('btn-shashank');
   if(!btnYou||!btnShashank)return;
-  if(currentPerson==='You'){
-    btnYou.style.background='var(--forest)';btnYou.style.color='#fff';btnYou.style.borderColor='var(--forest)';btnYou.style.fontWeight='600';
-    btnShashank.style.background='transparent';btnShashank.style.color='var(--stone)';btnShashank.style.borderColor='var(--cream)';btnShashank.style.fontWeight='500';
+  if(currentPerson==='Neelima'||currentPerson==='You'||currentPerson==='Me'){
+    btnYou.classList.add('active');btnShashank.classList.remove('active');
   } else {
-    btnShashank.style.background='var(--forest)';btnShashank.style.color='#fff';btnShashank.style.borderColor='var(--forest)';btnShashank.style.fontWeight='600';
-    btnYou.style.background='transparent';btnYou.style.color='var(--stone)';btnYou.style.borderColor='var(--cream)';btnYou.style.fontWeight='500';
+    btnShashank.classList.add('active');btnYou.classList.remove('active');
   }
 }
 window.setPerson=function(name){
@@ -689,19 +694,19 @@ function renderSummary(){
         <div class="irs-target">100-hour test</div>
         <div class="irs-hrs">${spouseTotal.toFixed(1)}<span style="font-size:14px;color:var(--stone);">/100h</span></div>
         <div class="prog-track"><div class="prog-fill" style="width:${Math.min(spouseTotal/100,1)*100}%;background:${spouseTotal>=100?'var(--sage)':spouseTotal>=60?'var(--amber)':'var(--rust)'};"></div></div>
-        <div class="irs-label">You + Shashank combined</div>
+        <div class="irs-label">Neelima + Shashank combined</div>
         <span class="irs-status ${sc(spouseTotal,60,100)}">${st(spouseTotal,100)}</span>
       </div>
       <div class="irs-card">
         <div class="irs-target">500-hr safe harbor</div>
         <div class="irs-hrs">${spouseTotal.toFixed(1)}<span style="font-size:14px;color:var(--stone);">/500h</span></div>
         <div class="prog-track"><div class="prog-fill" style="width:${Math.min(spouseTotal/500,1)*100}%;background:${spouseTotal>=500?'var(--sage)':spouseTotal>=300?'var(--amber)':'var(--rust)'};"></div></div>
-        <div class="irs-label">You + Shashank combined</div>
+        <div class="irs-label">Neelima + Shashank combined</div>
         <span class="irs-status ${sc(spouseTotal,300,500)}">${st(spouseTotal,500)}</span>
       </div>`;
   }
   metricsEl.innerHTML=`
-    <div class="metric metric-spouse"><div class="metric-label">Spouse hours</div><div class="metric-val">${spouseTotal.toFixed(1)}</div><div class="metric-sub">you + Shashank</div></div>
+    <div class="metric metric-spouse"><div class="metric-label">Spouse hours</div><div class="metric-val">${spouseTotal.toFixed(1)}</div><div class="metric-sub">Neelima + Shashank</div></div>
     <div class="metric metric-team"><div class="metric-label">Team hours</div><div class="metric-val">${teamTotal.toFixed(1)}</div><div class="metric-sub">contractors &amp; staff</div></div>
     <div class="metric"><div class="metric-label">Total entries</div><div class="metric-val">${all.length}</div><div class="metric-sub">all logged</div></div>
     <div class="metric"><div class="metric-label">Evidence files</div><div class="metric-val">${totalFiles}</div><div class="metric-sub">attached</div></div>`;
@@ -839,7 +844,7 @@ window.runImport=async function(){
   const propId=document.getElementById('importProperty').value;
   if(!propId){toast('Please select a property');return;}
   const pt=document.getElementById('importPersonType').value;
-  const person=pt==='spouse-shashank'?'Shashank':pt==='spouse-you'?currentPerson:'Team Import';
+  const person=pt==='spouse-shashank'?'Shashank':pt==='spouse-you'?'Neelima':'Team Import';
   const entryType=pt==='team'?'team':'spouse';
   const getIdx=key=>{const el=document.getElementById('map-'+key);return el&&el.value!==''?parseInt(el.value):-1;};
   const dateIdx=getIdx('date'),hoursIdx=getIdx('hours'),catIdx=getIdx('category'),notesIdx=getIdx('notes');
