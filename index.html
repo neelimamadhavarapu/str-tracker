@@ -151,8 +151,11 @@ input[type=file].ev-input{display:none;}
         </div>
       </div>
       <div>
-        <div class="person-label" style="margin-bottom:5px;text-align:right;">Who's working?</div>
-        <div class="person-toggle" id="person-toggle"></div>
+        <div class="person-label" style="margin-bottom:5px;text-align:right;font-size:11px;color:var(--stone);text-transform:uppercase;letter-spacing:0.4px;">Logging as</div>
+        <div style="display:flex;gap:6px;">
+          <button id="btn-you" onclick="setPerson('You')" style="padding:7px 18px;border-radius:30px;border:1.5px solid var(--forest);background:var(--forest);color:#fff;cursor:pointer;font-size:13px;font-weight:600;font-family:'DM Sans',sans-serif;transition:all 0.15s;">You</button>
+          <button id="btn-shashank" onclick="setPerson('Shashank')" style="padding:7px 18px;border-radius:30px;border:1.5px solid var(--cream);background:transparent;color:var(--stone);cursor:pointer;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;transition:all 0.15s;">Shashank</button>
+        </div>
       </div>
     </div>
     <nav class="nav">
@@ -420,17 +423,25 @@ function initApp(cfg){
 }
 (function(){initApp(FB);buildPersonToggle();updateLogBanner();})();
 
-/* PERSON TOGGLE — only You and Shashank */
+/* PERSON TOGGLE — You and Shashank */
 function buildPersonToggle(){
-  const wrap=document.getElementById('person-toggle');if(!wrap)return;
-  wrap.innerHTML=SPOUSES.map(p=>{
-    const isActive=p===currentPerson;
-    return`<button class="person-btn ${isActive?'active-spouse':''}" onclick="setPerson('${p}')">${p}</button>`;
-  }).join('');
+  updateToggleButtons();
+}
+function updateToggleButtons(){
+  const btnYou=document.getElementById('btn-you');
+  const btnShashank=document.getElementById('btn-shashank');
+  if(!btnYou||!btnShashank)return;
+  if(currentPerson==='You'){
+    btnYou.style.background='var(--forest)';btnYou.style.color='#fff';btnYou.style.borderColor='var(--forest)';btnYou.style.fontWeight='600';
+    btnShashank.style.background='transparent';btnShashank.style.color='var(--stone)';btnShashank.style.borderColor='var(--cream)';btnShashank.style.fontWeight='500';
+  } else {
+    btnShashank.style.background='var(--forest)';btnShashank.style.color='#fff';btnShashank.style.borderColor='var(--forest)';btnShashank.style.fontWeight='600';
+    btnYou.style.background='transparent';btnYou.style.color='var(--stone)';btnYou.style.borderColor='var(--cream)';btnYou.style.fontWeight='500';
+  }
 }
 window.setPerson=function(name){
   currentPerson=name;localStorage.setItem('str_current_person',name);
-  buildPersonToggle();updateLogBanner();
+  updateToggleButtons();updateLogBanner();
 };
 function updateLogBanner(){
   const b=document.getElementById('log-person-banner');if(!b)return;
