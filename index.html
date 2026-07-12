@@ -16,8 +16,6 @@
 }
 body{font-family:'DM Sans',sans-serif;background:var(--ivory);color:var(--ink);min-height:100vh;font-size:14px;line-height:1.5;}
 .app{max-width:760px;margin:0 auto;padding:0 1rem 4rem;}
-
-/* TOPBAR */
 .topbar{position:sticky;top:0;z-index:100;background:var(--ivory);border-bottom:1px solid var(--cream);padding:1rem 0 0;margin-bottom:1.5rem;}
 .topbar-inner{display:flex;align-items:flex-start;justify-content:space-between;flex-wrap:wrap;gap:10px;padding-bottom:1rem;}
 .brand{display:flex;align-items:center;gap:10px;}
@@ -25,21 +23,16 @@ body{font-family:'DM Sans',sans-serif;background:var(--ivory);color:var(--ink);m
 .brand-icon svg{width:18px;height:18px;fill:none;stroke:#fff;stroke-width:2;stroke-linecap:round;}
 .brand-name{font-size:17px;font-weight:600;color:var(--ink);letter-spacing:-0.3px;}
 .brand-sub{font-size:12px;color:var(--stone);margin-top:1px;}
-
-/* PERSON TOGGLE */
-.person-toggle{display:flex;align-items:center;gap:6px;background:var(--cream);border-radius:40px;padding:4px 6px;}
-.person-btn{padding:5px 14px;border-radius:30px;border:none;background:transparent;color:var(--stone);cursor:pointer;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;transition:all 0.15s;white-space:nowrap;}
+.person-toggle{display:flex;align-items:center;gap:4px;background:var(--cream);border-radius:40px;padding:4px 5px;}
+.person-btn{padding:5px 13px;border-radius:30px;border:none;background:transparent;color:var(--stone);cursor:pointer;font-size:12px;font-weight:500;font-family:'DM Sans',sans-serif;transition:all 0.15s;white-space:nowrap;}
 .person-btn.active-spouse{background:#fff;color:var(--forest);box-shadow:var(--shadow);font-weight:600;}
 .person-btn.active-team{background:var(--purple);color:#fff;box-shadow:var(--shadow);font-weight:600;}
 .person-label{font-size:11px;color:var(--stone);white-space:nowrap;}
-
 .nav{display:flex;gap:4px;overflow-x:auto;padding-bottom:1px;}
 .nav::-webkit-scrollbar{display:none;}
 .nav-btn{padding:7px 14px;border-radius:8px;border:none;background:transparent;color:var(--stone);cursor:pointer;font-size:13px;font-weight:500;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:all 0.15s;}
 .nav-btn:hover{background:var(--cream);color:var(--charcoal);}
 .nav-btn.active{background:var(--charcoal);color:#fff;}
-
-/* FORMS */
 select,input[type=text],input[type=number],input[type=date],textarea{width:100%;padding:9px 12px;border-radius:var(--radius);border:1.5px solid var(--cream);background:#fff;color:var(--ink);font-size:14px;font-family:'DM Sans',sans-serif;outline:none;transition:border-color 0.15s,box-shadow 0.15s;-webkit-appearance:none;}
 select:focus,input:focus,textarea:focus{border-color:var(--sage);box-shadow:0 0 0 3px rgba(74,124,47,0.12);}
 textarea{resize:vertical;min-height:72px;}
@@ -47,8 +40,6 @@ textarea{resize:vertical;min-height:72px;}
 .field label{display:block;font-size:12px;font-weight:500;color:var(--stone);margin-bottom:5px;text-transform:uppercase;letter-spacing:0.4px;}
 .grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;}
 @media(max-width:520px){.grid2{grid-template-columns:1fr;}}
-
-/* BUTTONS */
 .btn{padding:9px 20px;border-radius:var(--radius);border:1.5px solid var(--cream);background:transparent;color:var(--charcoal);cursor:pointer;font-size:14px;font-weight:500;font-family:'DM Sans',sans-serif;transition:all 0.15s;display:inline-flex;align-items:center;gap:6px;}
 .btn:hover{background:var(--cream);}
 .btn-primary{background:var(--forest);color:#fff;border-color:var(--forest);}
@@ -58,8 +49,6 @@ textarea{resize:vertical;min-height:72px;}
 .btn-sm{padding:5px 12px;font-size:12px;}
 .btn-ghost-danger{border-color:transparent;color:var(--rust);}
 .btn-ghost-danger:hover{background:var(--rust-bg);}
-
-/* CARDS & METRICS */
 .card{background:#fff;border:1px solid var(--cream);border-radius:var(--radius-lg);padding:1.125rem 1.25rem;margin-bottom:10px;transition:box-shadow 0.15s;}
 .card:hover{box-shadow:var(--shadow);}
 .metric-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(130px,1fr));gap:10px;margin-bottom:1.5rem;}
@@ -69,18 +58,12 @@ textarea{resize:vertical;min-height:72px;}
 .metric-sub{font-size:11px;color:var(--stone);margin-top:4px;}
 .metric-spouse{border-top:3px solid var(--forest);}
 .metric-team{border-top:3px solid var(--purple);}
-
-/* BADGES */
 .badge{display:inline-flex;align-items:center;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;}
 .spouse-chip{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;color:var(--forest);background:var(--leaf-bg);margin-left:5px;font-weight:500;}
 .team-chip{display:inline-block;padding:1px 8px;border-radius:10px;font-size:11px;color:#fff;background:var(--purple);margin-left:5px;font-weight:500;}
 .team-role-badge{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:500;background:var(--purple-bg);color:var(--purple);}
-
-/* PROGRESS */
 .prog-track{height:6px;background:var(--cream);border-radius:4px;overflow:hidden;margin-top:6px;}
 .prog-fill{height:100%;border-radius:4px;transition:width 0.4s ease;}
-
-/* LAYOUT */
 .section-head{font-size:15px;font-weight:600;color:var(--ink);margin-bottom:1rem;margin-top:0.25rem;}
 .section-sub{font-size:13px;color:var(--stone);margin-bottom:1rem;margin-top:-0.5rem;}
 .divider{border:none;border-top:1px solid var(--cream);margin:1.5rem 0;}
@@ -90,8 +73,6 @@ textarea{resize:vertical;min-height:72px;}
 .filter-bar select{flex:1;min-width:110px;width:auto;}
 .fade-in{animation:fadeIn 0.25s ease forwards;}
 @keyframes fadeIn{from{opacity:0;transform:translateY(6px);}to{opacity:1;transform:translateY(0);}}
-
-/* ENTRY CARDS */
 .entry-main{display:flex;align-items:flex-start;justify-content:space-between;gap:12px;}
 .entry-name{font-size:14px;font-weight:500;color:var(--ink);}
 .entry-meta{display:flex;align-items:center;gap:6px;flex-wrap:wrap;margin-top:5px;}
@@ -99,8 +80,6 @@ textarea{resize:vertical;min-height:72px;}
 .entry-hours{font-family:'DM Mono',monospace;font-size:20px;font-weight:500;color:var(--ink);white-space:nowrap;}
 .team-card{border-left:3px solid var(--purple);}
 .spouse-card{border-left:3px solid var(--forest);}
-
-/* EVIDENCE */
 .evidence-box{background:var(--leaf-bg);border:2px dashed var(--sage);border-radius:var(--radius-lg);padding:1.25rem;margin-bottom:16px;text-align:center;cursor:pointer;transition:all 0.15s;}
 .evidence-box:hover,.evidence-box.over{background:#e0f0d0;border-color:var(--forest);}
 .evidence-box-icon{font-size:24px;margin-bottom:6px;}
@@ -115,8 +94,6 @@ textarea{resize:vertical;min-height:72px;}
 input[type=file].ev-input{display:none;}
 .entry-evidence-drop{border:1.5px dashed var(--sand);border-radius:var(--radius);padding:8px 12px;text-align:center;cursor:pointer;background:var(--ivory);font-size:12px;color:var(--stone);margin-top:10px;transition:all 0.15s;}
 .entry-evidence-drop:hover,.entry-evidence-drop.over{border-color:var(--sage);background:var(--leaf-bg);color:var(--forest);}
-
-/* VOICE */
 .voice-wrap{background:var(--cream);border-radius:var(--radius-lg);padding:1rem 1.25rem;margin-bottom:16px;}
 .voice-label{font-size:11px;font-weight:600;color:var(--stone);text-transform:uppercase;letter-spacing:0.5px;margin-bottom:10px;}
 .voice-btn{width:48px;height:48px;border-radius:50%;border:none;background:var(--forest);color:#fff;cursor:pointer;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all 0.15s;}
@@ -126,8 +103,6 @@ input[type=file].ev-input{display:none;}
 .voice-row{display:flex;align-items:center;gap:12px;}
 .voice-transcript{flex:1;padding:8px 12px;border-radius:var(--radius);border:1px solid var(--sand);background:#fff;color:var(--ink);font-size:13px;min-height:40px;line-height:1.5;}
 .voice-hint{font-size:11px;color:var(--stone);margin-top:6px;}
-
-/* IRS PROGRESS RINGS */
 .irs-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:1.5rem;}
 .irs-card{background:#fff;border:1px solid var(--cream);border-radius:var(--radius-lg);padding:1rem;text-align:center;}
 .irs-hrs{font-family:'DM Mono',monospace;font-size:28px;font-weight:300;color:var(--ink);}
@@ -137,8 +112,6 @@ input[type=file].ev-input{display:none;}
 .irs-on{background:var(--leaf-bg);color:var(--forest);}
 .irs-warn{background:var(--amber-bg);color:var(--amber);}
 .irs-off{background:var(--rust-bg);color:var(--rust);}
-
-/* CSV IMPORT */
 .import-drop{border:2px dashed var(--sand);border-radius:var(--radius-lg);padding:2rem 1.5rem;text-align:center;cursor:pointer;background:#fff;transition:all 0.15s;margin-bottom:1rem;}
 .import-drop:hover,.import-drop.over{border-color:var(--sage);background:var(--leaf-bg);}
 .map-table{width:100%;border-collapse:collapse;margin-bottom:1rem;font-size:13px;}
@@ -149,8 +122,6 @@ input[type=file].ev-input{display:none;}
 .preview-table th{background:var(--cream);padding:6px 10px;text-align:left;font-size:11px;color:var(--stone);white-space:nowrap;}
 .preview-table td{padding:6px 10px;border-bottom:1px solid var(--cream);white-space:nowrap;}
 .import-status{font-size:13px;color:var(--stone);padding:8px 12px;background:var(--cream);border-radius:var(--radius);margin-bottom:1rem;display:none;}
-
-/* SYNC & TOAST */
 .sync-dot{width:7px;height:7px;border-radius:50%;display:inline-block;margin-right:5px;background:var(--sage);}
 .sync-dot.syncing{background:var(--amber);animation:pulse 1s infinite;}
 .sync-dot.error{background:var(--rust);}
@@ -158,6 +129,11 @@ input[type=file].ev-input{display:none;}
 .toast{position:fixed;bottom:24px;right:24px;background:var(--charcoal);color:#fff;padding:10px 18px;border-radius:var(--radius);font-size:13px;opacity:0;transition:opacity 0.25s;pointer-events:none;z-index:9998;max-width:280px;}
 .toast.show{opacity:1;}
 .audit-progress{margin-top:10px;font-size:12px;color:var(--stone);display:none;padding:8px 12px;background:var(--cream);border-radius:var(--radius);}
+/* TEAM TAB */
+.team-banner{background:var(--purple-bg);border-radius:var(--radius-lg);padding:1rem 1.25rem;margin-bottom:1.25rem;font-size:13px;color:var(--purple);border:1px solid #d4caf5;}
+.team-summary-card{background:#fff;border:1px solid var(--cream);border-radius:var(--radius-lg);padding:1rem 1.25rem;margin-bottom:8px;}
+.team-summary-role{font-size:13px;font-weight:600;color:var(--purple);margin-bottom:6px;}
+.team-member-row{display:flex;justify-content:space-between;font-size:13px;color:var(--stone);padding:3px 0;}
 </style>
 </head>
 <body>
@@ -174,7 +150,6 @@ input[type=file].ev-input{display:none;}
           <div class="brand-sub" id="sync-status"><span class="sync-dot syncing"></span>Connecting…</div>
         </div>
       </div>
-      <!-- WHO IS WORKING NOW -->
       <div>
         <div class="person-label" style="margin-bottom:5px;text-align:right;">Who's working?</div>
         <div class="person-toggle" id="person-toggle"></div>
@@ -183,17 +158,16 @@ input[type=file].ev-input{display:none;}
     <nav class="nav">
       <button class="nav-btn active" onclick="showTab('log')">Log Hours</button>
       <button class="nav-btn" onclick="showTab('entries')">All Entries</button>
+      <button class="nav-btn" onclick="showTab('team')">Team</button>
       <button class="nav-btn" onclick="showTab('summary')">Summary</button>
       <button class="nav-btn" onclick="showTab('import')">Import CSV</button>
       <button class="nav-btn" onclick="showTab('properties')">Properties</button>
     </nav>
   </div>
 
-  <!-- ═══ LOG HOURS ═══ -->
+  <!-- LOG HOURS -->
   <div id="tab-log" class="fade-in">
-    <!-- CURRENT PERSON BANNER -->
     <div id="log-person-banner" style="margin-bottom:1rem;padding:10px 14px;border-radius:var(--radius);font-size:13px;font-weight:500;"></div>
-
     <div class="grid2">
       <div class="field"><label>Property</label><select id="logProperty"></select></div>
       <div class="field"><label>Date</label><input type="date" id="logDate"></div>
@@ -210,19 +184,6 @@ input[type=file].ev-input{display:none;}
         </select>
       </div>
       <div class="field"><label>Hours spent</label><input type="number" id="logHours" min="0.25" max="24" step="0.25" placeholder="e.g. 2.5"></div>
-    </div>
-    <!-- TEAM ROLE ROW — shown only when a team member is selected -->
-    <div id="team-role-row" style="display:none;">
-      <div class="grid2">
-        <div class="field"><label>Role</label>
-          <select id="logTeamRole">
-            <option>Cleaner</option><option>Pool Maintenance</option><option>Design Team</option>
-            <option>Landscaping</option><option>Handyman</option><option>Property Manager</option>
-            <option>Photographer</option><option>Other Contractor</option>
-          </select>
-        </div>
-        <div class="field"><label>Company / full name</label><input type="text" id="logTeamFullName" placeholder="e.g. ABC Cleaning Co."></div>
-      </div>
     </div>
     <div class="field"><label>Notes (optional)</label><textarea id="logNotes" placeholder="What did you work on?"></textarea></div>
     <div class="evidence-box" id="log-drop" onclick="document.getElementById('log-file-input').click()" ondragover="dzOver(event,'log-drop')" ondragleave="dzOut('log-drop')" ondrop="dzDrop(event,'log-drop',null)">
@@ -250,7 +211,7 @@ input[type=file].ev-input{display:none;}
     </button>
   </div>
 
-  <!-- ═══ ALL ENTRIES ═══ -->
+  <!-- ALL ENTRIES -->
   <div id="tab-entries" style="display:none;">
     <div class="filter-bar">
       <select id="filterProp" onchange="renderEntries()"><option value="">All properties</option></select>
@@ -272,7 +233,63 @@ input[type=file].ev-input{display:none;}
     <div id="entries-list"></div>
   </div>
 
-  <!-- ═══ SUMMARY ═══ -->
+  <!-- TEAM TAB — single form with role dropdown -->
+  <div id="tab-team" style="display:none;">
+    <div class="section-head">Log team hours</div>
+    <div class="team-banner">
+      👥 Team hours are logged separately and do <strong>not</strong> count toward your IRS material participation total. They are tracked for your records and included in the audit package.
+    </div>
+    <div class="grid2">
+      <div class="field">
+        <label>Role</label>
+        <select id="teamRole">
+          <option value="Cleaner">Cleaner</option>
+          <option value="Pool Maintenance">Pool Maintenance</option>
+          <option value="Design Team">Design Team</option>
+          <option value="Landscaping">Landscaping</option>
+          <option value="Handyman">Handyman</option>
+          <option value="Property Manager">Property Manager</option>
+          <option value="Photographer">Photographer</option>
+          <option value="Other">Other</option>
+        </select>
+      </div>
+      <div class="field"><label>Name / Company</label><input type="text" id="teamName" placeholder="e.g. Maria, ABC Cleaning Co."></div>
+    </div>
+    <div class="grid2">
+      <div class="field"><label>Property</label><select id="teamProperty"></select></div>
+      <div class="field"><label>Date</label><input type="date" id="teamDate"></div>
+    </div>
+    <div class="grid2">
+      <div class="field">
+        <label>Category</label>
+        <select id="teamCategory">
+          <option>Administrative</option><option>Guest Relations</option><option>Legal</option>
+          <option>Marketing</option><option>Operations</option><option>Property Acquisition</option>
+          <option>Property Development</option><option>Property Improvements</option>
+          <option>Property Maintenance</option><option>Property Selling</option>
+          <option>Rental Management</option><option>Tenant Communication</option><option>Other</option>
+        </select>
+      </div>
+      <div class="field"><label>Hours</label><input type="number" id="teamHours" min="0.25" max="24" step="0.25" placeholder="e.g. 3"></div>
+    </div>
+    <div class="field"><label>Notes (optional)</label><textarea id="teamNotes" placeholder="What did they work on?"></textarea></div>
+    <div class="evidence-box" id="team-drop" onclick="document.getElementById('team-file-input').click()" ondragover="dzOver(event,'team-drop')" ondragleave="dzOut('team-drop')" ondrop="dzDrop(event,'team-drop','__team__')">
+      <div class="evidence-box-icon">📎</div>
+      <div class="evidence-box-title">Attach Evidence</div>
+      <div class="evidence-box-hint">Receipt, invoice, photo · JPG &amp; PNG up to 10MB · PDF up to 4MB</div>
+      <div class="evidence-grid" id="team-evidence-grid" onclick="event.stopPropagation()"></div>
+    </div>
+    <input type="file" class="ev-input" id="team-file-input" accept=".jpg,.jpeg,.png,.pdf" multiple onchange="teamAttach(event)">
+    <button class="btn" onclick="logTeamEntry()" style="width:100%;justify-content:center;padding:12px;background:var(--purple);color:#fff;border-color:var(--purple);">
+      <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+      Save Team Entry
+    </button>
+    <div class="divider"></div>
+    <div class="section-head">Team hours summary</div>
+    <div id="team-summary-list"></div>
+  </div>
+
+  <!-- SUMMARY -->
   <div id="tab-summary" style="display:none;">
     <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:8px;margin-bottom:1.25rem;">
       <div class="section-head" style="margin:0;">Overview</div>
@@ -289,12 +306,9 @@ input[type=file].ev-input{display:none;}
       </div>
     </div>
     <div class="audit-progress" id="audit-progress"></div>
-
-    <!-- IRS MATERIAL PARTICIPATION -->
     <div class="section-head">IRS material participation</div>
     <div class="section-sub">Combined spouse hours (you + Shashank) toward the 100-hr and 500-hr tests</div>
     <div class="irs-grid" id="irs-grid"></div>
-
     <div class="metric-grid" id="summary-metrics"></div>
     <div class="section-head">Spouse hours by category</div>
     <div id="summary-cats" style="margin-bottom:1.5rem;"></div>
@@ -304,19 +318,19 @@ input[type=file].ev-input{display:none;}
     <div id="summary-team-roles"></div>
   </div>
 
-  <!-- ═══ IMPORT CSV ═══ -->
+  <!-- IMPORT CSV -->
   <div id="tab-import" style="display:none;">
     <div class="section-head">Import from another app</div>
     <div class="section-sub">Upload a CSV from Toggl, Clockify, Harvest, or any time tracking tool.</div>
     <div class="import-drop" id="import-drop" onclick="document.getElementById('csv-file-input').click()" ondragover="dzOver(event,'import-drop')" ondragleave="dzOut('import-drop')" ondrop="csvDrop(event)">
       <div style="font-size:28px;margin-bottom:8px;">📊</div>
       <div style="font-size:14px;color:var(--stone);"><strong>Tap to upload CSV</strong> or drag &amp; drop</div>
-      <div style="font-size:12px;color:var(--sand);margin-top:4px;">Any .csv file exported from a time tracking app</div>
+      <div style="font-size:12px;color:var(--sand);margin-top:4px;">Any .csv file from a time tracking app</div>
     </div>
     <input type="file" class="ev-input" id="csv-file-input" accept=".csv" onchange="csvPick(event)">
     <div class="import-status" id="import-status"></div>
     <div id="import-mapper" style="display:none;">
-      <div class="section-head" style="margin-top:0;">Map your CSV columns</div>
+      <div class="section-head" style="margin-top:0;">Map your columns</div>
       <table class="map-table"><thead><tr><th>Field</th><th>Your CSV column</th></tr></thead><tbody id="map-body"></tbody></table>
       <div class="field"><label>Import as</label>
         <select id="importPersonType">
@@ -335,7 +349,7 @@ input[type=file].ev-input{display:none;}
     <div id="import-result" style="display:none;"></div>
   </div>
 
-  <!-- ═══ PROPERTIES ═══ -->
+  <!-- PROPERTIES -->
   <div id="tab-properties" style="display:none;">
     <div class="section-head">Your properties</div>
     <div id="props-list" style="margin-bottom:1.5rem;"></div>
@@ -351,23 +365,15 @@ input[type=file].ev-input{display:none;}
 
 <div class="toast" id="toast"></div>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jszip/3.10.1/jszip.min.js"></script>
-
 <script type="module">
 import { initializeApp } from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js';
 import { getFirestore, collection, addDoc, deleteDoc, updateDoc,
          doc, onSnapshot, query, orderBy }
   from 'https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js';
 
-/* ══════════════════════════════════
-   CONSTANTS
-   ══════════════════════════════════ */
-const CLOUD_NAME='odv2dxer', UPLOAD_PRESET='str_tracker';
+const CLOUD_NAME='odv2dxer',UPLOAD_PRESET='str_tracker';
 const CLOUDINARY_URL=`https://api.cloudinary.com/v1_1/${CLOUD_NAME}/upload`;
-
-// The two spouses — all hours from these names count toward IRS material participation
 const SPOUSES=['You','Shashank'];
-const TEAM_ROLES=['Cleaner','Pool Maintenance','Design Team','Landscaping','Handyman','Property Manager','Photographer','Other Contractor'];
-
 const CAT={
   'Administrative':{bg:'#EBF3FA',fg:'#1A5276'},'Guest Relations':{bg:'#E5F4F2',fg:'#0E7063'},
   'Legal':{bg:'#FCEBEB',fg:'#791F1F'},'Marketing':{bg:'#FBEAF0',fg:'#72243E'},
@@ -378,27 +384,16 @@ const CAT={
   'Other':{bg:'#F2F1EE',fg:'#6B6B67'}
 };
 
-/* ══════════════════════════════════
-   HELPERS
-   ══════════════════════════════════ */
 function catBadge(cat){const c=CAT[cat]||CAT['Other'];return`<span class="badge" style="background:${c.bg};color:${c.fg};">${cat}</span>`;}
 function fmtDate(d){if(!d)return'';const[y,m,day]=d.split('-');return new Date(y,m-1,day).toLocaleDateString('en-US',{month:'short',day:'numeric',year:'numeric'});}
 function toast(msg){const t=document.getElementById('toast');if(!t)return;t.textContent=msg;t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2500);}
-function setSyncStatus(state,label){const el=document.getElementById('sync-status');if(!el)return;const dc=state==='error'?'error':state==='ok'?'':'syncing';el.innerHTML=`<span class="sync-dot ${dc}"></span>${label}`;}
+function setSyncStatus(s,l){const el=document.getElementById('sync-status');if(!el)return;const dc=s==='error'?'error':s==='ok'?'':'syncing';el.innerHTML=`<span class="sync-dot ${dc}"></span>${l}`;}
 function safeName(s){return(s||'').replace(/[^a-zA-Z0-9_\-\.]/g,'_').substring(0,60);}
-function isSpouse(entry){return SPOUSES.includes(entry.person)||entry.entryType==='spouse';}
+function isSpouse(e){return SPOUSES.includes(e.person)||e.entryType==='spouse';}
 
-/* ══════════════════════════════════
-   STATE
-   ══════════════════════════════════ */
-let db=null, entries=[], properties=[];
-
-// currentPerson: one of SPOUSES or a team role string
+let db=null,entries=[],properties=[];
 let currentPerson=localStorage.getItem('str_current_person')||SPOUSES[0];
 
-/* ══════════════════════════════════
-   FIREBASE
-   ══════════════════════════════════ */
 const FB={
   apiKey:"AIzaSyByi-RGM2BYUdZF9Rw4Fk0w6lyJIBkdFhw",
   authDomain:"str-time-tracker-shared.firebaseapp.com",
@@ -411,10 +406,11 @@ const FB={
 function initApp(cfg){
   db=getFirestore(initializeApp(cfg));
   document.getElementById('logDate').value=new Date().toISOString().split('T')[0];
+  document.getElementById('teamDate').value=new Date().toISOString().split('T')[0];
   setSyncStatus('syncing','Connecting…');
   onSnapshot(query(collection(db,'str_entries'),orderBy('createdAt','desc')),snap=>{
     entries=snap.docs.map(d=>({id:d.id,...d.data()}));
-    renderEntries();renderSummary();
+    renderEntries();renderSummary();renderTeamSummary();
     setSyncStatus('ok','Synced · shared with household');
   },()=>setSyncStatus('error','Sync error — check Firebase rules'));
   onSnapshot(query(collection(db,'str_properties'),orderBy('createdAt','asc')),snap=>{
@@ -424,103 +420,81 @@ function initApp(cfg){
 }
 (function(){initApp(FB);buildPersonToggle();updateLogBanner();})();
 
-/* ══════════════════════════════════
-   PERSON TOGGLE
-   ══════════════════════════════════ */
+/* PERSON TOGGLE — only You and Shashank */
 function buildPersonToggle(){
-  const wrap=document.getElementById('person-toggle');
-  if(!wrap)return;
-  // Spouses first, then team roles
-  const all=[...SPOUSES,...TEAM_ROLES];
-  wrap.innerHTML=all.map(p=>{
+  const wrap=document.getElementById('person-toggle');if(!wrap)return;
+  wrap.innerHTML=SPOUSES.map(p=>{
     const isActive=p===currentPerson;
-    const isS=SPOUSES.includes(p);
-    const cls=isActive?(isS?'active-spouse':'active-team'):'';
-    return`<button class="person-btn ${cls}" onclick="setPerson('${p}')" title="${isS?'Spouse — counts toward IRS material participation':'Team member — does not count toward your hours'}">${p}</button>`;
+    return`<button class="person-btn ${isActive?'active-spouse':''}" onclick="setPerson('${p}')">${p}</button>`;
   }).join('');
 }
-
 window.setPerson=function(name){
-  currentPerson=name;
-  localStorage.setItem('str_current_person',name);
-  buildPersonToggle();
-  updateLogBanner();
-  // show/hide team role row
-  const isTeam=!SPOUSES.includes(name);
-  document.getElementById('team-role-row').style.display=isTeam?'':'none';
-  // change save button color
-  const btn=document.getElementById('save-btn');
-  if(isTeam){btn.style.background='var(--purple)';btn.style.borderColor='var(--purple)';}
-  else{btn.style.background='var(--forest)';btn.style.borderColor='var(--forest)';}
+  currentPerson=name;localStorage.setItem('str_current_person',name);
+  buildPersonToggle();updateLogBanner();
 };
-
 function updateLogBanner(){
   const b=document.getElementById('log-person-banner');if(!b)return;
-  const isS=SPOUSES.includes(currentPerson);
-  if(isS){
-    b.style.background='var(--leaf-bg)';b.style.color='var(--forest)';
-    b.innerHTML=`🏡 Logging as <strong>${currentPerson}</strong> — counts toward combined spouse material participation hours`;
-  }else{
-    b.style.background='var(--purple-bg)';b.style.color='var(--purple)';
-    b.innerHTML=`👥 Logging for team member <strong>${currentPerson}</strong> — these hours are <em>not</em> counted toward your IRS material participation total`;
-  }
+  b.style.background='var(--leaf-bg)';b.style.color='var(--forest)';
+  b.innerHTML=`🏡 Logging as <strong>${currentPerson}</strong> — counts toward combined spouse material participation hours`;
 }
 
-/* ══════════════════════════════════
-   TABS
-   ══════════════════════════════════ */
+/* TABS */
 window.showTab=function(name){
-  ['log','entries','summary','import','properties'].forEach(t=>{
+  ['log','entries','team','summary','import','properties'].forEach(t=>{
     document.getElementById('tab-'+t).style.display=t===name?'':'none';
     document.getElementById('tab-'+t).classList.toggle('fade-in',t===name);
   });
-  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',['log','entries','summary','import','properties'][i]===name));
+  document.querySelectorAll('.nav-btn').forEach((b,i)=>b.classList.toggle('active',['log','entries','team','summary','import','properties'][i]===name));
   if(name==='entries')renderEntries();
   if(name==='summary')renderSummary();
+  if(name==='team')renderTeamSummary();
   if(name==='properties')renderProperties();
 };
 
-/* DROPDOWNS */
 function refreshDropdowns(){
-  ['logProperty','filterProp','summaryProp','importProperty'].forEach(id=>{
+  ['logProperty','filterProp','summaryProp','teamProperty','importProperty'].forEach(id=>{
     const el=document.getElementById(id);if(!el)return;
     const val=el.value;
-    el.innerHTML=id!=='logProperty'?'<option value="">All properties</option>':'';
+    el.innerHTML=id!=='logProperty'&&id!=='teamProperty'?'<option value="">All properties</option>':'';
     properties.forEach(p=>{const o=document.createElement('option');o.value=p.id;o.textContent=p.name;el.appendChild(o);});
     if(val)el.value=val;
   });
 }
 
-/* ══════════════════════════════════
-   EVIDENCE
-   ══════════════════════════════════ */
-let pendingFiles=[];
-window.localAttach=function(e){addPendingFiles(Array.from(e.target.files));e.target.value='';};
-function addPendingFiles(files){
+/* EVIDENCE */
+let pendingFiles=[],teamPendingFiles=[];
+window.localAttach=function(e){addPendingFiles(Array.from(e.target.files),pendingFiles,'log-evidence-grid');e.target.value='';};
+window.teamAttach=function(e){addPendingFiles(Array.from(e.target.files),teamPendingFiles,'team-evidence-grid');e.target.value='';};
+function addPendingFiles(files,arr,gridId){
   const allowed=['image/jpeg','image/png','application/pdf'];
   files.forEach(f=>{
     if(!allowed.includes(f.type)){toast(`${f.name}: JPG, PNG or PDF only`);return;}
     const maxMB=f.type==='application/pdf'?4:10;
     if(f.size>maxMB*1024*1024){toast(`${f.name}: exceeds ${maxMB}MB`);return;}
-    pendingFiles.push(f);
+    arr.push(f);
   });
-  renderPendingGrid();
+  renderPendingGrid(arr,gridId);
 }
-function renderPendingGrid(){
-  const grid=document.getElementById('log-evidence-grid');if(!grid)return;
-  if(!pendingFiles.length){grid.innerHTML='';return;}
-  grid.innerHTML=pendingFiles.map((f,i)=>{
+function renderPendingGrid(arr,gridId){
+  const grid=document.getElementById(gridId);if(!grid)return;
+  if(!arr.length){grid.innerHTML='';return;}
+  grid.innerHTML=arr.map((f,i)=>{
     const isImg=f.type.startsWith('image/');const url=URL.createObjectURL(f);
-    return`<div class="ev-item">${isImg?`<img class="ev-thumb" src="${url}">`:`<div class="ev-pdf">📄</div>`}<div class="ev-name">${f.name}</div><button class="ev-del" onclick="event.stopPropagation();removePending(${i})">×</button></div>`;
+    return`<div class="ev-item">${isImg?`<img class="ev-thumb" src="${url}">`:`<div class="ev-pdf">📄</div>`}<div class="ev-name">${f.name}</div><button class="ev-del" onclick="event.stopPropagation();removePF('${gridId}',${i})">×</button></div>`;
   }).join('');
 }
-window.removePending=function(i){pendingFiles.splice(i,1);renderPendingGrid();};
+window.removePF=function(gridId,i){
+  if(gridId==='log-evidence-grid'){pendingFiles.splice(i,1);renderPendingGrid(pendingFiles,'log-evidence-grid');}
+  else{teamPendingFiles.splice(i,1);renderPendingGrid(teamPendingFiles,'team-evidence-grid');}
+};
 window.dzOver=function(e,id){e.preventDefault();document.getElementById(id)?.classList.add('over');};
 window.dzOut=function(id){document.getElementById(id)?.classList.remove('over');};
-window.dzDrop=function(e,id,entryId){
+window.dzDrop=function(e,id,ctx){
   e.preventDefault();document.getElementById(id)?.classList.remove('over');
   const files=Array.from(e.dataTransfer.files);
-  if(entryId)uploadEvidenceToEntry(files,entryId);else addPendingFiles(files);
+  if(ctx==='__team__')addPendingFiles(files,teamPendingFiles,'team-evidence-grid');
+  else if(ctx)uploadEvidenceToEntry(files,ctx);
+  else addPendingFiles(files,pendingFiles,'log-evidence-grid');
 };
 function uploadToCloudinary(file){
   return new Promise((res,rej)=>{
@@ -529,6 +503,14 @@ function uploadToCloudinary(file){
     xhr.onload=()=>xhr.status===200?res(JSON.parse(xhr.responseText).secure_url):rej(new Error('Upload failed'));
     xhr.onerror=()=>rej(new Error('Network error'));xhr.send(fd);
   });
+}
+async function uploadFiles(files){
+  const evidence=[];
+  for(const file of files){
+    try{const url=await uploadToCloudinary(file);evidence.push({name:file.name,url,type:file.type.startsWith('image/')?'image':'pdf'});}
+    catch(err){toast(`Failed: ${file.name}`);}
+  }
+  return evidence;
 }
 async function uploadEvidenceToEntry(files,entryId){
   const allowed=['image/jpeg','image/png','application/pdf'];
@@ -541,68 +523,59 @@ async function uploadEvidenceToEntry(files,entryId){
   if(!valid.length)return;
   toast(`Uploading ${valid.length} file${valid.length>1?'s':''}…`);
   const entry=entries.find(e=>e.id===entryId);
-  const newEvidence=[...(entry?.evidence||[])];
-  for(const file of valid){
-    try{const url=await uploadToCloudinary(file);newEvidence.push({name:file.name,url,type:file.type.startsWith('image/')?'image':'pdf'});}
-    catch(err){toast(`Failed: ${file.name}`);}
-  }
+  const newEvidence=[...(entry?.evidence||[]),...await uploadFiles(valid)];
   try{await updateDoc(doc(db,'str_entries',entryId),{evidence:newEvidence});toast('Evidence saved!');}
   catch(e){toast('Error saving evidence');}
 }
 window.deleteEvidence=async function(entryId,idx){
   const entry=entries.find(e=>e.id===entryId);if(!entry)return;
   const ev=[...(entry.evidence||[])];ev.splice(idx,1);
-  try{await updateDoc(doc(db,'str_entries',entryId),{evidence:ev});toast('File removed');}
-  catch(e){toast('Error removing file');}
+  try{await updateDoc(doc(db,'str_entries',entryId),{evidence:ev});toast('File removed');}catch(e){toast('Error removing file');}
 };
 window.openEvidencePicker=function(entryId){
   const inp=document.createElement('input');inp.type='file';inp.accept='.jpg,.jpeg,.png,.pdf';inp.multiple=true;
   inp.onchange=e=>uploadEvidenceToEntry(Array.from(e.target.files),entryId);inp.click();
 };
 
-/* ══════════════════════════════════
-   LOG ENTRY
-   ══════════════════════════════════ */
+/* LOG ENTRY — spouse */
 window.logEntry=async function(){
   const prop=document.getElementById('logProperty').value;
   const date=document.getElementById('logDate').value;
   const cat=document.getElementById('logCategory').value;
   const hrs=parseFloat(document.getElementById('logHours').value);
   const notes=document.getElementById('logNotes').value.trim();
-  const isTeam=!SPOUSES.includes(currentPerson);
   if(!prop){toast('Please select a property');return;}
   if(!date){toast('Please select a date');return;}
   if(!hrs||hrs<=0){toast('Please enter valid hours');return;}
-
   let evidence=[];
-  if(pendingFiles.length){
-    toast(`Uploading ${pendingFiles.length} file${pendingFiles.length>1?'s':''}…`);
-    for(const file of pendingFiles){
-      try{const url=await uploadToCloudinary(file);evidence.push({name:file.name,url,type:file.type.startsWith('image/')?'image':'pdf'});}
-      catch(err){toast(`Failed: ${file.name}`);}
-    }
-  }
-
-  const entryData={
-    property:prop, date, category:cat, hours:hrs, notes, evidence,
-    person:currentPerson,
-    entryType:isTeam?'team':'spouse',
-    createdAt:Date.now()
-  };
-  // add team-specific fields
-  if(isTeam){
-    entryData.teamRole=document.getElementById('logTeamRole').value;
-    entryData.teamFullName=document.getElementById('logTeamFullName').value.trim()||currentPerson;
-  }
-
-  try{await addDoc(collection(db,'str_entries'),entryData);}
+  if(pendingFiles.length){toast(`Uploading ${pendingFiles.length} file${pendingFiles.length>1?'s':''}…`);evidence=await uploadFiles(pendingFiles);}
+  try{await addDoc(collection(db,'str_entries'),{property:prop,date,category:cat,hours:hrs,notes,person:currentPerson,entryType:'spouse',evidence,createdAt:Date.now()});}
   catch(e){toast('Error saving — check connection');return;}
-
-  document.getElementById('logHours').value='';
-  document.getElementById('logNotes').value='';
-  if(isTeam)document.getElementById('logTeamFullName').value='';
-  pendingFiles=[];renderPendingGrid();
+  document.getElementById('logHours').value='';document.getElementById('logNotes').value='';
+  pendingFiles=[];renderPendingGrid(pendingFiles,'log-evidence-grid');
   toast('Entry saved!');
+};
+
+/* LOG TEAM ENTRY */
+window.logTeamEntry=async function(){
+  const role=document.getElementById('teamRole').value;
+  const name=document.getElementById('teamName').value.trim();
+  const prop=document.getElementById('teamProperty').value;
+  const date=document.getElementById('teamDate').value;
+  const cat=document.getElementById('teamCategory').value;
+  const hrs=parseFloat(document.getElementById('teamHours').value);
+  const notes=document.getElementById('teamNotes').value.trim();
+  const loggedBy=currentPerson;
+  if(!prop){toast('Please select a property');return;}
+  if(!date){toast('Please select a date');return;}
+  if(!hrs||hrs<=0){toast('Please enter valid hours');return;}
+  let evidence=[];
+  if(teamPendingFiles.length){toast(`Uploading ${teamPendingFiles.length} file${teamPendingFiles.length>1?'s':''}…`);evidence=await uploadFiles(teamPendingFiles);}
+  try{await addDoc(collection(db,'str_entries'),{property:prop,date,category:cat,hours:hrs,notes,person:name||role,teamRole:role,teamName:name||role,loggedBy,entryType:'team',evidence,createdAt:Date.now()});}
+  catch(e){toast('Error saving — check connection');return;}
+  document.getElementById('teamHours').value='';document.getElementById('teamNotes').value='';document.getElementById('teamName').value='';
+  teamPendingFiles=[];renderPendingGrid(teamPendingFiles,'team-evidence-grid');
+  renderTeamSummary();toast('Team entry saved!');
 };
 
 window.deleteEntry=async function(id){
@@ -610,9 +583,7 @@ window.deleteEntry=async function(id){
   try{await deleteDoc(doc(db,'str_entries',id));}catch(e){toast('Error deleting');}
 };
 
-/* ══════════════════════════════════
-   RENDER ENTRIES
-   ══════════════════════════════════ */
+/* RENDER ENTRIES */
 function renderEntries(){
   const el=document.getElementById('entries-list');if(!el)return;
   const fpEl=document.getElementById('filterPerson');
@@ -625,15 +596,11 @@ function renderEntries(){
   const fc=document.getElementById('filterCat')?.value||'';
   const fu=fpEl?.value||'';
   const ft=document.getElementById('filterType')?.value||'';
-  let list=entries.filter(e=>
-    (!fp||e.property===fp)&&(!fc||e.category===fc)&&(!fu||e.person===fu)&&
-    (!ft||(ft==='spouse'&&isSpouse(e))||(ft==='team'&&!isSpouse(e)))
-  );
+  let list=entries.filter(e=>(!fp||e.property===fp)&&(!fc||e.category===fc)&&(!fu||e.person===fu)&&(!ft||(ft==='spouse'&&isSpouse(e))||(ft==='team'&&!isSpouse(e))));
   if(!list.length){el.innerHTML='<div class="empty"><div class="empty-icon">📋</div>No entries yet. Start logging your hours!</div>';return;}
   el.innerHTML=list.map(e=>{
     const prop=properties.find(p=>p.id===e.property);
-    const ev=e.evidence||[];
-    const spouse=isSpouse(e);
+    const ev=e.evidence||[];const spouse=isSpouse(e);
     const evGrid=ev.length?`<div class="evidence-grid" style="margin-top:10px;">${ev.map((f,i)=>
       f.type==='image'
         ?`<div class="ev-item"><img class="ev-thumb" src="${f.url}" onclick="window.open('${f.url}','_blank')"><div class="ev-name">${f.name}</div><button class="ev-del" onclick="deleteEvidence('${e.id}',${i})">×</button></div>`
@@ -642,15 +609,11 @@ function renderEntries(){
     return`<div class="card ${spouse?'spouse-card':'team-card'}">
       <div class="entry-main">
         <div style="flex:1;min-width:0;">
-          <div class="entry-name">
-            ${prop?prop.name:'Unknown property'}
-            ${spouse
-              ?`<span class="spouse-chip">🏡 ${e.person}</span>`
-              :`<span class="team-chip">👥 ${e.teamRole||e.person}</span>`}
+          <div class="entry-name">${prop?prop.name:'Unknown'}
+            ${spouse?`<span class="spouse-chip">🏡 ${e.person}</span>`:`<span class="team-chip">👥 ${e.teamRole||e.person}</span>`}
           </div>
-          <div class="entry-meta">
-            ${fmtDate(e.date)} · ${catBadge(e.category)}
-            ${!spouse&&e.teamFullName?`<span style="font-size:11px;color:var(--purple);">${e.teamFullName}</span>`:''}
+          <div class="entry-meta">${fmtDate(e.date)} · ${catBadge(e.category)}
+            ${!spouse&&e.teamName?`<span style="font-size:11px;color:var(--purple);">${e.teamName}</span>`:''}
             ${ev.length?`<span style="font-size:11px;color:var(--stone);">📎 ${ev.length} file${ev.length>1?'s':''}</span>`:''}
           </div>
           ${e.notes?`<div class="entry-note">${e.notes}</div>`:''}
@@ -669,9 +632,31 @@ function renderEntries(){
 }
 window.renderEntries=renderEntries;
 
-/* ══════════════════════════════════
-   RENDER SUMMARY
-   ══════════════════════════════════ */
+/* TEAM SUMMARY */
+function renderTeamSummary(){
+  const el=document.getElementById('team-summary-list');if(!el)return;
+  const teamEntries=entries.filter(e=>!isSpouse(e));
+  if(!teamEntries.length){el.innerHTML='<div class="empty"><div class="empty-icon">👥</div>No team hours logged yet.</div>';return;}
+  const byRole={};
+  teamEntries.forEach(e=>{
+    const r=e.teamRole||'Other';if(!byRole[r])byRole[r]={total:0,members:{}};
+    byRole[r].total+=e.hours;const n=e.teamName||e.person||'Unknown';
+    byRole[r].members[n]=(byRole[r].members[n]||0)+e.hours;
+  });
+  el.innerHTML=Object.entries(byRole).sort((a,b)=>b[1].total-a[1].total).map(([role,data])=>{
+    const members=Object.entries(data.members).sort((a,b)=>b[1]-a[1]);
+    return`<div class="team-summary-card">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;">
+        <span class="team-role-badge">${role}</span>
+        <span style="font-family:'DM Mono',monospace;font-size:18px;font-weight:300;">${data.total.toFixed(1)}h</span>
+      </div>
+      ${members.map(([n,h])=>`<div class="team-member-row"><span>${n}</span><span style="font-weight:500;">${h.toFixed(1)}h</span></div>`).join('')}
+    </div>`;
+  }).join('');
+}
+window.renderTeamSummary=renderTeamSummary;
+
+/* SUMMARY */
 function renderSummary(){
   const metricsEl=document.getElementById('summary-metrics');if(!metricsEl)return;
   const fp=document.getElementById('summaryProp')?.value||'';
@@ -682,41 +667,33 @@ function renderSummary(){
   const teamTotal=teamEntries.reduce((s,e)=>s+e.hours,0);
   const totalFiles=all.reduce((s,e)=>s+(e.evidence||[]).length,0);
   const byCat={},byPerson={};
-  spouseEntries.forEach(e=>{
-    byCat[e.category]=(byCat[e.category]||0)+e.hours;
-    byPerson[e.person]=(byPerson[e.person]||0)+e.hours;
-  });
-
-  // IRS tests
-  const irs100pct=Math.min(spouseTotal/100,1);
-  const irs500pct=Math.min(spouseTotal/500,1);
+  spouseEntries.forEach(e=>{byCat[e.category]=(byCat[e.category]||0)+e.hours;byPerson[e.person]=(byPerson[e.person]||0)+e.hours;});
+  // IRS rings
   const irsGrid=document.getElementById('irs-grid');
   if(irsGrid){
-    const statusClass=(val,t1,t2)=>val>=t2?'irs-on':val>=t1?'irs-warn':'irs-off';
-    const statusText=(val,target)=>val>=target?'✓ Qualified':`${(target-val).toFixed(1)}h to go`;
+    const sc=(v,t1,t2)=>v>=t2?'irs-on':v>=t1?'irs-warn':'irs-off';
+    const st=(v,t)=>v>=t?'✓ Qualified':`${(t-v).toFixed(1)}h to go`;
     irsGrid.innerHTML=`
       <div class="irs-card">
         <div class="irs-target">100-hour test</div>
-        <div class="irs-hrs">${spouseTotal.toFixed(1)}<span style="font-size:16px;color:var(--stone);">/100h</span></div>
-        <div class="prog-track"><div class="prog-fill" style="width:${irs100pct*100}%;background:${spouseTotal>=100?'var(--sage)':spouseTotal>=60?'var(--amber)':'var(--rust)'};"></div></div>
-        <div class="irs-label">Combined spouse hours</div>
-        <span class="irs-status ${statusClass(spouseTotal,60,100)}">${statusText(spouseTotal,100)}</span>
+        <div class="irs-hrs">${spouseTotal.toFixed(1)}<span style="font-size:14px;color:var(--stone);">/100h</span></div>
+        <div class="prog-track"><div class="prog-fill" style="width:${Math.min(spouseTotal/100,1)*100}%;background:${spouseTotal>=100?'var(--sage)':spouseTotal>=60?'var(--amber)':'var(--rust)'};"></div></div>
+        <div class="irs-label">You + Shashank combined</div>
+        <span class="irs-status ${sc(spouseTotal,60,100)}">${st(spouseTotal,100)}</span>
       </div>
       <div class="irs-card">
-        <div class="irs-target">500-hour safe harbor</div>
-        <div class="irs-hrs">${spouseTotal.toFixed(1)}<span style="font-size:16px;color:var(--stone);">/500h</span></div>
-        <div class="prog-track"><div class="prog-fill" style="width:${irs500pct*100}%;background:${spouseTotal>=500?'var(--sage)':spouseTotal>=300?'var(--amber)':'var(--rust)'};"></div></div>
-        <div class="irs-label">Combined spouse hours</div>
-        <span class="irs-status ${statusClass(spouseTotal,300,500)}">${statusText(spouseTotal,500)}</span>
+        <div class="irs-target">500-hr safe harbor</div>
+        <div class="irs-hrs">${spouseTotal.toFixed(1)}<span style="font-size:14px;color:var(--stone);">/500h</span></div>
+        <div class="prog-track"><div class="prog-fill" style="width:${Math.min(spouseTotal/500,1)*100}%;background:${spouseTotal>=500?'var(--sage)':spouseTotal>=300?'var(--amber)':'var(--rust)'};"></div></div>
+        <div class="irs-label">You + Shashank combined</div>
+        <span class="irs-status ${sc(spouseTotal,300,500)}">${st(spouseTotal,500)}</span>
       </div>`;
   }
-
   metricsEl.innerHTML=`
-    <div class="metric metric-spouse"><div class="metric-label">Spouse hours</div><div class="metric-val">${spouseTotal.toFixed(1)}</div><div class="metric-sub">you + Shashank combined</div></div>
+    <div class="metric metric-spouse"><div class="metric-label">Spouse hours</div><div class="metric-val">${spouseTotal.toFixed(1)}</div><div class="metric-sub">you + Shashank</div></div>
     <div class="metric metric-team"><div class="metric-label">Team hours</div><div class="metric-val">${teamTotal.toFixed(1)}</div><div class="metric-sub">contractors &amp; staff</div></div>
     <div class="metric"><div class="metric-label">Total entries</div><div class="metric-val">${all.length}</div><div class="metric-sub">all logged</div></div>
     <div class="metric"><div class="metric-label">Evidence files</div><div class="metric-val">${totalFiles}</div><div class="metric-sub">attached</div></div>`;
-
   const sc=document.getElementById('summary-cats');
   if(sc){
     const sorted=Object.entries(byCat).sort((a,b)=>b[1]-a[1]);
@@ -729,13 +706,12 @@ function renderSummary(){
   if(sp){
     sp.innerHTML=SPOUSES.map(name=>{
       const hrs=byPerson[name]||0;const pct=spouseTotal?Math.round(hrs/spouseTotal*100):0;
-      return`<div class="card" style="display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:14px;font-weight:500;">${name}</div><div style="font-size:12px;color:var(--stone);">Spouse — counts toward IRS test</div></div><div style="font-family:'DM Mono',monospace;font-size:17px;">${hrs.toFixed(1)}h <span style="font-size:12px;color:var(--stone);">(${pct}%)</span></div></div>`;
+      return`<div class="card" style="display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:14px;font-weight:500;">${name}</div><div style="font-size:12px;color:var(--stone);">Counts toward IRS material participation</div></div><div style="font-family:'DM Mono',monospace;font-size:17px;">${hrs.toFixed(1)}h <span style="font-size:12px;color:var(--stone);">(${pct}%)</span></div></div>`;
     }).join('');
   }
   const str=document.getElementById('summary-team-roles');
   if(str){
-    const byRole={};
-    teamEntries.forEach(e=>{const k=e.teamRole||e.person||'Other';byRole[k]=(byRole[k]||0)+e.hours;});
+    const byRole={};teamEntries.forEach(e=>{const k=e.teamRole||'Other';byRole[k]=(byRole[k]||0)+e.hours;});
     const sortedR=Object.entries(byRole).sort((a,b)=>b[1]-a[1]);
     str.innerHTML=sortedR.length?sortedR.map(([role,hrs])=>{
       const pct=teamTotal?Math.round(hrs/teamTotal*100):0;
@@ -745,20 +721,17 @@ function renderSummary(){
 }
 window.renderSummary=renderSummary;
 
-/* ══════════════════════════════════
-   PROPERTIES
-   ══════════════════════════════════ */
+/* PROPERTIES */
 function renderProperties(){
   const el=document.getElementById('props-list');if(!el)return;
-  if(!properties.length){el.innerHTML='<div class="empty"><div class="empty-icon">🏠</div>No properties yet — add one below.</div>';return;}
+  if(!properties.length){el.innerHTML='<div class="empty"><div class="empty-icon">🏠</div>No properties yet.</div>';return;}
   el.innerHTML=properties.map(p=>{
-    const spouseHrs=entries.filter(e=>e.property===p.id&&isSpouse(e)).reduce((s,e)=>s+e.hours,0);
-    const teamHrs=entries.filter(e=>e.property===p.id&&!isSpouse(e)).reduce((s,e)=>s+e.hours,0);
-    return`<div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:12px;"><div style="flex:1;"><div style="font-size:14px;font-weight:500;">${p.name}</div><div style="font-size:12px;color:var(--stone);margin-top:2px;">Spouse: ${spouseHrs.toFixed(1)}h · Team: ${teamHrs.toFixed(1)}h</div></div><button class="btn btn-sm btn-ghost-danger" onclick="deleteProp('${p.id}')">Remove</button></div>`;
+    const sh=entries.filter(e=>e.property===p.id&&isSpouse(e)).reduce((s,e)=>s+e.hours,0);
+    const th=entries.filter(e=>e.property===p.id&&!isSpouse(e)).reduce((s,e)=>s+e.hours,0);
+    return`<div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:12px;"><div style="flex:1;"><div style="font-size:14px;font-weight:500;">${p.name}</div><div style="font-size:12px;color:var(--stone);margin-top:2px;">Spouse: ${sh.toFixed(1)}h · Team: ${th.toFixed(1)}h</div></div><button class="btn btn-sm btn-ghost-danger" onclick="deleteProp('${p.id}')">Remove</button></div>`;
   }).join('');
 }
 window.renderProperties=renderProperties;
-
 window.addProperty=async function(){
   const name=document.getElementById('newPropName').value.trim();if(!name){toast('Enter a property name');return;}
   try{await addDoc(collection(db,'str_properties'),{name,nick:document.getElementById('newPropNick').value.trim(),createdAt:Date.now()});}catch(e){toast('Error saving property');return;}
@@ -769,9 +742,7 @@ window.deleteProp=async function(id){
   try{await deleteDoc(doc(db,'str_properties',id));await Promise.all(entries.filter(e=>e.property===id).map(e=>deleteDoc(doc(db,'str_entries',e.id))));}catch(e){toast('Error removing property');}
 };
 
-/* ══════════════════════════════════
-   EXPORT CSV
-   ══════════════════════════════════ */
+/* EXPORT CSV */
 window.exportCSV=function(){
   if(!entries.length){toast('No entries to export yet');return;}
   const h=['Date','Property','Category','Hours','Person','Type','Team Role','Notes','Evidence Files'];
@@ -788,9 +759,7 @@ window.exportCSV=function(){
   toast(`Exported ${entries.length} entries`);
 };
 
-/* ══════════════════════════════════
-   AUDIT PACKAGE
-   ══════════════════════════════════ */
+/* AUDIT PACKAGE */
 window.downloadAuditPackage=async function(){
   if(!entries.length){toast('No entries to export');return;}
   if(typeof JSZip==='undefined'){toast('JSZip not loaded — refresh');return;}
@@ -810,9 +779,9 @@ window.downloadAuditPackage=async function(){
       const folder=zip.folder(safeName(prop?prop.name:'Unknown')).folder(entry.date||'Unknown');
       for(const ev of(entry.evidence||[])){
         try{const resp=await fetch(ev.url);if(!resp.ok)throw new Error();folder.file(safeName(entry.category)+'_'+safeName(ev.name),await resp.blob());done++;prog.textContent=`Collecting: ${done}/${total} files…`;}
-        catch(err){done++;console.warn('fetch failed',ev.url);}
+        catch(err){done++;}
       }
-      folder.file('_summary.txt',[`Date: ${entry.date}`,`Property: ${prop?prop.name:'Unknown'}`,`Category: ${entry.category}`,`Hours: ${entry.hours}`,`Person: ${entry.person}`,`Type: ${isSpouse(entry)?'Spouse (counts toward IRS test)':'Team (does not count)'}`,entry.teamRole?`Team Role: ${entry.teamRole}`:'',`Notes: ${entry.notes||'—'}`,`Evidence: ${(entry.evidence||[]).map(f=>f.name).join(', ')||'None'}`].filter(Boolean).join('\n'));
+      folder.file('_summary.txt',[`Date: ${entry.date}`,`Property: ${prop?prop.name:'Unknown'}`,`Category: ${entry.category}`,`Hours: ${entry.hours}`,`Person: ${entry.person}`,`Type: ${isSpouse(entry)?'Spouse':'Team'}`,entry.teamRole?`Team Role: ${entry.teamRole}`:'',`Notes: ${entry.notes||'—'}`,`Evidence: ${(entry.evidence||[]).map(f=>f.name).join(', ')||'None'}`].filter(Boolean).join('\n'));
     }
     prog.textContent='Compressing…';
     const blob=await zip.generateAsync({type:'blob',compression:'DEFLATE'});
@@ -821,23 +790,21 @@ window.downloadAuditPackage=async function(){
     document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);
     prog.textContent=`✓ Downloaded — ${entries.length} entries, ${total} evidence files`;
     setTimeout(()=>{prog.style.display='none';},4000);
-  }catch(err){prog.textContent='Error building package — try again';console.error(err);}
+  }catch(err){prog.textContent='Error building package';console.error(err);}
 };
 
-/* ══════════════════════════════════
-   CSV IMPORT
-   ══════════════════════════════════ */
+/* CSV IMPORT */
 let csvRows=[],csvHeaders=[];
-const FIELD_MAP=[{key:'date',label:'Date',required:true},{key:'hours',label:'Hours',required:true},{key:'category',label:'Category',required:false},{key:'notes',label:'Notes / Description',required:false}];
+const FIELD_MAP=[{key:'date',label:'Date',required:true},{key:'hours',label:'Hours',required:true},{key:'category',label:'Category',required:false},{key:'notes',label:'Notes',required:false}];
 window.csvDrop=function(e){e.preventDefault();document.getElementById('import-drop')?.classList.remove('over');const f=e.dataTransfer.files[0];if(f)parseCSV(f);};
 window.csvPick=function(e){const f=e.target.files[0];if(f)parseCSV(f);e.target.value='';};
 function parseCSV(file){
   const reader=new FileReader();
   reader.onload=ev=>{
     const lines=ev.target.result.split(/\r?\n/).filter(l=>l.trim());
-    if(lines.length<2){showImportStatus('CSV must have a header row and at least one data row.');return;}
+    if(lines.length<2){showIS('CSV must have a header and at least one row.');return;}
     csvHeaders=parseCSVLine(lines[0]);csvRows=lines.slice(1).map(l=>parseCSVLine(l));
-    showImportStatus(`Found ${csvRows.length} rows and ${csvHeaders.length} columns.`);
+    showIS(`Found ${csvRows.length} rows and ${csvHeaders.length} columns.`);
     buildMapper();buildPreview();document.getElementById('import-mapper').style.display='block';
   };
   reader.readAsText(file);
@@ -847,24 +814,22 @@ function parseCSVLine(line){
   for(let i=0;i<line.length;i++){const ch=line[i];if(ch==='"'&&inQ&&line[i+1]==='"'){cur+='"';i++;}else if(ch==='"'){inQ=!inQ;}else if(ch===','&&!inQ){res.push(cur.trim());cur='';}else cur+=ch;}
   res.push(cur.trim());return res;
 }
-function showImportStatus(msg){const el=document.getElementById('import-status');el.style.display='block';el.textContent=msg;}
+function showIS(msg){const el=document.getElementById('import-status');el.style.display='block';el.textContent=msg;}
 function buildMapper(){
-  const tbody=document.getElementById('map-body');
-  tbody.innerHTML=FIELD_MAP.map(f=>{
-    const opts=csvHeaders.map((h,i)=>{const sel=h.toLowerCase().includes(f.key)||h.toLowerCase().includes(f.label.split('/')[0].trim().toLowerCase())?'selected':'';return`<option value="${i}" ${sel}>${h}</option>`;}).join('');
+  document.getElementById('map-body').innerHTML=FIELD_MAP.map(f=>{
+    const opts=csvHeaders.map((h,i)=>{const sel=h.toLowerCase().includes(f.key)?'selected':'';return`<option value="${i}" ${sel}>${h}</option>`;}).join('');
     return`<tr><td><strong>${f.label}</strong>${f.required?' <span style="color:var(--rust);">*</span>':''}</td><td><select id="map-${f.key}"><option value="">— skip —</option>${opts}</select></td></tr>`;
   }).join('');
 }
 function buildPreview(){
-  const t=document.getElementById('preview-table');
-  t.innerHTML=`<tr>${csvHeaders.map(h=>`<th>${h}</th>`).join('')}</tr>`+csvRows.slice(0,5).map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('');
+  document.getElementById('preview-table').innerHTML=`<tr>${csvHeaders.map(h=>`<th>${h}</th>`).join('')}</tr>`+csvRows.slice(0,5).map(r=>`<tr>${r.map(c=>`<td>${c}</td>`).join('')}</tr>`).join('');
 }
 window.runImport=async function(){
   const propId=document.getElementById('importProperty').value;
   if(!propId){toast('Please select a property');return;}
-  const personType=document.getElementById('importPersonType').value;
-  const person=personType==='spouse-shashank'?'Shashank':personType==='spouse-you'?(localStorage.getItem('str_current_person')||SPOUSES[0]):'Team Import';
-  const entryType=personType==='team'?'team':'spouse';
+  const pt=document.getElementById('importPersonType').value;
+  const person=pt==='spouse-shashank'?'Shashank':pt==='spouse-you'?currentPerson:'Team Import';
+  const entryType=pt==='team'?'team':'spouse';
   const getIdx=key=>{const el=document.getElementById('map-'+key);return el&&el.value!==''?parseInt(el.value):-1;};
   const dateIdx=getIdx('date'),hoursIdx=getIdx('hours'),catIdx=getIdx('category'),notesIdx=getIdx('notes');
   if(dateIdx<0||hoursIdx<0){toast('Date and Hours columns are required');return;}
@@ -872,30 +837,26 @@ window.runImport=async function(){
   for(const row of csvRows){
     const date=row[dateIdx]?.trim();const hrs=parseFloat(row[hoursIdx]);
     if(!date||isNaN(hrs)||hrs<=0){skipped++;continue;}
-    let normDate=date;
-    const dp=date.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
-    if(dp){const y=dp[3].length===2?'20'+dp[3]:dp[3];normDate=`${y}-${dp[1].padStart(2,'0')}-${dp[2].padStart(2,'0')}`;}
+    let nd=date;const dp=date.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
+    if(dp){const y=dp[3].length===2?'20'+dp[3]:dp[3];nd=`${y}-${dp[1].padStart(2,'0')}-${dp[2].padStart(2,'0')}`;}
     const rawCat=catIdx>=0?row[catIdx]?.trim():'';
-    const cat=matchCat(rawCat)||'Other';
-    const notes=notesIdx>=0?row[notesIdx]?.trim()||'':'';
-    try{await addDoc(collection(db,'str_entries'),{property:propId,date:normDate,category:cat,hours:hrs,notes,person,entryType,evidence:[],createdAt:Date.now(),importedFrom:'csv'});imported++;}
+    const cat=matchCat(rawCat)||'Other';const notes=notesIdx>=0?row[notesIdx]?.trim()||'':'';
+    try{await addDoc(collection(db,'str_entries'),{property:propId,date:nd,category:cat,hours:hrs,notes,person,entryType,evidence:[],createdAt:Date.now(),importedFrom:'csv'});imported++;}
     catch(e){skipped++;}
   }
   document.getElementById('import-mapper').style.display='none';
   const res=document.getElementById('import-result');res.style.display='block';
-  res.innerHTML=`<div class="card" style="text-align:center;padding:1.5rem;"><div style="font-size:28px;margin-bottom:8px;">✅</div><div style="font-size:16px;font-weight:500;margin-bottom:4px;">${imported} entries imported as ${entryType==='spouse'?person:'Team'}</div><div style="font-size:13px;color:var(--stone);">${skipped} rows skipped</div></div>`;
+  res.innerHTML=`<div class="card" style="text-align:center;padding:1.5rem;"><div style="font-size:28px;margin-bottom:8px;">✅</div><div style="font-size:16px;font-weight:500;">${imported} entries imported</div><div style="font-size:13px;color:var(--stone);">${skipped} rows skipped</div></div>`;
   toast(`Imported ${imported} entries!`);
 };
 function matchCat(raw){
   if(!raw)return null;const lower=raw.toLowerCase();
-  for(const cat of Object.keys(CAT)){if(lower.includes(cat.toLowerCase())||cat.toLowerCase().includes(lower))return cat;}
+  for(const cat of Object.keys(CAT)){if(lower.includes(cat.toLowerCase()))return cat;}
   const a={admin:'Administrative',cleaning:'Property Maintenance',maintenance:'Property Maintenance',repair:'Property Maintenance',marketing:'Marketing',legal:'Legal',operations:'Operations',rental:'Rental Management',tenant:'Tenant Communication',guest:'Guest Relations',design:'Property Improvements',development:'Property Development',acquisition:'Property Acquisition',selling:'Property Selling'};
   for(const[k,v]of Object.entries(a)){if(lower.includes(k))return v;}return null;
 }
 
-/* ══════════════════════════════════
-   VOICE
-   ══════════════════════════════════ */
+/* VOICE */
 const VOICE_CATS=Object.keys(CAT);let recognition=null,isListening=false;
 (function(){
   const SR=window.SpeechRecognition||window.webkitSpeechRecognition;
@@ -910,8 +871,7 @@ function parseVoice(text){
   const lower=text.toLowerCase();let hours=null;
   const hm=lower.match(/(\d+(?:\.\d+)?)\s*(?:and\s*a?\s*half\s*)?hours?/);
   if(hm){hours=parseFloat(hm[1]);if(lower.includes('and a half')||lower.includes('and half'))hours+=0.5;}
-  if(!hours&&lower.match(/half\s+an?\s+hour/))hours=0.5;
-  if(!hours&&lower.match(/an?\s+hour/))hours=1;
+  if(!hours&&lower.match(/half\s+an?\s+hour/))hours=0.5;if(!hours&&lower.match(/an?\s+hour/))hours=1;
   let matchedCat=null,bestScore=0;
   VOICE_CATS.forEach(cat=>{const cl=cat.toLowerCase();if(lower.includes(cl)){matchedCat=cat;bestScore=100;return;}const words=cl.split(' ');const score=words.filter(w=>lower.includes(w)&&w.length>3).length/words.length;if(score>bestScore){bestScore=score;matchedCat=cat;}});
   const al={admin:'Administrative',guest:'Guest Relations',legal:'Legal',market:'Marketing',ops:'Operations',acqui:'Property Acquisition',develop:'Property Development',improv:'Property Improvements',mainten:'Property Maintenance',repair:'Property Maintenance',fix:'Property Maintenance',sell:'Property Selling',rental:'Rental Management',tenant:'Tenant Communication'};
