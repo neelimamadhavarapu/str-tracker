@@ -337,7 +337,7 @@ input[type=file].ev-input{display:none;}
       <table class="map-table"><thead><tr><th>Field</th><th>Your CSV column</th></tr></thead><tbody id="map-body"></tbody></table>
       <div class="field"><label>Import as</label>
         <select id="importPersonType">
-          <option value="spouse-you">Spouse — You</option>
+          <option value="spouse-you">Spouse — Neelima</option>
           <option value="spouse-shashank">Spouse — Shashank</option>
           <option value="team">Team member</option>
         </select>
@@ -393,9 +393,13 @@ function toast(msg){const t=document.getElementById('toast');if(!t)return;t.text
 function setSyncStatus(s,l){const el=document.getElementById('sync-status');if(!el)return;const dc=s==='error'?'error':s==='ok'?'':'syncing';el.innerHTML=`<span class="sync-dot ${dc}"></span>${l}`;}
 function safeName(s){return(s||'').replace(/[^a-zA-Z0-9_\-\.]/g,'_').substring(0,60);}
 function isSpouse(e){
-  // Recognize current names AND legacy values from older versions of the app
-  const spouseNames=['Neelima','Shashank','You','Me','Husband','me','husband'];
-  return spouseNames.includes(e.person)||e.entryType==='spouse';
+  // If explicitly marked as team, it's team
+  if(e.entryType==='team')return false;
+  // If explicitly marked as spouse, it's spouse
+  if(e.entryType==='spouse')return true;
+  // Legacy entries have no entryType at all — treat as spouse
+  // (all old entries logged by Me/Husband/You/Neelima/Shashank count)
+  return true;
 }
 
 let db=null,entries=[],properties=[];
@@ -617,6 +621,7 @@ function renderEntries(){
   el.innerHTML=list.map(e=>{
     const prop=properties.find(p=>p.id===e.property);
     const ev=e.evidence||[];const spouse=isSpouse(e);
+    const displayName=({'Me':'Neelima','me':'Neelima','You':'Neelima','you':'Neelima','Husband':'Shashank','husband':'Shashank'}[e.person])||e.person||'Neelima';
     const evGrid=ev.length?`<div class="evidence-grid" style="margin-top:10px;">${ev.map((f,i)=>
       f.type==='image'
         ?`<div class="ev-item"><img class="ev-thumb" src="${f.url}" onclick="window.open('${f.url}','_blank')"><div class="ev-name">${f.name}</div><button class="ev-del" onclick="deleteEvidence('${e.id}',${i})">×</button></div>`
@@ -626,7 +631,7 @@ function renderEntries(){
       <div class="entry-main">
         <div style="flex:1;min-width:0;">
           <div class="entry-name">${prop?prop.name:'Unknown'}
-            ${spouse?`<span class="spouse-chip">🏡 ${e.person}</span>`:`<span class="team-chip">👥 ${e.teamRole||e.person}</span>`}
+            ${spouse?`<span class="spouse-chip">🏡 ${displayName}</span>`:`<span class="team-chip">👥 ${e.teamRole||displayName}</span>`}
           </div>
           <div class="entry-meta">${fmtDate(e.date)} · ${catBadge(e.category)}
             ${!spouse&&e.teamName?`<span style="font-size:11px;color:var(--purple);">${e.teamName}</span>`:''}
@@ -720,8 +725,20 @@ function renderSummary(){
   }
   const sp=document.getElementById('summary-people');
   if(sp){
+    // Normalize legacy person names for display
+    const normalizePersonName=(name)=>{
+      if(['Me','me','You','you'].includes(name))return'Neelima';
+      if(['Husband','husband'].includes(name))return'Shashank';
+      return name;
+    };
+    // Build normalized totals
+    const normalizedByPerson={};
+    spouseEntries.forEach(e=>{
+      const n=normalizePersonName(e.person||'Neelima');
+      normalizedByPerson[n]=(normalizedByPerson[n]||0)+e.hours;
+    });
     sp.innerHTML=SPOUSES.map(name=>{
-      const hrs=byPerson[name]||0;const pct=spouseTotal?Math.round(hrs/spouseTotal*100):0;
+      const hrs=normalizedByPerson[name]||0;const pct=spouseTotal?Math.round(hrs/spouseTotal*100):0;
       return`<div class="card" style="display:flex;align-items:center;justify-content:space-between;"><div><div style="font-size:14px;font-weight:500;">${name}</div><div style="font-size:12px;color:var(--stone);">Counts toward IRS material participation</div></div><div style="font-family:'DM Mono',monospace;font-size:17px;">${hrs.toFixed(1)}h <span style="font-size:12px;color:var(--stone);">(${pct}%)</span></div></div>`;
     }).join('');
   }
